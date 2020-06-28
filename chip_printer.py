@@ -47,8 +47,10 @@ class ChipPrinter:
         draw = ImageDraw.Draw(image)
         x0 = math.ceil(self._get_indent_size() * 1.2)
 
-        _, textSizeY = draw.textsize(self._chip.name, font=self._font)
-        draw.text((x0, (canvasY-textSizeY)//2), self._chip.name, font=self._font)
+        label = f'{self._chip.name} {self._chip.description}'
+
+        _, textSizeY = draw.textsize(label, font=self._font)
+        draw.text((x0, (canvasY-textSizeY)//2), label, font=self._font)
 
     def _draw_pins(self, image):
         canvasX, canvasY = image.size
