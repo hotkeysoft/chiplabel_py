@@ -14,11 +14,7 @@ class Chip:
     }
 
     def __init__(self, name, pinCount, description='', **kwargs):
-
-        if pinCount < 4 or pinCount > 64:
-            raise ValueError(f'Pin count must be [4,64]')
-        if pinCount % 2:
-            raise ValueError('Pin count must be even')
+        self._validate_pin_count(pinCount)
 
         self.name = name
         self._pins = ["NC"] * pinCount
@@ -49,11 +45,24 @@ class Chip:
             raise IndexError(f'Pin number out of range: {index}')
         self._pins[index-1] = value
 
+    def set_pins(self, pins):
+        if not isinstance(pins, list):
+            raise ValueError('Expected pin list')
+        self._validate_pin_count(len(pins))
+        self._pins = pins.copy()
+
+    @staticmethod
+    def _validate_pin_count(pinCount):
+        if pinCount < 4 or pinCount > 64:
+            raise ValueError(f'Pin count must be [4,64]')
+        if pinCount % 2:
+            raise ValueError('Pin count must be even')
+
     @property
     def size(self):
          return len(self._pins)
 
-    def printASCII(self):
+    def print_ASCII(self):
         pinCount = len(self._pins)
         maxLen = max(len(pin) for pin in self._pins)
         fullWidth = maxLen*2 + 11
@@ -63,6 +72,8 @@ class Chip:
             rightSizePin = pinCount - row - 1
             print(f'{row+1:2} | {self._pins[row]:{maxLen}} {self._pins[rightSizePin]:>{maxLen}} | {rightSizePin+1}')
         print('  ','-'*(2*maxLen + 5))
+        if self.description:
+            print(self.description)
 
 def main():
     a = Chip('Atmega328p', 28)
@@ -93,8 +104,10 @@ def main():
     for pinnum, pin in enumerate(a, 1):
         print(f'{pinnum}: {pin}')
 
-    a.printASCII()
-    b.printASCII()
+    a.print_ASCII()
+    print()
+    b.print_ASCII()
+    print()
 
     d = Chip('testargs', 28, rowSpacing=12)
     print(d.config)
