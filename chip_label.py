@@ -87,12 +87,6 @@ def draw_chipname(image, font):
     draw.text((x0, (canvasY-textSizeY)//2), CHIP_NAME, font=font)
 
 def main(args):
-    import logging
-    logging.basicConfig(
-        filename = 'chip_label.log',
-        filemode = 'w',
-        level = logging.DEBUG
-    )
 
     font_size = get_font_size()
     print("font size ", font_size)
