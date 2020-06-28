@@ -27,6 +27,9 @@ optional arguments:
   -a, --all             generate labels for chips in package
   -l, --list            list all chips in package
   -o dir, --output dir  output directory (default: ./out)
+  -f file, --font file  ttf font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the system font directory
+                        is searched automatically.
+  -d num, --dpi num     resolution in dots per inch (default: 300)  
  ```
 Examples
 ============
