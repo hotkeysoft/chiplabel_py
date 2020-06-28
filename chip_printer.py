@@ -11,18 +11,24 @@ class ChipPrinter:
         'fontSize': 1.0, # desired font size in mm but not really, font size is not an exact science
         'indentSize': 1.0,  # in mm
         'border': True,
-        'font': 'fonts/CascadiaMono.ttf'
+        'font': './fonts/CascadiaMono.ttf'
     }
 
     _chip = None
     _font = None
 
-    def __init__(self):
+    def __init__(self, **kwargs):
+        if kwargs:
+            self.config = {**self.config, **kwargs}
+
         self._init_font()
 
     def _init_font(self):
         font_size = self._get_font_size()
-        self._font = ImageFont.truetype(self.config['font'], font_size)
+        try:
+            self._font = ImageFont.truetype(self.config['font'], font_size)
+        except IOError:
+            print(f'Unable to load font: [%s], text will not be rendered' % self.config['font'])
 
     def _draw_border(self, image):
         if self.config['border']:
