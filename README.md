@@ -5,7 +5,8 @@ Inspired by [clabel project](http://repetae.net/repos/clabel)
 
 The project is also [archived on github](https://github.com/hotkeysoft/chiplabel/tree/archive)
 
-## Requirements
+Requirements
+============
 - Needs PyYAML for parsing chip pinout files
   - simple install: `pip install PyYAML`
 - Needs Pillow for image generation and manipulation
@@ -13,7 +14,8 @@ The project is also [archived on github](https://github.com/hotkeysoft/chiplabel
 
 or see [requirements.txt](requirements.txt)
 
-## Usage
+Usage
+============
 ```
 usage: chip_label.py [-h] (-c name | -a | -l) [-o dir]
 
@@ -26,3 +28,10 @@ optional arguments:
   -l, --list            list all chips in package
   -o dir, --output dir  output directory (default: ./out)
  ```
+Examples
+============
+### 555 timer IC
+![555 timer IC example](https://github.com/hotkeysoft/chiplabel_py/raw/master/out/555.png "sample output: 555 timer")
+
+### 8085 CPU
+![8085 CPU example](https://github.com/hotkeysoft/chiplabel_py/raw/master/out/8085.png "sample output: 8085 CPU")
