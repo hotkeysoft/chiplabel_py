@@ -8,18 +8,24 @@ class Chip:
     description = String('description')
     _pins = {}
 
-    def __init__(self, name, pinCount, description='', dil=True):
+    config = {
+        "pinSpacing": 2.54,
+        "rowSpacing": 6, # in mm, 6 for narrow, 12 for wide
+    }
+
+    def __init__(self, name, pinCount, description='', **kwargs):
 
         if pinCount < 4 or pinCount > 64:
             raise ValueError(f'Pin count must be [4,64]')
-        if dil and pinCount % 2:
-            raise ValueError('Pin count must be even for DIL chips')
-        if not dil:
-            raise NotImplementedError('SIL chips not supported yet')
+        if pinCount % 2:
+            raise ValueError('Pin count must be even')
 
         self.name = name
         self._pins = ["NC"] * pinCount
         self.description = description
+
+        if kwargs:
+            self.config = {**self.config, **kwargs}
 
     def __str__(self):
         return f'{self.name}({len(self._pins)})'
@@ -89,6 +95,9 @@ def main():
 
     a.printASCII()
     b.printASCII()
+
+    d = Chip('testargs', 28, rowSpacing=12)
+    print(d.config)
 
 if __name__ == '__main__':
     main()
