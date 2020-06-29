@@ -4,6 +4,8 @@
 import math
 from chip import Chip
 from PIL import ImageFont, ImageDraw, Image
+import logging
+log = logging.getLogger(__name__)
 
 class ChipPrinter:
     config = {
@@ -28,7 +30,7 @@ class ChipPrinter:
         try:
             self._font = ImageFont.truetype(self.config['font'], font_size)
         except IOError:
-            print(f'Unable to load font: [%s], text will not be rendered' % self.config['font'])
+            log.warning(f'Unable to load font: [%s], text will not be rendered', self.config['font'])
 
     def _draw_border(self, image):
         if self.config['border']:

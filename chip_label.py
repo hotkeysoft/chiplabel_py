@@ -5,6 +5,8 @@ from chip_printer import ChipPrinter
 from chip_list import load_chip_list
 import math
 import argparse
+import logging
+log = logging.getLogger(__name__)
 
 MIN_DPI = 50
 MAX_DPI = 2000
@@ -28,7 +30,7 @@ def print_chip_label(chip_list, chip_name, args):
     image = printer.print_chip(chip)
     output_file = f"{output_dir}{chip_name}.png"
     image.save(output_file, dpi=(printer.config['dpi'], printer.config['dpi']))
-    print(f'Output saved to {output_file}')
+    log.info('Output saved to %s', output_file)
 
 def _dpi_range(string):
     try:
@@ -42,18 +44,60 @@ def _dpi_range(string):
 def main():
     parser = argparse.ArgumentParser(description='Generate footprint images for chips')
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-c', '--chip', metavar='name', help='chip identifier')
-    group.add_argument('-a', '--all', help='generate labels for chips in package', action="count")
-    group.add_argument('-l', '--list', help='list all chips in package', action="count")
-    parser.add_argument('-o', '--output', metavar='dir', help='output directory (default: ./out)', default='./out')
-    parser.add_argument('-f', '--font', metavar='file', help='ttf font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the system font directory is searched automatically.', default='./fonts/CascadiaMono.ttf')
-    parser.add_argument('-d', '--dpi', metavar='num', type=_dpi_range, help='resolution in dots per inch (default: 300)', default=300)
-    #parser.add_argument('-v', '--verbose', help='outputs additional information', action='count')
+    group.add_argument(
+        '-c', '--chip',
+        metavar='name',
+        help='chip identifier'
+    )
+    group.add_argument(
+        '-a', '--all',
+        help='generate labels for chips in package',
+        action="count"
+    )
+    group.add_argument(
+        '-l', '--list',
+        help='list all chips in package',
+        action="count"
+    )
+    parser.add_argument(
+        '-o', '--output',
+        metavar='dir',
+        help='output directory (default: ./out)',
+        default='./out'
+    )
+    parser.add_argument(
+        '-f', '--font',
+        metavar='file',
+        help='ttf font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the system font directory is searched automatically.',
+        default='./fonts/CascadiaMono.ttf'
+    )
+    parser.add_argument(
+        '-d', '--dpi',
+        metavar='num',
+        type=_dpi_range,
+        help='resolution in dots per inch (default: 300)',
+        default=300
+    )
+
+    debug_group = parser.add_mutually_exclusive_group()
+
+    debug_group.add_argument(
+        '--debug',
+        help="Print debugging statements",
+        action="store_const", dest="loglevel", const=logging.DEBUG,
+        default=logging.WARNING,
+    )
+    debug_group.add_argument(
+        '-v', '--verbose',
+        help="Print additional information",
+        action="store_const", dest="loglevel", const=logging.INFO,
+    )
     args = parser.parse_args()
+    logging.basicConfig(level=args.loglevel)
 
     chip_file = 'chips/chips.yaml'
     chip_list = load_chip_list(chip_file)
-    print(f'loaded {len(chip_list)} chips from {chip_file}')
+    log.info(f'loaded {len(chip_list)} chips from {chip_file}')
 
     if args.list:
         for chip in sorted(chip_list, key=str.casefold):

@@ -2,6 +2,8 @@
 # chip.py
 #
 from typedproperty import String
+import logging
+log = logging.getLogger(__name__)
 
 class Chip:
     name = String('name')
@@ -14,6 +16,7 @@ class Chip:
     }
 
     def __init__(self, name, pinCount, description='', **kwargs):
+        log.debug('Chip.__init__("%s", %d, "%s")', name, pinCount, description)
         self._validate_pin_count(pinCount)
 
         self.name = name
@@ -49,6 +52,7 @@ class Chip:
         if not isinstance(pins, list):
             raise ValueError('Expected pin list')
         self._validate_pin_count(len(pins))
+        log.debug('Chip[%s].set_pins(%s)', self.name, pins)
         self._pins = pins.copy()
 
     @staticmethod
