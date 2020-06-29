@@ -102,6 +102,7 @@ class ChipPrinter:
         return math.ceil(height)
 
     def print_chip(self, chip):
+        log.debug('print_chip() config=%s', self.config)
         self._chip = chip
 
         canvas_size = self._get_chip_size()
