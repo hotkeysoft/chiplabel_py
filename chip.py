@@ -2,8 +2,8 @@
 # chip.py
 #
 from typedproperty import String
-import logging
 import re
+import logging
 log = logging.getLogger(__name__)
 
 VALID_CHIP_ID = re.compile('^[-\w]+$')
