@@ -1,10 +1,12 @@
 # chiplabel_py
 _chip_label.py_ generates customized labels with pin number for chips.
 
-This project was inspired by [clabel](http://repetae.net/repos/clabel) which is in Perl and can print labels on a PTouch.
-The original _clabel_ project repository was converted to git and [archived on github](https://github.com/hotkeysoft/chiplabel/tree/archive)
+This project was inspired by [clabel](http://repetae.net/repos/clabel) (which is in Perl and can print on a PTouch label maker).
+The original _clabel_ project repository was converted to git and [archived on github](https://github.com/hotkeysoft/chiplabel/tree/archive).
+
 I started working on the original Perl code and made some [small improvements](https://github.com/hotkeysoft/chiplabel) but I decided to abandon the Perl version and start the whole thing from scratch in Python.
-I kept the original YAML configuration file format for the chips.
+
+I kept the original YAML [configuration file format](#configuration-files) for the chips.
 
 Requirements
 ============
@@ -18,22 +20,22 @@ or see [requirements.txt](requirements.txt)
 Usage
 ============
 ```
-usage: chip_label.py [-h] (-c name | -a | -l) [-o dir]
+usage: chip_label.py [-h] (-c name | -a | -l) [-o dir] [-f file] [-d num] [-i] [--debug | -v]
 
-Generate footprint images for chips
+Generate footprint images for chips.
 
 optional arguments:
   -h, --help            show this help message and exit
-  -c name, --chip name  chip identifier
-  -a, --all             generate labels for chips in package
-  -l, --list            list all chips in package
-  -o dir, --output dir  output directory (default: ./out)
-  -f file, --font file  ttf font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the system font directory
+  -c name, --chip name  Chip identifier.
+  -a, --all             Generate labels for chips in package.
+  -l, --list            List all chips in package.
+  -o dir, --output dir  Output directory (default: ./out).
+  -f file, --font file  TTF font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the system font directory
                         is searched automatically.
-  -d num, --dpi num     resolution in dots per inch (default: 300)
-  -i, --invert          invert label, for dead bug soldering
-  --debug               Print debugging statements
-  -v, --verbose         Print additional information
+  -d num, --dpi num     Resolution in dots per inch (default: 300).
+  -i, --invert          Invert label, for dead bug soldering.
+  --debug               Print debugging statements.
+  -v, --verbose         Print additional information.
  ```
 Examples
 ============

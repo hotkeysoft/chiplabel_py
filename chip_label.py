@@ -44,45 +44,49 @@ def _dpi_range(string):
     return value
 
 def main():
-    parser = argparse.ArgumentParser(description='Generate footprint images for chips')
+    chip_file = 'chips/chips.yaml'
+
+    parser = argparse.ArgumentParser(
+        description='Generate footprint images for chips.',
+        epilog=f'Chip definitions are loaded from {chip_file}')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
         '-c', '--chip',
         metavar='name',
-        help='chip identifier'
+        help='Chip identifier.'
     )
     group.add_argument(
         '-a', '--all',
-        help='generate labels for chips in package',
+        help='Generate labels for chips in package.',
         action="count"
     )
     group.add_argument(
         '-l', '--list',
-        help='list all chips in package',
+        help='List all chips in package.',
         action="count"
     )
     parser.add_argument(
         '-o', '--output',
         metavar='dir',
-        help='output directory (default: ./out)',
+        help='Output directory (default: ./out).',
         default='./out'
     )
     parser.add_argument(
         '-f', '--font',
         metavar='file',
-        help='ttf font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the system font directory is searched automatically.',
+        help='TTF font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the system font directory is searched automatically.',
         default='./fonts/CascadiaMono.ttf'
     )
     parser.add_argument(
         '-d', '--dpi',
         metavar='num',
         type=_dpi_range,
-        help='resolution in dots per inch (default: 300)',
+        help='Resolution in dots per inch (default: 300).',
         default=300
     )
     parser.add_argument(
         '-i', '--invert',
-        help='invert label, for dead bug soldering',
+        help='Invert label, for dead bug soldering.',
         action="count"
     )
 
@@ -90,19 +94,18 @@ def main():
 
     debug_group.add_argument(
         '--debug',
-        help="Print debugging statements",
+        help="Print debugging statements.",
         action="store_const", dest="loglevel", const=logging.DEBUG,
         default=logging.WARNING,
     )
     debug_group.add_argument(
         '-v', '--verbose',
-        help="Print additional information",
+        help="Print additional information.",
         action="store_const", dest="loglevel", const=logging.INFO,
     )
     args = parser.parse_args()
     logging.basicConfig(level=args.loglevel)
 
-    chip_file = 'chips/chips.yaml'
     chip_list = load_chip_list(chip_file)
     log.info(f'loaded {len(chip_list)} chips from {chip_file}')
 
