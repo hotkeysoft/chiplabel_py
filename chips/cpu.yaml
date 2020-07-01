@@ -1,11 +1,11 @@
 # Microprocessors
 8085:
-  name: CPU
+  description: CPU
   type: wide
   pins: [X1, X2, RST_OUT, SOD, SID, TRAP, RST7.5, RST6.5, RST5.5, INTR, /INTA, AD0, AD1, AD2, AD3, AD4, AD5, AD6, AD7, GND,
         A8, A9, A10, A11, A12, A13, A14, A15, S0, ALE, /WR, /RD, S1, IO/M, READY, /RST_IN, CLK_OUT, HLDA, HOLD, VCC]
 Z8400:
-  name: Z80 CPU
+  description: Z80 CPU
   type: wide
   pins: [A11, A12, A13, A14, A15, CLK, D4, D3, D5, D6, VCC, D2, D7, D0, D1, /INT, /NMI, /HALT, /MREQ, /IORQ,
         /RD, /WR, /BUSACK, /WAIT, /BUSREQ, /RESET, /M1, /RFSH, GND, A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10]

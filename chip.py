@@ -6,6 +6,7 @@ import logging
 log = logging.getLogger(__name__)
 
 class Chip:
+    id = String('id')
     name = String('name')
     description = String('description')
     _pins = {}
@@ -15,22 +16,24 @@ class Chip:
         "rowSpacing": 6, # in mm, 6 for narrow, 12 for wide
     }
 
-    def __init__(self, name, pinCount, description='', **kwargs):
-        log.debug('Chip.__init__("%s", %d, "%s")', name, pinCount, description)
+    def __init__(self, id, pinCount, name='', description='', **kwargs):
+        log.debug('Chip.__init__("%s", %d, "%s", "%s")', id, pinCount, name, description)
+        self.id = id
+        self.name = name
+        self.description = description
+
         self._validate_pin_count(pinCount)
 
-        self.name = name
         self._pins = ["NC"] * pinCount
-        self.description = description
 
         if kwargs:
             self.config = {**self.config, **kwargs}
 
     def __str__(self):
-        return f'{self.name}({len(self._pins)})'
+        return f'{self.id}({len(self._pins)})'
 
     def __repr__(self):
-        return f'chip.Chip({self.name}({len(self._pins)}))'
+        return f'chip.Chip({self.id}({len(self._pins)}))'
 
     def __len__(self):
         return len(self._pins)
@@ -48,11 +51,18 @@ class Chip:
             raise IndexError(f'Pin number out of range: {index}')
         self._pins[index-1] = value
 
+    @property
+    def display_name(self):
+        if len(self.name):
+            return self.name
+        else:
+            return self.id
+
     def set_pins(self, pins):
         if not isinstance(pins, list):
             raise ValueError('Expected pin list')
         self._validate_pin_count(len(pins))
-        log.debug('Chip[%s].set_pins(%s)', self.name, pins)
+        log.debug('Chip[%s].set_pins(%s)', self.id, pins)
         self._pins = pins.copy()
 
     @staticmethod
@@ -70,7 +80,7 @@ class Chip:
         pinCount = len(self._pins)
         maxLen = max(len(pin) for pin in self._pins)
         fullWidth = maxLen*2 + 11
-        print(f'{self.name:^{fullWidth}}')
+        print(f'{self.display_name:^{fullWidth}}')
         print('  ','-'*(2*maxLen + 5))
         for row in range(pinCount//2):
             rightSizePin = pinCount - row - 1
@@ -83,7 +93,7 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
 
     a = Chip('Atmega328p', 28)
-    b = Chip('7404', 14)
+    b = Chip('7404', 14, description='NOT')
 
     print ("A len: ", len(a))
     print ("B len: ", len(b))

@@ -26,16 +26,18 @@ def load_chip_list_file(filename):
     chip_list = {}
     with open(filename, 'r') as ymlfile:
         yaml_chips = yaml.safe_load(ymlfile)
-        for chipName, yaml_chip in yaml_chips.items():
+        for id, yaml_chip in yaml_chips.items():
             spacing = 6
             if 'type' in yaml_chip and yaml_chip['type'] == 'wide':
                 spacing = 12
-            chip = Chip(str(chipName), len(yaml_chip['pins']), rowSpacing = spacing)
+            chip = Chip(str(id), len(yaml_chip['pins']), rowSpacing = spacing)
             if 'name' in yaml_chip:
-                chip.description = yaml_chip['name']
+                chip.name = yaml_chip['name']
+            if 'description' in yaml_chip:
+                chip.description = yaml_chip['description']
 
             chip.set_pins(yaml_chip['pins'])
-            chip_list[str(chipName)] = chip
+            chip_list[str(id)] = chip
     log.info(f'Loaded %d chips from %s', len(chip_list), filename)
     return chip_list
 

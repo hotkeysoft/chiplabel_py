@@ -1,9 +1,9 @@
-sevenseg4digit:
-     name: seven segment
+7SEG4DIGIT:
      npins: 12
      pins: [E,D,DP,C,G,D4,B,D3,D2,A,F,D1]
-max7219: &max7219
-        name: LED Driver
+
+MAX7219: &max7219
+        description: LED Driver
         npins: 24
         pins:
                 - DIN
@@ -30,4 +30,4 @@ max7219: &max7219
                 - DP
                 - D
                 - DOUT
-max7221: *max7219
+MAX7221: *max7219
