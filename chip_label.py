@@ -24,6 +24,8 @@ def print_chip_label(chip_list, chip_name, args):
         config['font'] = args.font
     if args.dpi:
         config['dpi'] = args.dpi
+    if args.invert:
+        config['invert'] = True
 
     printer = ChipPrinter(**config)
     chip = chip_list[chip_name]
@@ -77,6 +79,11 @@ def main():
         type=_dpi_range,
         help='resolution in dots per inch (default: 300)',
         default=300
+    )
+    parser.add_argument(
+        '-i', '--invert',
+        help='invert label, for dead bug soldering',
+        action="count"
     )
 
     debug_group = parser.add_mutually_exclusive_group()

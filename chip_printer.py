@@ -12,7 +12,8 @@ class ChipPrinter:
         'dpi': 300,
         'fontSize': 1.0, # desired font size in mm but not really, font size is not an exact science
         'indentSize': 1.0,  # in mm
-        'border': True,
+        'padding': 2, # pixels between edge and label
+        'invert': False,
         'font': './fonts/CascadiaMono.ttf'
     }
 
@@ -30,13 +31,13 @@ class ChipPrinter:
         try:
             self._font = ImageFont.truetype(self.config['font'], font_size)
         except IOError:
-            log.warning(f'Unable to load font: [%s], text will not be rendered', self.config['font'])
+            log.warning(f'Unable to load font: [%s], using internal fixed size font', self.config['font'])
+            self._font = ImageFont.load_default()
 
     def _draw_border(self, image):
-        if self.config['border']:
-            draw = ImageDraw.Draw(image)
-            x,y = image.size
-            draw.rectangle([(0,0), (x-1, y-1)])
+        draw = ImageDraw.Draw(image)
+        x,y = image.size
+        draw.rectangle([(0,0), (x-1, y-1)])
 
     def _draw_chip_indent(self, image):
         _, canvasY = image.size
@@ -61,26 +62,24 @@ class ChipPrinter:
         draw.text((x0, (canvasY-textSizeY)//2), label, font=self._font)
 
     def _draw_pins(self, image):
-        canvasX, canvasY = image.size
+        width, height = image.size
         draw = ImageDraw.Draw(image)
-
+        padding = self.config['padding']
         rows = len(self._chip) // 2
         pin = 1
-        padding = 2 if self.config['border'] else 0
         for col in range(2):
+            effective_col = 1-col if self.config['invert'] else col
             for row in range(rows):
                 y = self._get_pin_row_y(row)
                 if (col == 1):
-                    y = canvasY-y
+                    y = height-y
                 pinName = self._chip[pin]
                 invert = pinName[0] in ('~', '/', '!')
                 pinName = pinName[1:] if invert else pinName
                 pin += 1
                 textSizeX, textSizeY = draw.textsize(pinName, font=self._font)
                 offsetY = math.ceil(textSizeY / 2.0)
-                x = padding
-                if col == 1:
-                    x = canvasX-textSizeX-padding
+                x = padding if effective_col == 0 else width-textSizeX-padding
                 draw.text((x, y-offsetY), pinName, font=self._font)
                 if invert:
                     draw.line([(x,y-offsetY), (x+textSizeX, y-offsetY)])
@@ -123,13 +122,22 @@ def main(args):
     logging.basicConfig(level=logging.DEBUG)
 
     chip = Chip('7404', 14)
-    pins = ['1A', '1Y', '2A', '2Y', '3A', '3Y', 'GND', '4Y', '4A', '5Y', '5A', '6Y', '6A', 'VCC']
+    pins = [str(pin+1) for pin in range(14)]
     for pinnum, pin in enumerate(chip, 1):
         chip[pinnum] = pins[pinnum-1]
 
     printer = ChipPrinter()
     image = printer.print_chip(chip)
     image.save("./out.png", dpi=(printer.config['dpi'], printer.config['dpi']))
+
+    printer_inverted = ChipPrinter(invert=True)
+    image = printer_inverted.print_chip(chip)
+    image.save("./out_inverted.png", dpi=(printer.config['dpi'], printer.config['dpi']))
+
+    #test bad font
+    printer_bad_font = ChipPrinter(font='')
+    image = printer_bad_font.print_chip(chip)
+    image.save("./out_badfont.png", dpi=(printer.config['dpi'], printer.config['dpi']))
 
 if __name__ == '__main__':
     import sys

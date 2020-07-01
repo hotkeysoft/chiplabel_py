@@ -29,7 +29,10 @@ optional arguments:
   -o dir, --output dir  output directory (default: ./out)
   -f file, --font file  ttf font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the system font directory
                         is searched automatically.
-  -d num, --dpi num     resolution in dots per inch (default: 300)  
+  -d num, --dpi num     resolution in dots per inch (default: 300)
+  -i, --invert          invert label, for dead bug soldering
+  --debug               Print debugging statements
+  -v, --verbose         Print additional information
  ```
 Examples
 ============
