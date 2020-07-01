@@ -1,0 +1,18 @@
+# Microcontroller
+
+ARDUINO328: &arduino328p
+  name: Atmega328p
+  description: with Arduino bootloader
+  pins: [/RES, RX, TX, D2, D3, D4, VCC, GND, X1, X2, D5, D6, D7, D8,
+        D9, D10, D11, D12, D13, AVCC, AREF, GND, A0, A1, A2, A3, A4, A5]
+
+ARDUINO328INT:
+  <<: *arduino328p  
+  description: Arduino Internal clock 8MHz
+
+ARDUINO328INTSMD: # SMD chip in SMD to DIP Adapter
+  name: Atmega328p
+  description: Arduino Internal clock 8MHz
+  type: wide
+  pins: [PD3, PD4, GND, VCC, GND, VCC, PB6, PB7, PD5, PD6, PD7, PB0, PB1, PB2, PB3, PB4,
+        PB5, AVCC, ADC6, AREF, GND, ADC7, PC0, PC1, PC2, PC3, PC4, PC6, /RESET, PD0, PD1, PD2]

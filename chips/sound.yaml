@@ -1,0 +1,10 @@
+# Sound Chips
+
+SN76489AN:
+  description: Sound Generator
+  pins: [D5, D6, D7, RDY, /WE, /CE, OUT, GND, NC, D0, D1, D2, D3, CLK, D4, VCC]
+AY-3-8910:
+  description: Sound Generator
+  type: wide
+  pins: [GND, NC, AN_CH_B, AN_CH_A, NC, IOB7, IOB6, IOB5, IOB4, IOB3, IOB2, IOB1, IOB0, IOA7, IOA6, IOA5, IOA4, IOA3, IOA2, IOA1,
+        IOA0, CLOCK, /RESET, /A9, A8, NC, BUSDIR, BC2, BC1, DA7, DA6, DA5, DA4, DA3, DA2, DA1, DA0, AN_CH_C, NC, VCC]

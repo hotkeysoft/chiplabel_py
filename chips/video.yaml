@@ -1,0 +1,12 @@
+# Video Chips
+
+TMS9918A:
+  description: Video Display Controller
+  type: wide
+  pins: [/RAS, /CAS, AD0, AD1, AD2, AD3, AD4, AD5, AD6, AD7, R/W, GND, MODE, /CSW, /CSR, /INT, CD0, CD1, CD2, CD3,
+        CD4, CD5, CD6, CD7, RD0, RD1, RD2, RD3, RD4, RD5, RD6, RD7, VCC, /RESET, EXTVDP, COMVID, GROMCLK, CPUCLK, XTAL1, XTAL2]
+HD68B45S:
+  description: CRT Controller
+  type: wide
+  pins: [GND, /RES, LPSTB, MA0, MA1, MA2, MA3, MA4, MA5, MA6, MA7, MA8, MA9, MA10, MA11, MA12, MA13, DISPTMG, CUDISP, VCC,
+        CLK, R/W, E, RS, /CS, D7, D6, D5, D4, D3, D2, D1, D0, RA4, RA3, RA2, RA1, RA0, HSYNC, VSYNC]

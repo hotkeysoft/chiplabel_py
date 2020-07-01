@@ -1,0 +1,24 @@
+# Misc I/O
+
+# UART
+8250:
+  description: UART
+  type: wide
+  pins: [D0, D1, D2, D3, D4, D5, D6, D7, RCLK, SIN, SOUT, CS0, CS1, /CS2, /BAUDOUT, XIN, XOUT, /WR, WR, GND,
+        /RD, RD, DDIS, CSOUT, /ADS, A2, A1, A0, NC, INTR, /OUT2, /RTS, /DTR, /OUT1, MR, /CTS, /DSR, /DCD, /RI, VCC]
+16550:
+  description: UART w/FIFO
+  type: wide
+  pins: [D0, D1, D2, D3, D4, D5, D6, D7, RCLK, SIN, SOUT, CS0, CS1, /CS2, /BAUDOUT, XIN, XOUT, /WR, WR, GND,
+        /RD, RD, DDIS, /TXRDY, /ADS, A2, A1, A0, /RXRDY, INTR, /OUT2, /RTS, /DTR, /OUT1, MR, /CTS, /DSR, /DCD, /RI, VCC]
+
+# FTDI Adapters
+FTDI:
+  description: USB-Serial Interface
+  type: wide
+  pins: [CBUS3, 3V3, NC, CBUS2, CBUS1, NC, RXD, TXD, VCC, GND, VCC, VCC, GND, GND, /DTR, /RTS, /RI, /DSR, /DCD, /CTS]
+FT232RL:
+  description: USB UART
+  type: wide
+  pins: [TXD, /DTR, /RTS, VCCIO, RXD, /RI, GND, NC, /DSR, /DCD, /CTS, CBUS4, CBUS2, CBUS3,
+        USBDP, USBDM, 3V3OUT, GND, /RESET, VCC, GND, CBUS1, CBUS0, NC, AGND, TEST, OSCI, OSCO]

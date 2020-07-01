@@ -1,0 +1,12 @@
+# Programmable Logic Device (PAL, GAL, etc.)
+
+# Custom PLDs used in various projects
+DTBANK1:
+    pins: [/MEM, BR0, BR1, BR2, BR3, BR4, BR5, BR6, BR7, GND,
+          A13, A14, A15, /RAM, /ROM, R13, R14, R15, R16, VCC]
+DTGLUE3:
+    pins: [/MEM, NC, NC, A15, A14, A13, NC, /UO1, /SIN, GND,
+          NC, SOUT, SEN, /UART, /PIT, /RAM, /ROM, NC, NC, VCC]
+DTGLUE4:
+    pins: [/MEM, A15, A14, A13, NC, NC, NC, NC, NC, GND,
+          NC, NC, NC, NC, NC, /SOUND, /UART, /PIT, BK, VCC]
