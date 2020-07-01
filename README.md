@@ -29,9 +29,11 @@ optional arguments:
   -c name, --chip name  Chip identifier.
   -a, --all             Generate labels for chips in package.
   -l, --list            List all chips in package.
+  -i dir, --input dir   Input chip library file or directory (default: ./chips). If a directory
+                        is specified all .yaml files in that directory will be loaded.  
   -o dir, --output dir  Output directory (default: ./out).
-  -f file, --font file  TTF font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the system font directory
-                        is searched automatically.
+  -f file, --font file  TTF font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the
+                        system font directory is searched automatically.
   -d num, --dpi num     Resolution in dots per inch (default: 300).
   -i, --invert          Invert label, for dead bug soldering.
   --debug               Print debugging statements.
@@ -48,7 +50,7 @@ Examples
 Configuration files
 ============
 A _chip library_ configuration file is a .yaml file containing a list of chip definition such as:
-```
+```YAML
 SN76489AN:
     name: Sound Generator
     pins: [ D5, D6, D7, RDY, /WE, /CE, OUT, GND, NC, D0, D1, D2, D3, CLK, D4, VCC ]

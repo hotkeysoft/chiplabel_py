@@ -6,14 +6,20 @@ from chip_list import load_chip_list
 import math
 import argparse
 import logging
-log = logging.getLogger(__name__)
+log = logging.getLogger()
 
 MIN_DPI = 50
 MAX_DPI = 2000
+DEFAULT_DPI = 300
+
+DEFAULT_FONT = './fonts/CascadiaMono.ttf'
+DEFAULT_INPUT_DIR = './chips'
+DEFAULT_OUTPUT_DIR = './out'
 
 def print_chip_label(chip_list, chip_name, args):
     if chip_name not in chip_list:
-        raise SystemExit(f'Chip not found: {chip_name}')
+        log.error('Chip not found: %s', chip_name)
+        return
 
     output_dir = args.output
     if output_dir[-1] not in ('/', '\\'):
@@ -43,12 +49,17 @@ def _dpi_range(string):
         raise argparse.ArgumentTypeError(f'{string} is not an integer value')
     return value
 
-def main():
-    chip_file = 'chips/chips.yaml'
+class LogFormatter(logging.Formatter):
+    def format(self, record):
+        if record.levelno == logging.INFO:
+            self._style._fmt = "%(message)s"
+        else:
+            self._style._fmt = "%(levelname)s: %(message)s"
+        return super().format(record)
 
-    parser = argparse.ArgumentParser(
-        description='Generate footprint images for chips.',
-        epilog=f'Chip definitions are loaded from {chip_file}')
+def parse_args():
+    parser = argparse.ArgumentParser(description='Generate footprint images for chips.')
+
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
         '-c', '--chip',
@@ -66,26 +77,32 @@ def main():
         action="count"
     )
     parser.add_argument(
+        '-i', '--input',
+        metavar='dir',
+        help=f'Input chip library file or directory (default: {DEFAULT_INPUT_DIR}). If a directory is specified all .yaml files in that directory will be loaded.',
+        default=DEFAULT_INPUT_DIR
+    )
+    parser.add_argument(
         '-o', '--output',
         metavar='dir',
-        help='Output directory (default: ./out).',
-        default='./out'
+        help=f'Output directory (default: {DEFAULT_OUTPUT_DIR}).',
+        default=DEFAULT_OUTPUT_DIR
     )
     parser.add_argument(
         '-f', '--font',
         metavar='file',
-        help='TTF font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the system font directory is searched automatically.',
-        default='./fonts/CascadiaMono.ttf'
+        help=f'TTF font to use (default: {DEFAULT_FONT}). Under Windows the system font directory is searched automatically.',
+        default=DEFAULT_FONT
     )
     parser.add_argument(
-        '-d', '--dpi',
+        '--dpi',
         metavar='num',
         type=_dpi_range,
-        help='Resolution in dots per inch (default: 300).',
-        default=300
+        help=f'Resolution in dots per inch (default: {DEFAULT_DPI}).',
+        default=DEFAULT_DPI
     )
     parser.add_argument(
-        '-i', '--invert',
+        '--invert',
         help='Invert label, for dead bug soldering.',
         action="count"
     )
@@ -103,11 +120,21 @@ def main():
         help="Print additional information.",
         action="store_const", dest="loglevel", const=logging.INFO,
     )
-    args = parser.parse_args()
-    logging.basicConfig(level=args.loglevel)
+    return parser.parse_args()
 
-    chip_list = load_chip_list(chip_file)
-    log.info(f'loaded {len(chip_list)} chips from {chip_file}')
+def main():
+    args = parse_args()
+
+    # Configure logging
+    handler = logging.StreamHandler()
+    handler.setFormatter(LogFormatter())
+    log.setLevel(args.loglevel)
+    log.addHandler(handler)
+
+    chip_list = load_chip_list(args.input)
+    if not chip_list or len(chip_list) == 0:
+        log.error('No chip loaded')
+        return
 
     if args.list:
         for chip in sorted(chip_list, key=str.casefold):
