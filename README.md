@@ -68,6 +68,7 @@ Pins that start with '/', '!' or '~' will be drawn as inverted (with a line on t
   - /OE
   - !WR
   - ~RD
+
 These are functionally equivalent.
 
 #### Hidden Chips, Templates
@@ -77,7 +78,7 @@ Chips with an id that begins with an underscore (\_) are hidden from chip list. 
 _op1: &op1
   description: OpAmp
   pins: [BAL, IN-, IN+, V-, BAL, OUT, V+, NC]
-#...
+
   LF356: *op1
   LM741: *op1
 ```

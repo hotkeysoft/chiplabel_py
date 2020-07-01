@@ -3,26 +3,35 @@
 #
 from typedproperty import String
 import logging
+import re
 log = logging.getLogger(__name__)
 
+VALID_CHIP_ID = re.compile('^[-\w]+$')
+
 class Chip:
-    id = String('id')
-    name = String('name')
-    description = String('description')
+    _id = None
     _pins = {}
+
+    name = String('name')
+    library = String('library')
+    description = String('description')
 
     config = {
         "pinSpacing": 2.54,
         "rowSpacing": 6, # in mm, 6 for narrow, 12 for wide
     }
 
-    def __init__(self, id, pinCount, name='', description='', **kwargs):
-        log.debug('Chip.__init__("%s", %d, "%s", "%s")', id, pinCount, name, description)
-        self.id = id
+    def __init__(self, id, pinCount, name='', description='', library='', **kwargs):
+        log.debug('Chip.__init__("%s", %d, name="%s", description="%s", library="%s")',
+            id, pinCount, name, description, library)
+
+        self._validate_chip_id(id)
+        self._validate_pin_count(pinCount)
+
+        self._id = id
         self.name = name
         self.description = description
-
-        self._validate_pin_count(pinCount)
+        self.library = library
 
         self._pins = ["NC"] * pinCount
 
@@ -56,7 +65,19 @@ class Chip:
         if len(self.name):
             return self.name
         else:
-            return self.id
+            return self.unscoped_id
+
+    @property
+    def id(self):
+        return self.scoped_id
+
+    @property
+    def unscoped_id(self):
+        return self._id
+
+    @property
+    def scoped_id(self):
+        return f'{self.library}/{self._id}' if len(self.library) else self._id
 
     def set_pins(self, pins):
         if not isinstance(pins, list):
@@ -68,9 +89,14 @@ class Chip:
     @staticmethod
     def _validate_pin_count(pinCount):
         if pinCount < 4 or pinCount > 64:
-            raise ValueError(f'Pin count must be [4,64]')
+            raise ValidationError(f'Pin count must be [4,64]')
         if pinCount % 2:
-            raise ValueError('Pin count must be even')
+            raise ValidationError('Pin count must be even')
+
+    @staticmethod
+    def _validate_chip_id(id):
+        if not VALID_CHIP_ID.match(id):
+            raise ValidationError(f'Invalid characters in chip id')
 
     @property
     def size(self):
@@ -89,11 +115,18 @@ class Chip:
         if self.description:
             print(self.description)
 
+class Error(Exception):
+    """Base class for exceptions in this module."""
+    pass
+class ValidationError(Error):
+    """Raised when an invalid condition is found."""
+    pass
+
 def main():
     logging.basicConfig(level=logging.DEBUG)
 
     a = Chip('Atmega328p', 28)
-    b = Chip('7404', 14, description='NOT')
+    b = Chip('7404', 14, description='NOT', library='TTL')
 
     print ("A len: ", len(a))
     print ("B len: ", len(b))
@@ -111,6 +144,9 @@ def main():
     #d = Chip('3pins', 3)
     #e = Chip('66pins', 66)
     #f = Chip('evenpins', 15)
+    #g = Chip('/badid1', 8)
+    #h = Chip('bad id2', 8)
+    #i = Chip('', 8)
 
     bPins = ['1A', '1Y', '2A', '2Y', '3A', '3Y', 'GND', '4Y', '4A', '5Y', '5A', '6Y', '6A', 'VCC']
     for pinnum, pin in enumerate(b, 1):

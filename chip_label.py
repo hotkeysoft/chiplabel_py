@@ -2,7 +2,7 @@
 from PIL import ImageFont, ImageDraw, Image
 from chip import Chip
 from chip_printer import ChipPrinter
-from chip_list import load_chip_list
+from chip_list import ChipList
 import math
 import argparse
 import logging
@@ -16,10 +16,12 @@ DEFAULT_FONT = './fonts/CascadiaMono.ttf'
 DEFAULT_INPUT_DIR = './chips'
 DEFAULT_OUTPUT_DIR = './out'
 
-def print_chip_label(chip_list, chip_name, args):
-    if chip_name not in chip_list:
-        log.error('Chip not found: %s', chip_name)
+def print_chip_label(chip_list, chip_id, args):
+    chip = chip_list[chip_id]
+    if not chip:
+        log.error('Chip not found: %s', chip_id)
         return
+    log.info('Generating label for chip: %s', chip.id)
 
     output_dir = args.output
     if output_dir[-1] not in ('/', '\\'):
@@ -34,9 +36,9 @@ def print_chip_label(chip_list, chip_name, args):
         config['invert'] = True
 
     printer = ChipPrinter(**config)
-    chip = chip_list[chip_name]
     image = printer.print_chip(chip)
-    output_file = f"{output_dir}{chip_name}.png"
+#TODO: Prefix lib name flag
+    output_file = f"{output_dir}{chip.unscoped_id}.png"
     image.save(output_file, dpi=(printer.config['dpi'], printer.config['dpi']))
     log.info('Output saved to %s', output_file)
 
@@ -131,17 +133,19 @@ def main():
     log.setLevel(args.loglevel)
     log.addHandler(handler)
 
-    chip_list = load_chip_list(args.input)
-    if not chip_list or len(chip_list) == 0:
+    chip_list = ChipList()
+    chip_list.load(args.input)
+    if not chip_list.size:
         log.error('No chip loaded')
         return
 
     if args.list:
-        for chip in sorted(chip_list, key=str.casefold):
+        for chip in sorted(chip_list.names, key=str.casefold):
             print(chip)
     elif args.all:
         for chip in chip_list:
-            print_chip_label(chip_list, chip, args)
+            print('chip:', chip.scoped_id)
+            print_chip_label(chip_list, chip.id, args)
     else:
         print_chip_label(chip_list, args.chip, args)
 
