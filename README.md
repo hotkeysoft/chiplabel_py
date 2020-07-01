@@ -20,22 +20,24 @@ or see [requirements.txt](requirements.txt)
 Usage
 ============
 ```
-usage: chip_label.py [-h] (-c name | -a | -l) [-o dir] [-f file] [-d num] [-i] [--debug | -v]
+usage: chip_label.py [-h] (-c [name [name ...]] | -a | -l) [-i dir] [-o dir] [-f font]
+                     [--dpi num] [--invert] [--debug | -v]
 
 Generate footprint images for chips.
 
 optional arguments:
   -h, --help            show this help message and exit
-  -c name, --chip name  Chip identifier.
+  -c [name [name ...]], --chip [name [name ...]]
+                        One or more chip identifier.
   -a, --all             Generate labels for chips in package.
   -l, --list            List all chips in package.
   -i dir, --input dir   Input chip library file or directory (default: ./chips). If a directory
-                        is specified all .yaml files in that directory will be loaded.  
+                        is specified all .yaml files in that directory will be loaded.
   -o dir, --output dir  Output directory (default: ./out).
-  -f file, --font file  TTF font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the
+  -f font, --font font  TTF font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the
                         system font directory is searched automatically.
-  -d num, --dpi num     Resolution in dots per inch (default: 300).
-  -i, --invert          Invert label, for dead bug soldering.
+  --dpi num             Resolution in dots per inch (default: 300).
+  --invert              Invert label, for dead bug soldering.
   --debug               Print debugging statements.
   -v, --verbose         Print additional information.
  ```

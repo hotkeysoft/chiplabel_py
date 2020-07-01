@@ -65,18 +65,19 @@ def parse_args():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
         '-c', '--chip',
+        nargs='*',
         metavar='name',
-        help='Chip identifier.'
+        help='One or more chip identifier.'
     )
     group.add_argument(
         '-a', '--all',
         help='Generate labels for chips in package.',
-        action="count"
+        action="store_true"
     )
     group.add_argument(
         '-l', '--list',
         help='List all chips in package.',
-        action="count"
+        action="store_true"
     )
     parser.add_argument(
         '-i', '--input',
@@ -92,7 +93,7 @@ def parse_args():
     )
     parser.add_argument(
         '-f', '--font',
-        metavar='file',
+        metavar='font',
         help=f'TTF font to use (default: {DEFAULT_FONT}). Under Windows the system font directory is searched automatically.',
         default=DEFAULT_FONT
     )
@@ -147,7 +148,8 @@ def main():
             print('chip:', chip.scoped_id)
             print_chip_label(chip_list, chip.id, args)
     else:
-        print_chip_label(chip_list, args.chip, args)
+        for chip in args.chip:
+            print_chip_label(chip_list, chip, args)
 
 if __name__ == '__main__':
     import sys
