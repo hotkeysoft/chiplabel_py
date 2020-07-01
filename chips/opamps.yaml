@@ -1,0 +1,26 @@
+_op1: &op1
+  description: OpAmp
+  type: template
+  pins: [BAL, IN-, IN+, V-, BAL, OUT, V+, NC]
+_op2ss: &op2ss
+  description: SS OpAmp
+  type: template
+  pins: [1O, 1-, 1+, GND, 2+, 2-, 2O, VCC]
+_op2: &op2
+  description: Dual OpAmp
+  type: template
+  pins: [1O, 1-, 1+, V-, 2+, 2-, 2O, V+ ]
+
+LF356: *op1
+LF353: *op2
+TS922IN: *op2
+LM741: *op1
+LM358: *op2ss
+
+LM386:
+  description: Audio Op Amp
+  pins: [GAIN, IN-, IN+, GND, OUT, V+, BYPASS, GAIN]
+
+LM239N:
+  description: Comparator
+  pins: [O2, O1, VCC, I1-, I1+, I2-, I2+, I3-, I3+, I4-, I4+, GND, O4, O3]

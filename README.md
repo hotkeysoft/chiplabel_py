@@ -62,5 +62,28 @@ The optional fields are:
 - _description_: appended to name.
 - _type_: _wide_ generates 12mm labels instead of the default 6mm.
 
-At the moment the only chip library configuration file loaded is [chips/chips.yaml](https://github.com/hotkeysoft/chiplabel_py/blob/master/chips/chips.yaml).
-This will be customizable eventually.
+### Advanced Configuration
+#### Inverted pin
+Pins that start with '/', '!' or '~' will be drawn as inverted (with a line on top):
+  - /OE
+  - !WR
+  - ~RD
+These are functionally equivalent.
+
+#### Hidden Chips, Templates
+Chips with an id that begins with an underscore (\_) are hidden from chip list. This is useful to generate many chips based on the same pinout without cluttering the chip list:
+
+```YAML
+_op1: &op1
+  description: OpAmp
+  pins: [BAL, IN-, IN+, V-, BAL, OUT, V+, NC]
+#...
+  LF356: *op1
+  LM741: *op1
+```
+This will generate two chips with the same pinout: LF356 and LM741.  You can override fields (such as description) like this:
+```YAML
+LM741:
+  <<: *op1  
+  description: custom description
+```

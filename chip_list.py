@@ -24,21 +24,27 @@ def load_chip_list(path):
 def load_chip_list_file(filename):
     log.debug('load_chip_list_file(%s)', filename)
     chip_list = {}
+    skipped = 0
     with open(filename, 'r') as ymlfile:
         yaml_chips = yaml.safe_load(ymlfile)
         for id, yaml_chip in yaml_chips.items():
+            id_str = str(id)
+            log.debug('Processing id=', id_str)
+            if id_str[0] == '_':
+                log.debug("Skipping id=", id_str)
+                skipped += 1
+                continue
             spacing = 6
             if 'type' in yaml_chip and yaml_chip['type'] == 'wide':
                 spacing = 12
-            chip = Chip(str(id), len(yaml_chip['pins']), rowSpacing = spacing)
+            chip = Chip(id_str, len(yaml_chip['pins']), rowSpacing = spacing)
             if 'name' in yaml_chip:
                 chip.name = yaml_chip['name']
             if 'description' in yaml_chip:
                 chip.description = yaml_chip['description']
-
             chip.set_pins(yaml_chip['pins'])
             chip_list[str(id)] = chip
-    log.info(f'Loaded %d chips from %s', len(chip_list), filename)
+    log.info(f'Loaded %d chips from %s (%d skipped)', len(chip_list), filename, skipped)
     return chip_list
 
 def main():
