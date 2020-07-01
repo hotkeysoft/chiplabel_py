@@ -106,6 +106,7 @@ class ChipPrinter:
         self._chip = chip
 
         canvas_size = self._get_chip_size()
+        log.debug('canvas_size=%s', canvas_size)
 
         image = Image.new(mode='1', size=canvas_size, color=255)
 
@@ -119,6 +120,8 @@ class ChipPrinter:
         return rotated
 
 def main(args):
+    logging.basicConfig(level=logging.DEBUG)
+
     chip = Chip('7404', 14)
     pins = ['1A', '1Y', '2A', '2Y', '3A', '3Y', 'GND', '4Y', '4A', '5Y', '5A', '6Y', '6A', 'VCC']
     for pinnum, pin in enumerate(chip, 1):

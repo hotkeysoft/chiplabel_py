@@ -80,6 +80,8 @@ class Chip:
             print(self.description)
 
 def main():
+    logging.basicConfig(level=logging.DEBUG)
+
     a = Chip('Atmega328p', 28)
     b = Chip('7404', 14)
 

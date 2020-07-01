@@ -2,7 +2,9 @@
 # chip_list.py
 #
 from chip import Chip
-import yaml # PyYAML
+import yaml
+import logging
+log = logging.getLogger(__name__)
 
 def load_chip_list(filename) :
     chip_list = {}
@@ -21,6 +23,8 @@ def load_chip_list(filename) :
     return chip_list
 
 def main():
+    logging.basicConfig(level=logging.DEBUG)
+
     chip_list = load_chip_list('chips/chips.yaml')
     for name, chip in chip_list.items():
         chip.print_ASCII()
