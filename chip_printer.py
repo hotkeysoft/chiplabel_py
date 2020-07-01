@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3
 # chip_printer.py
 #
 import math
@@ -56,8 +56,7 @@ class ChipPrinter:
         draw = ImageDraw.Draw(image)
         x0 = math.ceil(self._get_indent_size() * 1.2)
 
-        label = f'{self._chip.display_name} {self._chip.description}'
-
+        label = self._chip.full_name
         _, textSizeY = draw.textsize(label, font=self._font)
         draw.text((x0, (canvasY-textSizeY)//2), label, font=self._font)
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3
 # chip_list.py
 #
 import os
@@ -75,8 +75,8 @@ class ChipList:
                     log.error('Error adding chip [%s]: %s, skipping',
                         scoped_id, err)
                     skipped += 1
-        log.info(f'Loaded %d chips from %s (%d skipped)',
-            len(chip_list), filename, skipped)
+        log.info(f'Loaded %d chips from %s %s', len(chip_list), filename,
+            f'({skipped} skipped)' if skipped else '')
 
         self._chip_list.update(chip_list)
 

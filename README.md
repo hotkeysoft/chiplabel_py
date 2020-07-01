@@ -10,6 +10,7 @@ I kept the original YAML [configuration file format](#configuration-files) for t
 
 Requirements
 ============
+- Python 3.6
 - Needs PyYAML for parsing chip pinout files
   - simple install: `pip install PyYAML`
 - Needs Pillow for image generation and manipulation
@@ -20,35 +21,53 @@ or see [requirements.txt](requirements.txt)
 Usage
 ============
 ```
-usage: chip_label.py [-h] (-c [name [name ...]] | -a | -l) [-i dir] [-o dir] [-f font]
-                     [--dpi num] [--invert] [--debug | -v]
+usage: chip_label.py [-h] (-c name [name ...] | -a | -l) [-i dir] [-o dir] [-f font] [--dpi num] [--invert] [-t]
+                     [--debug | -v]
 
 Generate footprint images for chips.
 
 optional arguments:
   -h, --help            show this help message and exit
-  -c [name [name ...]], --chip [name [name ...]]
+  -c name [name ...], --chip name [name ...]
                         One or more chip identifier.
   -a, --all             Generate labels for chips in package.
   -l, --list            List all chips in package.
-  -i dir, --input dir   Input chip library file or directory (default: ./chips). If a directory
-                        is specified all .yaml files in that directory will be loaded.
+  -i dir, --input dir   Input chip library file or directory (default: ./chips). If a directory is specified all .yaml
+                        files in that directory will be loaded.
   -o dir, --output dir  Output directory (default: ./out).
-  -f font, --font font  TTF font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the
-                        system font directory is searched automatically.
-  --dpi num             Resolution in dots per inch (default: 300).
-  --invert              Invert label, for dead bug soldering.
+  -t, --text            Generate text output in console instead of image. Image options will be ignored
   --debug               Print debugging statements.
   -v, --verbose         Print additional information.
+
+Image Options:
+  -f font, --font font  TTF font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the system font directory
+                        is searched automatically.
+  --dpi num             Resolution in dots per inch (default: 300).
+  --invert              Invert label, for dead bug soldering.
  ```
 Examples
 ============
-### 555 timer IC
+### Image Output (default)
+#### 555 timer IC
 ![555 timer IC example](https://github.com/hotkeysoft/chiplabel_py/raw/master/out/555.png "sample output: 555 timer")
 
 ### 8085 CPU
 ![8085 CPU example](https://github.com/hotkeysoft/chiplabel_py/raw/master/out/8085.png "sample output: 8085 CPU")
 
+### Text Output (-t)
+```
+SN76489AN Sound Generator
+   -----------
+ 1 | D5  VCC | 16
+ 2 | D6   D4 | 15
+ 3 | D7  CLK | 14
+ 4 | RDY  D3 | 13
+ 5 | /WE  D2 | 12
+ 6 | /CE  D1 | 11
+ 7 | OUT  D0 | 10
+ 8 | GND  NC | 9
+   -----------
+```
 Configuration files
 ============
 A _chip library_ configuration file is a .yaml file containing a list of chip definition such as:

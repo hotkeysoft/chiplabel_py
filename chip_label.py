@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3
 from PIL import ImageFont, ImageDraw, Image
 from chip import Chip
 from chip_printer import ChipPrinter
@@ -16,12 +16,20 @@ DEFAULT_FONT = './fonts/CascadiaMono.ttf'
 DEFAULT_INPUT_DIR = './chips'
 DEFAULT_OUTPUT_DIR = './out'
 
-def print_chip_label(chip_list, chip_id, args):
+def print_chip(chip_list, chip_id, args):
     chip = chip_list[chip_id]
     if not chip:
         log.error('Chip not found: %s', chip_id)
         return
     log.info('Generating label for chip: %s', chip.id)
+
+    if args.text:
+        print()
+        chip.print_ASCII()
+    else:
+        print_chip_image(chip, args)
+
+def print_chip_image(chip, args):
 
     output_dir = args.output
     if output_dir[-1] not in ('/', '\\'):
@@ -62,23 +70,24 @@ class LogFormatter(logging.Formatter):
 def parse_args():
     parser = argparse.ArgumentParser(description='Generate footprint images for chips.')
 
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument(
+    action_group = parser.add_mutually_exclusive_group(required=True)
+    action_group.add_argument(
         '-c', '--chip',
-        nargs='*',
+        nargs='+',
         metavar='name',
         help='One or more chip identifier.'
     )
-    group.add_argument(
+    action_group.add_argument(
         '-a', '--all',
         help='Generate labels for chips in package.',
         action="store_true"
     )
-    group.add_argument(
+    action_group.add_argument(
         '-l', '--list',
         help='List all chips in package.',
         action="store_true"
     )
+
     parser.add_argument(
         '-i', '--input',
         metavar='dir',
@@ -91,23 +100,31 @@ def parse_args():
         help=f'Output directory (default: {DEFAULT_OUTPUT_DIR}).',
         default=DEFAULT_OUTPUT_DIR
     )
-    parser.add_argument(
+
+    graph_group = parser.add_argument_group('Image Options')
+    graph_group.add_argument(
         '-f', '--font',
         metavar='font',
         help=f'TTF font to use (default: {DEFAULT_FONT}). Under Windows the system font directory is searched automatically.',
         default=DEFAULT_FONT
     )
-    parser.add_argument(
+    graph_group.add_argument(
         '--dpi',
         metavar='num',
         type=_dpi_range,
         help=f'Resolution in dots per inch (default: {DEFAULT_DPI}).',
         default=DEFAULT_DPI
     )
-    parser.add_argument(
+    graph_group.add_argument(
         '--invert',
         help='Invert label, for dead bug soldering.',
-        action="count"
+        action="store_true"
+    )
+
+    parser.add_argument(
+        '-t', '--text',
+        help=f'Generate text output in console instead of image.  Image options will be ignored',
+        action="store_true"
     )
 
     debug_group = parser.add_mutually_exclusive_group()
@@ -145,12 +162,14 @@ def main():
             print(chip)
     elif args.all:
         for chip in chip_list:
-            print('chip:', chip.scoped_id)
-            print_chip_label(chip_list, chip.id, args)
+            print_chip(chip_list, chip.id, args)
     else:
         for chip in args.chip:
-            print_chip_label(chip_list, chip, args)
+            print_chip(chip_list, chip, args)
 
 if __name__ == '__main__':
     import sys
+    MIN_PYTHON = (3, 6)
+    if sys.version_info < MIN_PYTHON:
+        sys.exit("Python %s.%s or later is required.\n" % MIN_PYTHON)
     main()

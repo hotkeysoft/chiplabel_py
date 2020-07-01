@@ -68,6 +68,10 @@ class Chip:
             return self.unscoped_id
 
     @property
+    def full_name(self):
+        return f'{self.display_name} {self.description}'.rstrip()
+
+    @property
     def id(self):
         return self.scoped_id
 
@@ -106,14 +110,12 @@ class Chip:
         pinCount = len(self._pins)
         maxLen = max(len(pin) for pin in self._pins)
         fullWidth = maxLen*2 + 11
-        print(f'{self.display_name:^{fullWidth}}')
+        print(f'{self.full_name:^{fullWidth}}')
         print('  ','-'*(2*maxLen + 5))
         for row in range(pinCount//2):
             rightSizePin = pinCount - row - 1
             print(f'{row+1:2} | {self._pins[row]:{maxLen}} {self._pins[rightSizePin]:>{maxLen}} | {rightSizePin+1}')
         print('  ','-'*(2*maxLen + 5))
-        if self.description:
-            print(self.description)
 
 class Error(Exception):
     """Base class for exceptions in this module."""
