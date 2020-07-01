@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.6
 from PIL import ImageFont, ImageDraw, Image
 from chip import Chip
 from chip_printer import ChipPrinter
