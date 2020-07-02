@@ -80,15 +80,14 @@ class ChipList:
 
         self._chip_list.update(chip_list)
 
+    def __len__(self):
+        return len(self._chip_list)
+
     def __iter__(self):
         return self._chip_list.values().__iter__()
 
     def __getitem__(self, item):
         return self.find_chip(item)
-
-    @property
-    def size(self):
-         return len(self._chip_list)
 
     @property
     def names(self):

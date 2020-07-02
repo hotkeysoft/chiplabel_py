@@ -86,11 +86,6 @@ class ChipPrinter:
     def _get_indent_size(self):
         return math.ceil(self.config['indentSize'] * self.config['dpi'] / 25.4)
 
-    def _get_chip_size(self):
-        width = self._chip.config['rowSpacing'] * self.config['dpi'] / 25.4
-        height = (len(self._chip)//2) * self._chip.config['pinSpacing'] * self.config['dpi'] / 25.4
-        return (math.ceil(width), math.ceil(height))
-
     def _get_pin_row_y(self, row):
         y = self._chip.config['pinSpacing'] * (row + 0.5) * self.config['dpi'] / 25.4
         return math.ceil(y)
@@ -99,11 +94,16 @@ class ChipPrinter:
         height = self.config['fontSize'] * self.config['dpi'] / 25.4
         return math.ceil(height)
 
+    def get_chip_size(self, chip):
+        width = chip.config['rowSpacing'] * self.config['dpi'] / 25.4
+        height = (len(chip)//2) * chip.config['pinSpacing'] * self.config['dpi'] / 25.4
+        return (math.ceil(width), math.ceil(height))
+
     def print_chip(self, chip):
-        log.debug('print_chip() config=%s', self.config)
+        log.debug('print_chip(%s) config=%s', chip, self.config)
         self._chip = chip
 
-        canvas_size = self._get_chip_size()
+        canvas_size = self.get_chip_size(chip)
         log.debug('canvas_size=%s', canvas_size)
 
         image = Image.new(mode='1', size=canvas_size, color=255)
