@@ -21,30 +21,39 @@ or see [requirements.txt](requirements.txt)
 Usage
 ============
 ```
-usage: chip_label.py [-h] (-c name [name ...] | -a | -l) [-i dir] [-o dir] [-f font] [--dpi num]
-                     [--invert] [-t] [--debug | -v]
+usage: chip_label.py [-h] (-c name [name ...] | -a | -l) [-i dir] [-o dir] [-f font]
+                     [--dpi num] [--invert] [-p] [--page_size n n] [--page_padding inch]
+                     [-t] [--debug | -v]
 
 Generate footprint images for chips.
 
 optional arguments:
   -h, --help            show this help message and exit
   -c name [name ...], --chip name [name ...]
-                        One or more chip identifier.
-  -a, --all             Generate labels for chips in package.
-  -l, --list            List all chips in package.
-  -i dir, --input dir   Input chip library file or directory (default: ./chips). If a directory is
-                        specified all .yaml files in that directory will be loaded.
-  -o dir, --output dir  Output directory (default: ./out).
-  -t, --text            Generate text output in console instead of image. Image options will be
-                        ignored
-  --debug               Print debugging statements.
-  -v, --verbose         Print additional information.
+                        one or more chip identifier
+  -a, --all             generate labels for chips in package
+  -l, --list            list all chips in package
+  -i dir, --input dir   input chip library file or directory (default: ./chips). If a
+                        directory is specified all .yaml files in that directory will be
+                        loaded
+  -o dir, --output dir  output directory (default: ./out)
+  --debug               print debugging statements
+  -v, --verbose         print additional information
 
 Image Options:
-  -f font, --font font  TTF font to use (default: ./fonts/CascadiaMono.ttf). Under Windows the
-                        system font directory is searched automatically.
-  --dpi num             Resolution in dots per inch (default: 300).
-  --invert              Invert label, for dead bug soldering.
+  -f font, --font font  TTF font to use (default: ./fonts/CascadiaMono.ttf). Under Windows
+                        the system font directory is searched automatically
+  --dpi num             resolution in dots per inch (default: 300)
+  --invert              invert label, for dead bug soldering
+
+Page Mode Options:
+  -p, --page            page mode: fit all specified chips in a grid on one or more pages
+  --page_size n n       page width and height, in inches (default: 7.5 10)
+  --page_padding inch   space between chips, in inches (default: 0.1)
+
+Text Output Options:
+  -t, --text            generate text output in console instead of image. Image options will
+                        be ignored
  ```
 Examples
 ============

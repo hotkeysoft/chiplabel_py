@@ -2,15 +2,14 @@
 # chip_grid_printer.py
 #
 from PIL import Image
+from chip_printer import ChipPrinter
 import logging
 import math
 import operator
 
 log = logging.getLogger(__name__)
 
-class ChipGridPrinter:
-    config = {}
-
+class ChipGridPrinter(ChipPrinter):
     _curr_page_image = None
     _curr_page = 0
     _row_height = 0
@@ -19,16 +18,15 @@ class ChipGridPrinter:
 
     def __init__(self, **kwargs):
         log.debug('ChipGridPrinter()')
-        if kwargs:
-            self.config = {**self.config, **kwargs}
+        ChipPrinter.__init__(self, **kwargs)
 
         dpi = self.config['dpi']
         page_size = self.config['page_size']
 
-        self._page_size_pixels = (self._to_pixels(page_size[0]), self._to_pixels(page_size[1]))
+        self._page_size_pixels = (self._inch_to_pixels(page_size[0]), self._inch_to_pixels(page_size[1]))
         log.debug('page_size_pixels: %s', self._page_size_pixels)
 
-        self._padding_pixels = self._to_pixels(self.config['page_padding'])
+        self._padding_pixels = self._inch_to_pixels(self.config['page_padding'])
         log.debug('padding_pixels: %s', self._padding_pixels)
 
     def new_page(self):
@@ -43,22 +41,19 @@ class ChipGridPrinter:
         dpi =  self.config['dpi']
         self._curr_page_image.save(image_file_name, dpi=(dpi, dpi))    
 
-    def _to_pixels(self, inch):
-        return math.ceil(inch * self.config['dpi'])
-
-    def print_chips(self, chip_printer, chip_list):
-        sizedChips = [(chip, chip_printer.get_chip_size(chip)) for chip in chip_list]
+    def print_chips(self, chip_list):
+        sizedChips = [(chip, self.get_chip_size(chip)) for chip in chip_list]
         sizedChips.sort(key=operator.itemgetter(1), reverse=True)
     
         self.new_page()
         self._page_pos = (0, 0)
 
         for chip, chip_size in sizedChips:
-            self.print_to_page(chip_printer, chip)
+            self.print_to_page(chip)
         self.save_page()
 
-    def print_to_page(self, chip_printer, chip):
-        chip_image = chip_printer.print_chip(chip)
+    def print_to_page(self, chip):
+        chip_image = self.print_chip(chip)
         chip_size = (chip_image.size[0], chip_image.size[1])
 
         self._row_height = max(self._row_height, chip_size[1])

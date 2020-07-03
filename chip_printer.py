@@ -84,19 +84,23 @@ class ChipPrinter:
                     draw.line([(x,y-offsetY), (x+textSizeX, y-offsetY)])
 
     def _get_indent_size(self):
-        return math.ceil(self.config['indentSize'] * self.config['dpi'] / 25.4)
+        return self._mm_to_pixel(self.config['indentSize'])
 
     def _get_pin_row_y(self, row):
-        y = self._chip.config['pinSpacing'] * (row + 0.5) * self.config['dpi'] / 25.4
-        return math.ceil(y)
+        return self._mm_to_pixel(self._chip.config['pinSpacing'] * (row + 0.5))
 
     def _get_font_size(self):
-        height = self.config['fontSize'] * self.config['dpi'] / 25.4
-        return math.ceil(height)
+        return self._mm_to_pixel(self.config['fontSize'])
+
+    def _inch_to_pixels(self, inch):
+        return math.ceil(inch * self.config['dpi'])
+
+    def _mm_to_pixel(self, mm):
+        return math.ceil(mm * self.config['dpi'] / 25.4)
 
     def get_chip_size(self, chip):
-        width = chip.config['rowSpacing'] * self.config['dpi'] / 25.4
-        height = (len(chip)//2) * chip.config['pinSpacing'] * self.config['dpi'] / 25.4
+        width = self._mm_to_pixel(chip.config['rowSpacing'])
+        height = self._mm_to_pixel(len(chip)//2 * chip.config['pinSpacing'])
         return (math.ceil(width), math.ceil(height))
 
     def print_chip(self, chip):

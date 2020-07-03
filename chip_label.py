@@ -30,27 +30,20 @@ def print_chips_image(chip_list, args):
     if output_dir[-1] not in ('/', '\\'):
         output_dir = output_dir + '/'
 
-    config = {}
-    if args.font:
-        config['font'] = args.font
-    if args.dpi:
-        config['dpi'] = args.dpi
-    if args.invert:
-        config['invert'] = True
-    config['page_size'] = args.page_size
-    config['page_padding'] = args.page_padding
-
-    printer = ChipPrinter(**config)
+    config = vars(args)
+    log.debug('config: %s', config)
 
     if not args.page:
+        chip_printer = ChipPrinter(**config)
         for chip in chip_list:
             log.info('Generating label for chip: %s', chip.id)
             #TODO: Prefix lib name flag
             output_file = f"{output_dir}{chip.unscoped_id}.png"
-            printer.print_chip_to_file(chip, output_file)
+            chip_printer.print_chip_to_file(chip, output_file)
     else:
+        #TODO: Output directory/file pattern
         gridPrinter = ChipGridPrinter(**config)
-        gridPrinter.print_chips(printer, chip_list)
+        gridPrinter.print_chips(chip_list)
 
 class LogFormatter(logging.Formatter):
     def format(self, record):
