@@ -117,6 +117,11 @@ class ChipPrinter:
         self._draw_chip_indent(rotated)
         return rotated
 
+    def print_chip_to_file(self, chip, output_file):
+        image = self.print_chip(chip)
+        image.save(output_file, dpi=(self.config['dpi'], self.config['dpi']))
+        log.info('Output saved to %s', output_file)        
+
 def main(args):
     logging.basicConfig(level=logging.DEBUG)
 
