@@ -34,6 +34,25 @@ class ChipList:
         else:
             raise IOError('input must be a file or directory')
 
+    def _add_aliases(self, chip, family):
+        id = chip.unscoped_id
+        if family == '7400':
+            log.debug('Adding 7400-family aliases')
+            if id[:2] != '74':
+                log.error('Chip is missing 74 prefix: %s, skipping aliases', id)
+            else:
+                FAMILIES = ['L', 'H', 'S', 'LS', 'AS', 'ALS', 'F', # Bipolar
+                            'C', 'HC', 'HCT', 'AC', 'ACT', # CMOS
+                            'ACQ', 'AHC', 'ALVC', 'ALVT', 'AUC', # CMOS overkill
+                            'AUP', 'AVC', 'AXC', 'FC', 'FCT', 'LCX', 
+                            'LV', 'LVC', 'LVT', 'LVQ', 'LVX', 'VHC']
+                names = [f'{id[:2]}{fam}{id[2:]}' for fam in FAMILIES]
+                for name in names:
+                    self._global_name_dict[name] = chip.create_alias(name)
+                log.debug('Added %d aliases: %s', len(names), names)
+        else:
+            log.warning('Unknown family: %s for chip %s', family, chip.scoped_id)
+
     def _load_single_file(self, filename):
         log.debug('load_chip_list_file(%s)', filename)
         library_name = Path(filename).stem
@@ -74,6 +93,9 @@ class ChipList:
                         log.warning('Duplicate global chip id [%s], use scoped name [%s] for lookup', string_id, scoped_id)
                     self._global_name_dict[string_id] = new_chip
 
+                    if 'family' in yaml_chip:
+                        self._add_aliases(new_chip, str(yaml_chip['family']))
+
                 except chip.Error as err:
                     log.error('Error adding chip [%s]: %s, skipping',
                         scoped_id, err)
@@ -100,16 +122,20 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
 
     chip_list = ChipList()
-    chip_list.load('chips/chips.yaml')
-    for chip in chip_list:
-        chip.print_ASCII()
-        print()
+    # chip_list.load('chips/chips.yaml')
+    # for chip in chip_list:
+    #     chip.print_ASCII()
+    #     print()
 
-    chip = chip_list['chips/bad']
-    print(chip)
+    # chip = chip_list['chips/bad']
+    # print(chip)
 
-    chip = chip_list['chips/DAC0808']
-    print(chip)
+    # chip = chip_list['chips/DAC0808']
+    # print(chip)
+
+    chip_list = ChipList()
+    chip_list.load('chips/7400.yaml')
+    #print(chip)
 
 if __name__ == '__main__':
     main()

@@ -2,6 +2,7 @@
 # chip.py
 #
 from typedproperty import String
+import copy
 import re
 import logging
 log = logging.getLogger(__name__)
@@ -81,6 +82,12 @@ class Chip:
     @property
     def scoped_id(self):
         return f'{self.library}/{self._id}' if len(self.library) else self._id
+
+    def create_alias(self, id):
+        # aliases are shallow copies
+        alias = copy.copy(self)
+        alias._id = id
+        return alias        
 
     def set_pins(self, pins):
         if not isinstance(pins, list):
