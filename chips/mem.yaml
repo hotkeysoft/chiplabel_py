@@ -17,7 +17,7 @@ TC551001:
   pins: [NC, A16, A14, A12, A7, A6, A5, A4, A3, A2, A1, A0, IO0, IO1, IO2, GND,
         IO3, IO4, IO5, IO6, IO7, /CE1, A10, /OE, A11, A9, A8, A13, R/W, CE2, A15, VCC]
 
-  # EPROM
+# EPROM
 27C256:
   description: 32Kx8 EPROM
   type: wide
@@ -25,7 +25,7 @@ TC551001:
         D3, D4, D5, D6, D7, /CE, A10, /OE, A11, A9, A8, A13, A14, VCC]
 
 # EEPROM
-AT28C16:
+28C16:
   description: 2Kx8 EEPROM
   type: wide
   pins: [A7, A6, A5, A4, A3, A2, A1, A0, IO0, IO1, IO2, GND,

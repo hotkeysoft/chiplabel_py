@@ -1,14 +1,11 @@
 _op1: &op1
   description: OpAmp
-  type: template
   pins: [BAL, IN-, IN+, V-, BAL, OUT, V+, NC]
 _op2ss: &op2ss
   description: SS OpAmp
-  type: template
   pins: [1O, 1-, 1+, GND, 2+, 2-, 2O, VCC]
 _op2: &op2
   description: Dual OpAmp
-  type: template
   pins: [1O, 1-, 1+, V-, 2+, 2-, 2O, V+ ]
 
 LF356: *op1

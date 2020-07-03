@@ -46,7 +46,10 @@ def _dpi_range(string):
     return value
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Generate footprint images for chips.')
+    parser = argparse.ArgumentParser(
+        description='Generate footprint images for chips.', 
+        fromfile_prefix_chars='@'
+    )
 
     action_group = parser.add_mutually_exclusive_group(required=True)
     action_group.add_argument(

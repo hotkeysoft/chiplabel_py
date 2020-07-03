@@ -13,19 +13,20 @@ def _to_chip_list(chip_list, chip_ids):
     for chip_id in chip_ids:
         chip = chip_list[chip_id]
         if not chip:
-            log.error('Chip not found: %s', chip_id)
-            return None
-        chips.append(chip)
+            log.warning('Chip not found: %s, skipping', chip_id)
+        else:
+            chips.append(chip)
     return chips
 
 def print_chips_text(chip_list, args):
-    log.info('Printing %s chips (text)', len(chip_list))
+    log.info('Printing %s chips to text', len(chip_list))
     for chip in chip_list:
         print()
         chip.print_ASCII()
 
 def print_chips_image(chip_list, args):
-    log.info('Printing %s chips (image)', len(chip_list))
+    #TODO: Validate output directory
+    log.info('Printing %s chips to .png', len(chip_list))
     output_dir = args.output
     if output_dir[-1] not in ('/', '\\'):
         output_dir = output_dir + '/'
@@ -75,12 +76,14 @@ def main():
             print(chip)
     elif args.all:
         print_chips(chip_list, args)
-    else:
+    else:        
         chips = _to_chip_list(chip_list, args.chip)
         if chips and len(chips):
+            out_of = f'(out of {len(args.chip)})' if len(chips) != len(args.chip) else ''
+            log.info('Found %d chips %s', len(chips), out_of)
             print_chips(chips, args)
         else: 
-            log.info('Nothing to do')
+            log.warning('Nothing to do')
 
 if __name__ == '__main__':
     import sys

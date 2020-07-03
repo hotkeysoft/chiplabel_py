@@ -1,0 +1,169 @@
+
+_quad2in: &quad2in
+  family: 7400
+  description: quad 2-input
+  pins: [1A, 1B, 1Y, 2A, 2B, 2Y, GND, 3Y, 3A, 3B, 4Y, 4A, 4V, VCC]
+
+_tri3in: &tri3in
+  family: 7400
+  description: triple 3-input
+  pins: [1A, 1B, 2A, 2B, 2C, 2Y, GND, 3Y, 3A, 3B, 3C, 1Y, 1C, VCC]
+
+_dual4in: &dual4in
+  family: 7400
+  description: dual 4-input
+  pins: [1A, 1B, NC, 1C, 1D, 1Y, GND, 2Y, 2A, 2B, NC, 2C, 2D, VCC]
+
+_hexnot: &hexnot
+  family: 7400
+  description: hex inverter
+  pins: [1A, 1Y, 2A, 2Y, 3A, 3Y, GND, 4A, 4Y, 5A, 5Y, 6A, 6Y, VCC]
+
+_4bitcounter: &4bitcounter
+  family: 7400
+  description: 4-bit counter
+  pins: [/CLR, CLK, A, B, C, D, ENP, GND, /LOAD, END, QD, QC, QB, QA, RCO, VCC]
+
+7400:
+  <<: *quad2in  
+  description: quad 2-input NAND
+
+7402:
+  family: 7400
+  description: quad 2-input NOR
+  pins: [1Y, 1A, 1B, 2Y, 2A, 2B, GND, 3A, 3B, 3Y, 4A, 4B, 4Y, VCC]
+
+7403:
+  <<: *quad2in  
+  description: quad 2-input NAND OC
+
+7404:
+  <<: *hexnot
+  description: hex NOT
+
+7405:
+  <<: *hexnot
+  description: hex NOT OC
+
+7408:
+  <<: *quad2in  
+  description: quad 2-input AND
+
+7409:
+  <<: *quad2in  
+  description: quad 2-input AND OC
+
+7410:
+  <<: *tri3in
+  description: triple 3-input NAND
+
+7411:
+  <<: *tri3in
+  description: triple 3-input AND
+
+7412:
+  <<: *tri3in
+  description: triple 3-input NAND OC
+
+7414:
+  <<: *hexnot
+  description: hex NOT Schmitt
+
+7420:
+  <<: *dual4in
+  description: dual 4-input NAND
+
+7421:
+  <<: *dual4in
+  description: dual 4-input AND
+
+7427:
+  <<: *tri3in
+  description: triple 3-input NOR
+
+7430:
+  family: 7400  
+  description: 8-input NAND
+  pins: [A, B, C, D, E, F, GND, Y, NC, NC, G, H, NC, VCC]
+
+7432:
+  <<: *quad2in  
+  description: quad 2-input OR
+
+7486:
+  <<: *quad2in  
+  description: quad 2-input XOR
+
+74107:
+  family: 7400  
+  description: dual J-K FF w/clear
+  pins: [1J, /1Q, 1Q, 1K, 2Q, /2Q, GND, 2J, 2CLK, /2CLR, 2K, 1CLK, /1CLR, VCC]
+
+74132: 
+  <<: *quad2in  
+  description: quad 2-input NAND Schmitt
+
+74138:
+  family: 7400  
+  description: 3-to-8 demux
+  pins: [A, B, C, /G2A, /G2B, G1, Y7, GND, Y6, Y5, Y4, Y3, Y2, Y1, Y0, VCC]
+
+74139:
+  family: 7400  
+  description: dual 2-to-4 demux
+  pins: [/1G, 1A, 1B, 1Y0, 1Y1, 1Y2, 1Y3, GND, 2Y3, 2Y2, 2Y1, 2Y0, 2B, 2A, /2G, VCC]
+
+74157: &quad2to1mux
+  family: 7400
+  description: quad 2-to-1 mux
+  pins: [SEL, A1, B1, Y1, A2, B2, Y2, GND, Y3, B3, A3, Y4, B4, A4, STRB, VCC]
+
+74158:
+  <<: *quad2to1mux
+  description: quad 2-to-1 mux, invert
+
+74160:
+  <<: *4bitcounter
+  description:  counter /10 async clear
+
+74161:
+  <<: *4bitcounter
+  description:  counter /16 full sync
+
+74162:
+  <<: *4bitcounter
+  description:  counter /10 async clear
+
+74163:
+  <<: *4bitcounter
+  description:  counter /16 full sync  
+
+74173:
+  family: 7400
+  description: 4-bit D-reg 3-state
+  pins: [M, N, 1Q, 2Q, 3Q, 4Q, CLK, GND, /G1, /G2, 4D, 3D, 2D, 1D, CLR, VCC]
+
+74189:
+  family: 7400
+  description: 64 bit RAM 3-state
+  pins: [A0, /CS, /WE, D0, /O0, D1, /O1, GND, /O2, D2, /O3, D3, A3, A2, A1, VCC]
+
+74245:
+  family: 7400  
+  description: octal bus transceiver 3-state
+  pins: [DIR, A1, A2, A3, A4, A5, A6, A7, A8, GND, B8, B7, B6, B5, B4, B3, B2, B1, /OE, VCC]
+
+74273:
+  family: 7400  
+  description: octal D-type flip-flop w/clear
+  pins: [/CLR, 1Q, 1D, 2D, 2Q, 3Q, 3D, 4D, 4Q, GND, CLK, 5Q, 5D, 6D, 6Q, 7Q, 7D, 8D, 8Q, VCC]
+
+74283:
+  family: 7400  
+  description: 4-bit full adder
+  pins: [Σ2, B2, A1, Σ1, A1, B1, CO, GND, C4, Σ4, B4, A4, 'Σ3', A3, B3, VCC]
+
+74573:
+  family: 7400  
+  description: octal D-type latch 3-state
+  pins: [/OE, D0, D1, D2, D3, D4, D5, D6, D7, GND, LE, Q7, Q6, Q5, Q4, Q3, Q2, Q1, Q0, VCC]

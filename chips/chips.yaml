@@ -5,12 +5,9 @@
 TLC5620:
   description: Quad DAC
   pins: [GND, RA, RB, RC, RD, DATA, CLK, LOAD, OD, OC, OB, OA, LDAC, VDD]
+
 DAC0808:
   pins: [NC, GND, VEE, I0, A1, A2, A3, A4, A5, A6, A7, A8, VCC, "V+", "V-", CMP]
-
-74573:
-  description: Octal D latch 3-state
-  pins: [/OE, D0, D1, D2, D3, D4, D5, D6, D7, GND, LE, Q7, Q6, Q5, Q4, Q3, Q2, Q1, Q0, VCC]
 
 82C54:
   description: Programmable Interval Timer

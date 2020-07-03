@@ -21,16 +21,15 @@ class Chip:
         "rowSpacing": 6, # in mm, 6 for narrow, 12 for wide
     }
 
-    def __init__(self, id, pinCount, name='', description='', library='', **kwargs):
-        log.debug('Chip.__init__("%s", %d, name="%s", description="%s", library="%s")',
-            id, pinCount, name, description, library)
+    def __init__(self, id, pinCount, library, **kwargs):
+        log.debug('Chip.__init__("%s", %d, library="%s")',
+            id, pinCount, library)
 
         self._validate_chip_id(id)
         self._validate_pin_count(pinCount)
 
         self._id = id
-        self.name = name
-        self.description = description
+        self.name = ''
         self.library = library
 
         self._pins = ["NC"] * pinCount

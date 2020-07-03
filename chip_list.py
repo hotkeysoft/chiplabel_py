@@ -41,9 +41,10 @@ class ChipList:
 
         chip_list = {}
         skipped = 0
-        with open(filename, 'r') as ymlfile:
+        with open(filename, 'r', encoding='utf8') as ymlfile:
             yaml_chips = yaml.safe_load(ymlfile)
             for id, yaml_chip in yaml_chips.items():
+                log.debug('processing: %s, data: %s', id, yaml_chip)
                 string_id = str(id)
                 scoped_id = f'{library_name}/{string_id}'
                 log.debug('Processing id=%s', scoped_id)
@@ -52,17 +53,19 @@ class ChipList:
                     skipped += 1
                     continue
                 spacing = 6
+
                 if 'type' in yaml_chip and yaml_chip['type'] == 'wide':
                     spacing = 12
                 try:
                     new_chip = chip.Chip(string_id, len(yaml_chip['pins']),
                         library=library_name,
-                        rowSpacing = spacing)
+                        rowSpacing=spacing)
 
                     if 'name' in yaml_chip:
-                        new_chip.name = yaml_chip['name']
+                        new_chip.name = str(yaml_chip['name'])
                     if 'description' in yaml_chip:
-                        new_chip.description = yaml_chip['description']
+                        new_chip.description = str(yaml_chip['description'])
+
                     new_chip.set_pins(yaml_chip['pins'])
                     chip_list[scoped_id] = new_chip
 
