@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 import argparse
 import logging
+import pkg_resources
 log = logging.getLogger(__name__)
 
 MIN_DPI = 100
 MAX_DPI = 2000
 DEFAULT_DPI = 300
-DEFAULT_FONT = './fonts/CascadiaMono.ttf'
-DEFAULT_INPUT_DIR = './chips'
-DEFAULT_OUTPUT_DIR = './out'
+DEFAULT_FONT = 'CascadiaMono.ttf'
+DEFAULT_FONT_DIR = pkg_resources.resource_filename('chiplabel', f'fonts/{DEFAULT_FONT}')
+DEFAULT_INPUT_DIR = pkg_resources.resource_filename('chiplabel', 'chips')
+DEFAULT_OUTPUT_DIR = '.'
 
 MIN_PAGE_SIZE = 1
 MAX_PAGE_SIZE = 20
@@ -72,7 +74,7 @@ def parse_args():
     parser.add_argument(
         '-i', '--input',
         metavar='dir',
-        help=f'input chip library file or directory (default: {DEFAULT_INPUT_DIR}). If a directory is specified all .yaml files in that directory will be loaded',
+        help='input chip library file or directory (default: $package/chips). If a directory is specified all .yaml files in that directory will be loaded',
         default=DEFAULT_INPUT_DIR
     )
     parser.add_argument(
@@ -86,8 +88,8 @@ def parse_args():
     graph_group.add_argument(
         '-f', '--font',
         metavar='font',
-        help=f'TTF font to use (default: {DEFAULT_FONT}). Under Windows the system font directory is searched automatically',
-        default=DEFAULT_FONT
+        help=f'TTF font to use (default: $package/fonts/{DEFAULT_FONT}). Under Windows the system font directory is searched automatically',
+        default=DEFAULT_FONT_DIR
     )
     graph_group.add_argument(
         '--dpi',

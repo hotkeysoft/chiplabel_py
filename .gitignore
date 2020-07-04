@@ -3,3 +3,6 @@
 __pycache__
 .vscode
 *.bak
+/build
+/chiplabel.egg-info
+/dist

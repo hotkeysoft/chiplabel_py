@@ -31,6 +31,7 @@ class Chip:
 
         self._id = id
         self.name = ''
+        self.description = ''
         self.library = library
 
         self._pins = ["NC"] * pinCount
