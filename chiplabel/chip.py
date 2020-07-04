@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # chip.py
 #
-from typedproperty import String
 import copy
 import re
 import logging
+from .typed_property import String
 log = logging.getLogger(__name__)
 
 VALID_CHIP_ID = re.compile('^[-\w]+$')

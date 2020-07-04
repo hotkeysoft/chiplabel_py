@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # chip_grid_printer.py
 #
-from PIL import Image
-from chip_printer import ChipPrinter
 import logging
 import math
 import operator
+from PIL import Image
+from .chip_printer import ChipPrinter
 
 log = logging.getLogger(__name__)
 

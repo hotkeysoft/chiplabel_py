@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# typedproperty.py
+# typed_property.py
+
 def typedproperty(name, expected_type):
     private_name = '_' + name
     @property

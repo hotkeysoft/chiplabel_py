@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-from args import parse_args
-from chip import Chip
-from chip_list import ChipList
-from chip_printer import ChipPrinter
-from chip_grid_printer import ChipGridPrinter
+
 import logging
 from PIL import Image
+from .args import parse_args
+from .chip import Chip
+from .chip_list import ChipList
+from .chip_printer import ChipPrinter
+from .chip_grid_printer import ChipGridPrinter
+
 log = logging.getLogger()
 
 def _to_chip_list(chip_list, chip_ids):
