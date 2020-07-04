@@ -4,25 +4,25 @@
 import copy
 import re
 import logging
-from .typed_property import String
+from .typed_property import StrippedString
 log = logging.getLogger(__name__)
 
-VALID_CHIP_ID = re.compile('^[-\w]+$')
+VALID_CHIP_ID = re.compile(r'^\w[-\w]{0,63}$')
 
 class Chip:
     _id = None
     _pins = {}
 
-    name = String('name')
-    library = String('library')
-    description = String('description')
+    name = StrippedString('name')
+    library = StrippedString('library')
+    description = StrippedString('description')
 
     config = {
         "pinSpacing": 2.54,
         "rowSpacing": 6, # in mm, 6 for narrow, 12 for wide
     }
 
-    def __init__(self, id, pinCount, library, **kwargs):
+    def __init__(self, id, pinCount, library='', **kwargs):
         log.debug('Chip.__init__("%s", %d, library="%s")',
             id, pinCount, library)
 
@@ -130,48 +130,3 @@ class Error(Exception):
 class ValidationError(Error):
     """Raised when an invalid condition is found."""
     pass
-
-def main():
-    logging.basicConfig(level=logging.DEBUG)
-
-    a = Chip('Atmega328p', 28)
-    b = Chip('7404', 14, description='NOT', library='TTL')
-
-    print ("A len: ", len(a))
-    print ("B len: ", len(b))
-
-    print(a)
-    print(b)
-
-    a[1] = "PIN1"
-    a[28] = "PIN28"
-
-    #test errors
-    #a[0] = "ERROR"
-    #a[29] = "ERROR"
-    #c = Chip('0pins', 0)
-    #d = Chip('3pins', 3)
-    #e = Chip('66pins', 66)
-    #f = Chip('evenpins', 15)
-    #g = Chip('/badid1', 8)
-    #h = Chip('bad id2', 8)
-    #i = Chip('', 8)
-
-    bPins = ['1A', '1Y', '2A', '2Y', '3A', '3Y', 'GND', '4Y', '4A', '5Y', '5A', '6Y', '6A', 'VCC']
-    for pinnum, pin in enumerate(b, 1):
-        b[pinnum] = bPins[pinnum-1]
-
-
-    for pinnum, pin in enumerate(a, 1):
-        print(f'{pinnum}: {pin}')
-
-    a.print_ASCII()
-    print()
-    b.print_ASCII()
-    print()
-
-    d = Chip('testargs', 28, rowSpacing=12)
-    print(d.config)
-
-if __name__ == '__main__':
-    main()
