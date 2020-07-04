@@ -1,8 +1,8 @@
-/*.png
-*.log
 __pycache__
 .vscode
+/*.png
+*.log
 *.bak
+/*.egg-info
 /build
-/chiplabel.egg-info
 /dist
