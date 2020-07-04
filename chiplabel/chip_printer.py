@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # chip_printer.py
 #
-import math
-from chip import Chip
-from PIL import ImageFont, ImageDraw, Image
 import logging
+import math
+from PIL import ImageFont, ImageDraw, Image
+from .chip import Chip
+
 log = logging.getLogger(__name__)
 
 class ChipPrinter:

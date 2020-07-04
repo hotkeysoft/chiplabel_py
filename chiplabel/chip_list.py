@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 # chip_list.py
 #
+import logging
 import os
 from pathlib import Path
-import chip
 import yaml
-import logging
+from . import chip
+
 log = logging.getLogger(__name__)
 
 class ChipList:

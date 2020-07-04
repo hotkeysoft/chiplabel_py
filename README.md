@@ -21,9 +21,9 @@ or see [requirements.txt](requirements.txt)
 Usage
 ============
 ```
-usage: chip_label.py [-h] (-c name [name ...] | -a | -l) [-i dir] [-o dir] [-f font]
-                     [--dpi num] [--invert] [-p] [--page_size n n] [--page_padding inch]
-                     [-t] [--debug | -v]
+usage: chip_label [-h] (-c name [name ...] | -a | -l) [-i dir] [-o dir] [-f font]
+                  [--dpi num] [--invert] [-p] [--page_size n n] [--page_padding inch] [-t]
+                  [--debug | -v]
 
 Generate footprint images for chips.
 
@@ -33,16 +33,16 @@ optional arguments:
                         one or more chip identifier
   -a, --all             generate labels for chips in package
   -l, --list            list all chips in package
-  -i dir, --input dir   input chip library file or directory (default: ./chips). If a
-                        directory is specified all .yaml files in that directory will be
+  -i dir, --input dir   input chip library file or directory (default: $package/chips). If
+                        a directory is specified all .yaml files in that directory will be
                         loaded
-  -o dir, --output dir  output directory (default: ./out)
+  -o dir, --output dir  output directory (default: .)
   --debug               print debugging statements
   -v, --verbose         print additional information
 
 Image Options:
-  -f font, --font font  TTF font to use (default: ./fonts/CascadiaMono.ttf). Under Windows
-                        the system font directory is searched automatically
+  -f font, --font font  TTF font to use (default: $package/fonts/CascadiaMono.ttf). Under
+                        Windows the system font directory is searched automatically
   --dpi num             resolution in dots per inch (default: 300)
   --invert              invert label, for dead bug soldering
 
@@ -52,8 +52,8 @@ Page Mode Options:
   --page_padding inch   space between chips, in inches (default: 0.1)
 
 Text Output Options:
-  -t, --text            generate text output in console instead of image. Image options will
-                        be ignored
+  -t, --text            generate text output in console instead of image. Image options
+                        will be ignored
  ```
 Examples
 ============
