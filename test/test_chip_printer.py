@@ -6,7 +6,6 @@ import pytest
 from PIL import Image
 from PIL import ImageChops
 from chiplabel import chip
-from chiplabel.chip_list import ChipList
 from chiplabel.chip_printer import ChipPrinter
 
 CREATE_REFERENCES = False
@@ -45,7 +44,6 @@ def test_font(caplog):
     c = ChipPrinter(font=DEFAULT_FONT)
     assert caplog.text == ''
     assert c.font
-    print(c.font)
     assert c.font.getname() == ('Cascadia Mono', 'Regular')
     caplog.clear()
 

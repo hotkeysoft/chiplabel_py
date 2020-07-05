@@ -94,10 +94,14 @@ class ChipPrinter:
         return self._mm_to_pixel(self.config['fontSize'])
 
     def _inch_to_pixels(self, inch):
-        return math.ceil(inch * self.config['dpi'])
+        return math.ceil(inch * self.dpi)
 
     def _mm_to_pixel(self, mm):
-        return math.ceil(mm * self.config['dpi'] / 25.4)
+        return math.ceil(mm * self.dpi / 25.4)
+
+    @property
+    def dpi(self):
+        return self.config.get('dpi', 300)
 
     @property
     def font(self):
@@ -128,5 +132,5 @@ class ChipPrinter:
 
     def print_chip_to_file(self, chip, output_file):
         image = self.print_chip(chip)
-        image.save(output_file, dpi=(self.config['dpi'], self.config['dpi']))
+        image.save(output_file, dpi=(self.dpi, self.dpi))
         log.info('Output saved to %s', output_file)        
