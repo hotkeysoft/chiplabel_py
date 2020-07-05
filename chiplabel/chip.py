@@ -4,17 +4,21 @@
 import copy
 import re
 import logging
-from .typed_property import StrippedString
+from .typed_property import StrippedString, RegexString
 log = logging.getLogger(__name__)
 
-VALID_CHIP_ID = re.compile(r'^\w[-\w]{0,63}$')
+# Allow letters, numbers, underscore and dash (except as first character)
+VALID_ID_REGEX = re.compile(r'^\w[-\w]{0,63}$')
+# Same rules + also allows empty string
+VALID_LIBRARY_REGEX  = re.compile(r'^(?:\w[-\w]{0,63})?$')
 
 class Chip:
     _id = None
     _pins = {}
 
     name = StrippedString('name')
-    library = StrippedString('library')
+    #library = StrippedString('library')#, VALID_NAME)
+    library = RegexString('library', VALID_LIBRARY_REGEX)
     description = StrippedString('description')
 
     config = {
@@ -43,7 +47,7 @@ class Chip:
         return f'{self.id}({len(self._pins)})'
 
     def __repr__(self):
-        return f'chip.Chip({self.id}({len(self._pins)}))'
+        return f'chip.Chip({self.id}, {len(self._pins)})'
 
     def __len__(self):
         return len(self._pins)
@@ -106,7 +110,7 @@ class Chip:
 
     @staticmethod
     def _validate_chip_id(id):
-        if not VALID_CHIP_ID.match(id):
+        if not VALID_ID_REGEX.match(id):
             raise ValidationError(f'Invalid characters in chip id')
 
     @property

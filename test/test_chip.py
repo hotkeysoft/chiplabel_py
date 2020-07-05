@@ -4,14 +4,14 @@
 import pytest
 from chiplabel import chip
 
-def _createGood(id, pins=4) :
+def _create_good(id, pins=4) :
     a = chip.Chip(id, pins, library='')
     assert a.id == id
     return a
 
-def _createBad(id, pins=4) :
+def _create_bad(id, pins=4) :
     with pytest.raises(chip.ValidationError):
-        chip.Chip(id, pins, library='')
+        chip.Chip(id, pins, library='')  
 
 def test_name():   
     GOOD_NAMES = ['goodName', 'goodName', 'good_name', 'good-name', 
@@ -19,22 +19,22 @@ def test_name():
         '1', 'a1', '1a', '12345',
         'goodname12345678901234567890123456789012345678901234567890123456']
     for id in GOOD_NAMES:
-        _createGood(id)
+        _create_good(id)
 
     BAD_NAMES = ['', 'bad name', '/badname', '\\badname', 'bad&name', 
         'bad!name', ' badname', 'badname ', '-badname',
         'badname1234567890123456789012345678901234567890123456789012345678']
     for id in BAD_NAMES:
-        _createBad(id)
+        _create_bad(id)
 
 def test_pincount():
     GOOD_PINS = [4, 6, 10, 32, 64]
     for pins in GOOD_PINS:
-        _createGood('id', pins)
+        _create_good('id', pins)
 
     BAD_PINS = [0, 1, 2, 3, 5, 65]
     for pins in BAD_PINS:
-        _createBad('id', pins)
+        _create_bad('id', pins)
 
 def test_getsetitem():
     a = chip.Chip('Atmega328p', 8)
@@ -53,15 +53,24 @@ def test_getsetitem():
     with pytest.raises(IndexError):
         a[29] = "ERROR"
 
+    with pytest.raises(IndexError):
+        pin = a[0]
+    with pytest.raises(IndexError):
+        pin = a[-1]
+    with pytest.raises(IndexError):
+        pin = a[29]
+
 def test_str():
     a = chip.Chip('chip', 4)
     assert a.__str__() == 'chip(4)'
     a = chip.Chip('chip', 4, 'lib')
     assert a.__str__() == 'lib/chip(4)'
-    a = chip.Chip('chip', 4, 'lib/lab')
-    assert a.__str__() == 'lib/lab/chip(4)'
-    a = chip.Chip('chip', 4, r'lib\lab')
-    assert a.__str__() == r'lib\lab/chip(4)'
+
+def test_repr():
+    a = chip.Chip('chip', 4)
+    assert a.__repr__() == 'chip.Chip(chip, 4)'
+    a = chip.Chip('chip', 4, 'lib')
+    assert a.__repr__() == 'chip.Chip(lib/chip, 4)'
 
 def test_iter():
     a = chip.Chip('chip', 4)
@@ -104,16 +113,24 @@ def test_description():
         a.description = [1,2]
 
 def test_library():
+    def good_library_name(name):
+        a.library = name
+        assert a.library == name.strip()
+        assert a.id == f'{name.strip()}/chip'
+
+    def bad_library_name(name):
+        with pytest.raises(TypeError):
+            a.library = name
+        with pytest.raises(TypeError):
+            chip.Chip('chip', 4, name)
+
     a = chip.Chip('chip', 4)
     assert a.library == ''
     assert a.id == 'chip'
-    a.library = 'lib'
-    assert a.library == 'lib'
-    assert a.id == 'lib/chip'
 
-    a.library = ' spacelib '
-    assert a.library == 'spacelib'
-    assert a.id == 'spacelib/chip'
+    GOOD_NAMES = ['lib', ' spacelib ', 'space-lib', 'space_lib']
+    for name in GOOD_NAMES:
+        good_library_name(name)
 
     with pytest.raises(TypeError):
         a.library = 3
@@ -122,8 +139,9 @@ def test_library():
     with pytest.raises(TypeError):
         a.library = [1,2]
 
-    b = chip.Chip('chip', 4, ' spacelib ')
-    assert a.library == 'spacelib'
+    BAD_NAMES = ['-spaceLib', '-a', 'a/b', r'a\b']
+    for name in BAD_NAMES:
+        bad_library_name(name)
 
 def test_display_name():
     a = chip.Chip('chip', 4, 'lib')
@@ -215,10 +233,36 @@ def test_set_pins():
     with pytest.raises(chip.ValidationError):
         a.set_pins(['1','2','3'])
 
-def test_len():
+def test_len_size():
     a = chip.Chip('chip', 28)
     assert len(a) == 28
+    assert a.size == 28
 
     b = chip.Chip('chip', 14)
     assert len(b) == 14
+    assert b.size == 14
 
+def test_kwargs():
+    a = chip.Chip('chip', 28)
+    assert a.config['rowSpacing'] == 6
+    assert a.config['pinSpacing'] == 2.54
+
+    a = chip.Chip('chip', 28, pinSpacing=1.23, dpi=300, rowSpacing=12)
+    assert a.config['dpi'] == 300
+    assert a.config['rowSpacing'] == 12
+    assert a.config['pinSpacing'] == 1.23
+
+def test_print_ASCII(capsys):
+    a = chip.Chip('chip', 4)
+    a.description = 'desc'
+    a.set_pins(['P1', 'P2', 'P3', 'P4'])
+    a.print_ASCII()
+
+    captured = capsys.readouterr()
+    assert 'chip' in captured.out
+    assert 'desc' in captured.out
+    assert '1 | P1' in captured.out
+    assert '2 | P2' in captured.out
+    assert 'P3 | 3' in captured.out
+    assert 'P4 | 4' in captured.out
+   
