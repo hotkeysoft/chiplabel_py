@@ -14,7 +14,7 @@ DEFAULT_OUTPUT_DIR = '.'
 
 MIN_PAGE_SIZE = 1
 MAX_PAGE_SIZE = 20
-DEFAULT_PAGE_SIZE = (7.5, 10)
+DEFAULT_PAGE_SIZE = [7.5, 10]
 
 MIN_PADDING = 0
 MAX_PADDING = 1
@@ -47,7 +47,7 @@ def _dpi_range(string):
         raise argparse.ArgumentTypeError(f'{string} is not an integer value')
     return value
 
-def parse_args():
+def parse_args(args=None):
     parser = argparse.ArgumentParser(
         description='Generate footprint images for chips.', 
         fromfile_prefix_chars='@'
@@ -146,4 +146,4 @@ def parse_args():
         help="print additional information",
         action="store_const", dest="loglevel", const=logging.INFO,
     )
-    return parser.parse_args()
+    return parser.parse_args(args)
