@@ -1,0 +1,11 @@
+# Undefined family
+
+TestChip:
+  family: 4000
+  name: myName
+  description: myDescription
+  pins: [P1, P2, P3, P4]
+
+555:
+  description: Timer
+  pins: [GND,  TRG, OUT, /RST,  CTRL, THR,  DIS,  VCC]

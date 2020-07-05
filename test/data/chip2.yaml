@@ -1,0 +1,11 @@
+# Two chip defined
+
+555:
+  description: Timer
+  pins: [GND,  TRG, OUT, /RST,  CTRL, THR,  DIS,  VCC]
+
+TestChip:
+  name: myName
+  description: myDescription
+  type: wide
+  pins: [P1, P2, P3, P4]

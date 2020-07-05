@@ -13,15 +13,21 @@ class ChipList:
     _chip_list = {}
     _global_name_dict = {}
 
+    def __init__(self):
+        log.debug('ChipList.__init__()')
+        self.clear()
+
     def find_chip(self, chip_id):
-        log.debug('find_chip(%s)', chip_id)
+        log.debug('ChipList.find_chip(%s)', chip_id)
+        if not isinstance(chip_id, str):        
+            raise ValueError('Expected string')
         if '/' in chip_id: # scoped chip id
             return self._chip_list.get(chip_id)
         return self._global_name_dict.get(chip_id)
 
     def clear(self):
-        _chip_list = {}
-        _global_name_dict = {}
+        self._chip_list = {}
+        self._global_name_dict = {}
 
     def load(self, path):
         log.debug('load_chip_list(%s)', path)
@@ -33,7 +39,7 @@ class ChipList:
                     fullpath = os.path.normpath(os.path.join(path, file))
                     self._load_single_file(fullpath)
         else:
-            raise IOError('input must be a file or directory')
+            raise IOError('Input must be a file or directory')
 
     def _add_aliases(self, chip, family):
         id = chip.unscoped_id
@@ -54,6 +60,16 @@ class ChipList:
         else:
             log.warning('Unknown family: %s for chip %s', family, chip.scoped_id)
 
+    @staticmethod
+    def _get_row_spacing(yaml_chip):
+        spacing = 6
+        if 'type' in yaml_chip:
+            if yaml_chip['type'] == 'wide':
+                spacing = 12
+            else:
+                log.warning('Unknown type attribute: %s', yaml_chip['type'])
+        return spacing
+
     def _load_single_file(self, filename):
         log.debug('load_chip_list_file(%s)', filename)
         library_name = Path(filename).stem
@@ -62,21 +78,29 @@ class ChipList:
         chip_list = {}
         skipped = 0
         with open(filename, 'r', encoding='utf8') as ymlfile:
-            yaml_chips = yaml.safe_load(ymlfile)
+            yaml_chips = None
+            try:
+                yaml_chips = yaml.safe_load(ymlfile)
+            except yaml.YAMLError as err: 
+                log.error('Error parsing chip file: %s', err)
+                return
+            if yaml_chips == None:
+                log.warning('No chip data in file')
+                return
             for id, yaml_chip in yaml_chips.items():
                 log.debug('processing: %s, data: %s', id, yaml_chip)
                 string_id = str(id)
                 scoped_id = f'{library_name}/{string_id}'
                 log.debug('Processing id=%s', scoped_id)
                 if string_id[0] == '_':
-                    log.debug("Skipping id=%s", scoped_id)
+                    log.debug('Skipping id=%s', scoped_id)
                     skipped += 1
                     continue
-                spacing = 6
-
-                if 'type' in yaml_chip and yaml_chip['type'] == 'wide':
-                    spacing = 12
                 try:
+                    if not 'pins' in yaml_chip:
+                        raise chip.Error('No pins attribute')
+
+                    spacing = self._get_row_spacing(yaml_chip)
                     new_chip = chip.Chip(string_id, len(yaml_chip['pins']),
                         library=library_name,
                         rowSpacing=spacing)
@@ -117,26 +141,8 @@ class ChipList:
 
     @property
     def names(self):
-        return self._chip_list.keys().__iter__()
+        return [name for name in self._chip_list.keys()]
 
-def main():
-    logging.basicConfig(level=logging.DEBUG)
-
-    chip_list = ChipList()
-    # chip_list.load('chips/chips.yaml')
-    # for chip in chip_list:
-    #     chip.print_ASCII()
-    #     print()
-
-    # chip = chip_list['chips/bad']
-    # print(chip)
-
-    # chip = chip_list['chips/DAC0808']
-    # print(chip)
-
-    chip_list = ChipList()
-    chip_list.load('chips/7400.yaml')
-    #print(chip)
-
-if __name__ == '__main__':
-    main()
+    @property
+    def global_names(self):
+        return [name for name in self._global_name_dict]

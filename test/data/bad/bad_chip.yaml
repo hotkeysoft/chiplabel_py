@@ -1,0 +1,20 @@
+# Chip with error in definition
+
+Test!Chip: # Bad ID
+  name: myName
+  description: myDescription
+  pins: [P1, P2, P3, P4]
+
+555:
+  description: Timer
+  pins: [GND,  TRG, OUT, /RST,  CTRL, THR,  DIS,  VCC]
+
+5pins: # Odd pin number
+  name: myName
+  description: myDescription
+  pins: [P1, P2, P3, P4, P5]
+
+
+nopins: # No pins
+  name: myName
+  description: myDescription

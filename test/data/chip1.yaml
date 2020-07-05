@@ -1,0 +1,5 @@
+# Single chip defined
+
+555:
+  description: Timer
+  pins: [GND,  TRG, OUT, /RST,  CTRL, THR,  DIS,  VCC]

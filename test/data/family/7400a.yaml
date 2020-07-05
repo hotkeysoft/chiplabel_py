@@ -1,0 +1,4 @@
+74999:
+  description: Dummy TTL
+  family: 7400
+  pins: [GND, A, B, C, D, VCC]

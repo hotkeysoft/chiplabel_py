@@ -1,0 +1,20 @@
+# Chips with id that starts with _ are skipped
+
+_skip1:
+  name: skip
+  description: myDescription
+  pins: [P1, P2, P3, P4]
+
+555:
+  description: Timer
+  pins: [GND,  TRG, OUT, /RST,  CTRL, THR,  DIS,  VCC]
+
+_skip2:
+  name: skip
+  description: myDescription
+  pins: [P1, P2, P3, P4]
+
+TestChip:
+  name: myName
+  description: myDescription
+  pins: [P1, P2, P3, P4]
