@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-# test_chip.py
+# test_chip_list.py
 
 import pkg_resources
 import pytest
 from chiplabel import chip
 from chiplabel.chip_list import ChipList
 
-TEST_DATA_DIR = pkg_resources.resource_filename('test', f'data')
+TEST_DATA_DIR = pkg_resources.resource_filename('test', 'data')
 
 def test_load_file(caplog):
     chip_list = ChipList()

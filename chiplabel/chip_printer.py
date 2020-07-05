@@ -15,7 +15,7 @@ class ChipPrinter:
         'indentSize': 1.0,  # in mm
         'padding': 2, # pixels between edge and label
         'invert': False,
-        'font': './fonts/CascadiaMono.ttf'
+        'font': ''
     }
 
     _chip = None
@@ -99,6 +99,10 @@ class ChipPrinter:
     def _mm_to_pixel(self, mm):
         return math.ceil(mm * self.config['dpi'] / 25.4)
 
+    @property
+    def font(self):
+        return self._font
+
     def get_chip_size(self, chip):
         width = self._mm_to_pixel(chip.config['rowSpacing'])
         height = self._mm_to_pixel(len(chip)//2 * chip.config['pinSpacing'])
@@ -126,28 +130,3 @@ class ChipPrinter:
         image = self.print_chip(chip)
         image.save(output_file, dpi=(self.config['dpi'], self.config['dpi']))
         log.info('Output saved to %s', output_file)        
-
-def main(args):
-    logging.basicConfig(level=logging.DEBUG)
-
-    chip = Chip('7404', 14)
-    pins = [str(pin+1) for pin in range(14)]
-    for pinnum, pin in enumerate(chip, 1):
-        chip[pinnum] = pins[pinnum-1]
-
-    printer = ChipPrinter()
-    image = printer.print_chip(chip)
-    image.save("./out.png", dpi=(printer.config['dpi'], printer.config['dpi']))
-
-    printer_inverted = ChipPrinter(invert=True)
-    image = printer_inverted.print_chip(chip)
-    image.save("./out_inverted.png", dpi=(printer.config['dpi'], printer.config['dpi']))
-
-    #test bad font
-    printer_bad_font = ChipPrinter(font='')
-    image = printer_bad_font.print_chip(chip)
-    image.save("./out_badfont.png", dpi=(printer.config['dpi'], printer.config['dpi']))
-
-if __name__ == '__main__':
-    import sys
-    main(sys.argv)
