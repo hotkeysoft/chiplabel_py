@@ -116,3 +116,31 @@ def test_print_chip():
     _compare_reference(ChipPrinter(font=DEFAULT_FONT, dpi=600), wide_chip, 'nw600')
     _compare_reference(ChipPrinter(font=DEFAULT_FONT, dpi=600, invert=True), normal_chip, 'in600')
     _compare_reference(ChipPrinter(font=DEFAULT_FONT, dpi=600, invert=True), wide_chip, 'iw600')
+
+def _save_to_file(tmpdir, chip_printer, chip, dpi, ext):
+    out_file = f'{tmpdir}/test_{dpi}.{ext}'
+
+    chip_printer.print_chip_to_file(chip, out_file)
+
+    image = Image.open(out_file)
+    assert image
+    assert image.info['dpi'] == (dpi, dpi)
+
+def test_print_chip_to_file(tmpdir):
+    c = chip.Chip('normal', 8)
+
+    p = ChipPrinter()
+    with pytest.raises(AttributeError):
+        p.print_chip_to_file(None, 'out.png')
+    with pytest.raises(ValueError):
+        p.print_chip_to_file(c, None)
+    with pytest.raises(ValueError):        
+        p.print_chip_to_file(c, '')
+
+    p = ChipPrinter(font=DEFAULT_FONT, dpi=300)
+    _save_to_file(tmpdir, p, c, 300, 'png')
+    _save_to_file(tmpdir, p, c, 300, 'jpg')
+
+    p = ChipPrinter(font=DEFAULT_FONT, dpi=600)
+    _save_to_file(tmpdir, p, c, 600, 'png')
+    _save_to_file(tmpdir, p, c, 600, 'jpg')
