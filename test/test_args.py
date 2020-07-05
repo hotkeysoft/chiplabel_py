@@ -10,7 +10,8 @@ def test_no_args(capsys):
         args.parse_args([])
 
     captured = capsys.readouterr()
-    assert 'usage: pytest' in captured.err
+    assert 'usage:' in captured.err
+    assert 'one of the arguments' in captured.err
 
 def test_default_args():
     arg_list = args.parse_args(['-a'])
