@@ -35,6 +35,10 @@ Requirements
 
 or see [requirements.txt](requirements.txt)
 
+Installation
+============
+TODO
+
 Usage
 ============
 ```
@@ -72,6 +76,8 @@ Text Output Options:
   -t, --text            generate text output in console instead of image. Image options
                         will be ignored
  ```
+### @chiplist File
+
 You can use a file with a list of chips (one chip per line) and pass it to the --chip parameter like this:
 ```chip_label -c @chiplist -p```
 
@@ -80,6 +86,15 @@ This will generate a page with all the chips in chiplist.  This if you are worki
 In the _examples_ folder I put a file [beneater8bit.txt](./examples/beneater8bit.txt) that contains the BOM of the [Ben Eater's TTL Computer](https://eater.net/8bit)
 
 I put the output of ```chip_label -c @examples/beneater8bit.txt -p``` [in the _out_ folder](./examples/beneater8bit.png)
+
+### Family Aliases
+Chips part the 7400 family have auto-generated aliases (see [configuration file format](#configuration-files))
+
+If your chip configuration file defines the 74999 chip, you will be able to generate chip images for all the variants:
+
+```chip_label -c 74999 74LS999 74HCT999``` 
+
+The only difference is the name printed on the chip.  This is useful to avoid mixing incompatible families by mistake.
 
 Examples
 ============
@@ -118,6 +133,7 @@ The optional fields are:
 - _name_: replaces the chip id on the label.
 - _description_: appended to name.
 - _type_: _wide_ generates 12mm labels instead of the default 6mm.
+- _family_: _7400_ generates family aliases for common (and uncommon) families: LS, ALS, HC, HCT, etc.
 
 ### Advanced Configuration
 #### Inverted pin
