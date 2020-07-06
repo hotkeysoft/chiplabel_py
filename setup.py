@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="chiplabel-hotkeysoft",
+    name="chiplabel",
     version="1.0.0a1",
     author="Dominic Thibodeau",
     author_email="dev@hotkeysoft.net",
@@ -12,7 +12,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/hotkeysoft/chiplabel_py",
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(include=['chiplabel']),
     include_package_data = True,
     package_data={'chiplabel': ['fonts/*', 'chips/*']},
     classifiers=[
@@ -28,6 +28,8 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     install_requires=['Pillow', 'PyYAML'],
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
     entry_points={
         'console_scripts': ['chip_label=chiplabel.__main__:main']
     },

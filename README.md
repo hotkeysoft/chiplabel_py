@@ -28,16 +28,23 @@ I kept the original YAML [configuration file format](#configuration-files) for t
 Requirements
 ============
 - Python 3.6
-- _PyYAML_ for parsing chip pinout files
-  - simple install: `pip install PyYAML`
-- _Pillow_ for image generation and manipulation
-  - simple install: `pip install Pillow`
+- If you're not using the [installation package](#installation), you will need to install two libraries manually:
+  - _PyYAML_ for parsing chip pinout files
+    - simple install: `pip install PyYAML`
+  - _Pillow_ for image generation and manipulation
+    - simple install: `pip install Pillow`
 
 or see [requirements.txt](requirements.txt)
 
 Installation
 ============
-TODO
+### Manual Download
+- Download or `git clone` sources
+- Launch `chip_label.py` (or `python3 chip_label.py`) from project root
+### Install Package with PIP
+- Download latest release package
+- Install with `pip3 install chiplabel-(version).tar.gz`
+- If your paths are set properly you'll be able to launch `chip_label` from anywhere
 
 Usage
 ============
