@@ -63,7 +63,9 @@ class Chip:
     def __setitem__(self, index, value):
         if index < 1 or index > len(self._pins):
             raise IndexError(f'Pin number out of range: {index}')
-        self._pins[index-1] = value
+        if not isinstance(value, (float, int, str)):
+            raise ValueError(f'Invalid pin value for pin: {index}')
+        self._pins[index-1] = str(value)
 
     @property
     def display_name(self):
@@ -98,8 +100,10 @@ class Chip:
         if not isinstance(pins, list):
             raise ValueError('Expected pin list')
         self._validate_pin_count(len(pins))
+        if any([not isinstance(pin, (float, int, str)) for pin in pins]):
+            raise ValueError('Invalid pin(s) in pin list')
         log.debug('Chip[%s].set_pins(%s)', self.id, pins)
-        self._pins = pins.copy()
+        self._pins = [str(pin) for pin in pins]
 
     @staticmethod
     def _validate_pin_count(pinCount):

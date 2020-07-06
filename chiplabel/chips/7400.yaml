@@ -90,14 +90,58 @@ _4bitcounter: &4bitcounter
   <<: *quad2in  
   description: quad 2-input OR
 
+7438:
+  <<: *quad2in  
+  description: quad 2-input NAND
+
+7442: &1to10decoder
+  family: 7400  
+  description: 1-of-10 decoder
+  pins: [/0, /1, /2, /3, /4, /5, /6, GND, /7, /8, /9, A3, A2, A1, A0, VCC]
+
+7447:
+  family: 7400  
+  description: BCD-7seg decoder/driver
+  pins: [B, C, /LT, "/BI/RBO", /RBI, D, A, GND, /e, /d, /c, /b, /a, /g, /f, VCC]
+
+7474:
+  family: 7400  
+  description: dual D FF +edge
+  pins: [/1CLR, 1D, 1CLK, /1PRE, 1Q, /1Q, GND, /2Q, 2Q, /2PRE, 2CLK, 2D, /2CLR, VCC]
+
+7476:
+  family: 7400  
+  description: dual JK FF w/set+clear
+  pins: [1CLK, 1PRE, 1CLR, 1J, VCC, 2CLK, 2PRE, 2CLR, 2J, /2Q, 2Q, 2K, GND, /1Q, 1Q, 1K]
+
+7485:
+  family: 7400  
+  description: 4-bit magnitude comparator
+  pins: [B3, Ia<b, Ia=b, Ia>b, Oa>b, Oa=b, Oa<b, GND, B0, A0, B1, A1, A2, B2, A3, VCC]
+
 7486:
   <<: *quad2in  
   description: quad 2-input XOR
 
 74107:
   family: 7400  
-  description: dual J-K FF w/clear
+  description: dual JK FF w/clear
   pins: [1J, /1Q, 1Q, 1K, 2Q, /2Q, GND, 2J, 2CLK, /2CLR, 2K, 1CLK, /1CLR, VCC]
+
+74109:
+  family: 7400  
+  description: dual JK FF +edge
+  pins: [/1CLR, 1J, /1K, 1CLK, /1PRE, 1Q, /1Q, GND, /2Q, 2Q, /2PRE, 2CLK, /2K, 2J, /2CLR, VCC]
+
+74122:
+  family: 7400  
+  description: one shot
+  pins: [A1, A2, B1, B2, CLR, /Q, GND, Q, Rint, NC, Cext, NC, RCext, VCC]
+
+74123:
+  family: 7400  
+  description: dual one shot
+  pins: [1A, 1B, 1CLR, /1Q, 2Q, 2Cext, 2RCext, GND, 2A, 2B, 2CLR, /2Q, 1Q, 1Cext, 1RCext, VCC]
 
 74132: 
   <<: *quad2in  
@@ -112,6 +156,35 @@ _4bitcounter: &4bitcounter
   family: 7400  
   description: dual 2-to-4 demux
   pins: [/1G, 1A, 1B, 1Y0, 1Y1, 1Y2, 1Y3, GND, 2Y3, 2Y2, 2Y1, 2Y0, 2B, 2A, /2G, VCC]
+
+74145:
+  <<: *1to10decoder
+  description: 1-of-10 decoder OC
+
+74147:
+  family: 7400
+  description: 10to4 priority encoder
+  pins: [/I4, /I5, /I6, /I7, /I8, /C, /B, GND, /A, /I9, /I1, /I2, /I3, /D, NC, VCC]
+
+74148:
+  family: 7400
+  description: 8to3 priority encoder
+  pins: [/I4, /I5, /I6, /I7, /EI, /A2, /A1, GND, /A0, /I0, /I1, /I2, /I3, /GS, /EO, VCC]
+
+74151:
+  family: 7400
+  description: 8-input mux
+  pins: [I3, I2, I1, I0, Z, /Z, /E, GND, S2, S1, S0, I7, I6, I5, I4, VCC]
+
+74153:
+  family: 7400
+  description: dual 4-input mux
+  pins: [/Ea, S1, I3a, I2a, I1a, I0a, Za, GND, Zb, I0b, I1b, I2b, I3b, S0, /Eb, VCC]
+
+74156: 
+  family: 7400
+  description: dual 1-of-4 demux
+  pins: [Ea, /Ea, A1, /O3a, /O2a, /O1a, /O0a, GND, /O0b, /O1b, /O2b, /O3b, A0, /Eb, /Eb, VCC]
 
 74157: &quad2to1mux
   family: 7400
@@ -138,10 +211,36 @@ _4bitcounter: &4bitcounter
   <<: *4bitcounter
   description:  counter /16 full sync  
 
+74164:
+  family: 7400
+  description: S-in P-out Shift Reg
+  pins: [A, B, Q0, Q1, Q2, Q3, GND, CP, /MR, Q4, Q5, Q6, Q7, VCC]
+
+74165:
+  family: 7400
+  description: 8 bit P-to-S Shift Reg
+  pins: [/PL, CP1, P4, P5, P6, P7, /Q7, GND, Q7, DS, P0, P1, P2, P3, CP2, VCC]
+
+74166:
+  family: 7400
+  description: 8 bit P-to-S Shift Reg
+  pins: [SI, A, B, C, D, CI, CLK, GND, /CLR, E, F, G, Qh, H, S/L, VCC]
+
+
 74173:
   family: 7400
   description: 4-bit D-reg 3-state
   pins: [M, N, 1Q, 2Q, 3Q, 4Q, CLK, GND, /G1, /G2, 4D, 3D, 2D, 1D, CLR, VCC]
+
+74174:
+  family: 7400
+  description: hex D Flip-Flop
+  pins: [/MR, Q0, D0, D1, Q1, D2, Q1, GND, CP, Q3, D3, Q4, D4, D5, Q5, VCC]
+
+74175:
+  family: 7400
+  description: hex D Flip-Flop
+  pins: [/MR, Q0, /Q0, D0, D1, /Q1, Q1, GND, CP, Q2, /Q2, D2, D3, /Q3, Q3, VCC]
 
 74189:
   family: 7400

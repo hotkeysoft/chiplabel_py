@@ -37,7 +37,7 @@ def test_pincount():
         _create_bad('id', pins)
 
 def test_getsetitem():
-    a = chip.Chip('Atmega328p', 8)
+    a = chip.Chip('Chip', 8)
 
     assert a[1] == 'NC'
     assert a[8] == 'NC'
@@ -46,12 +46,19 @@ def test_getsetitem():
     assert a[1] == 'PIN1'
     assert a[8] == 'PIN8'
 
+def test_bad_setitem():
+    a = chip.Chip('Chip', 8)
+
     with pytest.raises(IndexError):
         a[0] = "ERROR"
     with pytest.raises(IndexError):
         a[-1] = "ERROR"
-    with pytest.raises(IndexError):
-        a[29] = "ERROR"
+    with pytest.raises(ValueError):
+        a[1] = [1,2,3]
+    with pytest.raises(ValueError):
+        a[1] = {'a':123}
+    with pytest.raises(ValueError):
+        a[1] = None
 
     with pytest.raises(IndexError):
         pin = a[0]
@@ -210,12 +217,27 @@ def test_alias():
     alias.config['config_flag'] = 'newflag'
     assert a.config['config_flag'] == 'newflag'
 
-def test_set_pins():
+def test_good_set_pins():
     a = chip.Chip('chip', 4)
     assert len(a) == 4
+
     a.set_pins(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'])
     assert len(a) == 8
+    assert a[1] == 'a'
+    assert a[8] == 'h'
+
     a.set_pins(['1', '2', '3', '4'])
+    assert len(a) == 4
+    assert a[1] == '1'
+    assert a[4] == '4'
+
+    a.set_pins(['1', 2, '3', 4])
+    assert len(a) == 4
+    assert a[1] == '1'
+    assert a[4] == '4'
+
+def test_bad_set_pins():
+    a = chip.Chip('chip', 4)
     assert len(a) == 4
 
     with pytest.raises(ValueError):
@@ -232,6 +254,14 @@ def test_set_pins():
         a.set_pins([])
     with pytest.raises(chip.ValidationError):
         a.set_pins(['1','2','3'])
+    with pytest.raises(chip.ValidationError):
+        a.set_pins(['1',None,'3'])
+    with pytest.raises(chip.ValidationError):
+        a.set_pins(['1',[1,2],'3'])
+    with pytest.raises(chip.ValidationError):
+        a.set_pins(['1',{},'3'])
+    with pytest.raises(chip.ValidationError):
+        a.set_pins(['1',{'a':True},'3'])
 
 def test_len_size():
     a = chip.Chip('chip', 28)
@@ -255,7 +285,7 @@ def test_kwargs():
 def test_print_ASCII(capsys):
     a = chip.Chip('chip', 4)
     a.description = 'desc'
-    a.set_pins(['P1', 'P2', 'P3', 'P4'])
+    a.set_pins(['P1', 'P2', 3, 'P4'])
     a.print_ASCII()
 
     captured = capsys.readouterr()
@@ -263,6 +293,6 @@ def test_print_ASCII(capsys):
     assert 'desc' in captured.out
     assert '1 | P1' in captured.out
     assert '2 | P2' in captured.out
-    assert 'P3 | 3' in captured.out
+    assert '3 | 3' in captured.out
     assert 'P4 | 4' in captured.out
-   
+  
