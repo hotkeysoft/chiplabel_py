@@ -3,4 +3,9 @@
 
 import sys
 from . import chip_label
-chip_label.main(sys.argv)
+
+def main():
+    chip_label.main(sys.argv)
+
+if __name__ == '__main__':
+    main()
