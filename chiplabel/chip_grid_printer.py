@@ -59,6 +59,12 @@ class ChipGridPrinter(ChipPrinter):
         log.debug('new_page: %d', self._curr_page)
         self._curr_page_image = Image.new(mode='1', size=self.page_size_pixels, color=255)
 
+    def _crop_image(self):
+        if self.config.get('page_nocrop', False):
+            return
+        inverted = Image.eval(self._curr_page_image, (lambda x: 1-x))
+        self._curr_page_image = self._curr_page_image.crop(inverted.getbbox())        
+
     def _get_output_dir(self):
         output_dir = str(self.config.get('output', '.'))
         if output_dir[-1] not in ('/', '\\'):
@@ -75,6 +81,7 @@ class ChipGridPrinter(ChipPrinter):
         image_file_name = f'{output_dir}page{self._curr_page}.png'
         log.debug('save page: %s', image_file_name)
         dpi = self.dpi
+        self._crop_image()
         self._curr_page_image.save(image_file_name, dpi=(dpi, dpi))    
 
     def print_chips(self, chip_list):

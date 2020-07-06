@@ -26,6 +26,7 @@ def test_default_args():
     assert arg_list.page == False
     assert arg_list.page_size == [7.5, 10]
     assert arg_list.page_padding == 0.1
+    assert arg_list.page_nocrop == False
 
 def test_args():
     arg_list = args.parse_args([
@@ -37,7 +38,8 @@ def test_args():
         '--invert',
         '-p',
         '--page_size', '5', '6',
-        '--page_padding', '0.6'
+        '--page_padding', '0.6',
+        '--page_nocrop'
     ])
 
     assert arg_list.all == False
@@ -51,6 +53,7 @@ def test_args():
     assert arg_list.page == True
     assert arg_list.page_size == [5.0, 6.0]
     assert arg_list.page_padding == 0.6
+    assert arg_list.page_nocrop == True
 
 def test_page_size_range(capsys):
     arg_list = args.parse_args(['-a', '--page_size', '1', '1'])

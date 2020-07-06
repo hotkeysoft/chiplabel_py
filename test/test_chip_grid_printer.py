@@ -234,3 +234,33 @@ def test_output_dir():
     p = ChipGridPrinter(output='bad/dir')
     with pytest.raises(ValueError):
         p.save_page()
+
+def _crop(printer, tmpdir, expected_size):
+    c = chip.Chip('id', 20, rowSpacing=25.4)
+
+    # Square chip
+    chip_size = printer.get_chip_size(c)
+    assert chip_size == (300, 300)
+    printer.print_chips([c])
+
+    assert tmpdir.join('page1.png').check(file=1)
+
+    image = Image.open(str(tmpdir.join('page1.png')))
+    assert(image)
+    assert image.size == expected_size
+
+def test_crop(tmpdir):
+    # Square page
+    p = ChipGridPrinter(page_size=(2, 2), 
+        page_padding=0.1, output=tmpdir, page_nocrop=False)
+    assert p.page_size_pixels == (600, 600)
+    assert p.page_padding_pixels == 30
+    _crop(p, tmpdir, (300, 300))
+
+def test_nocrop(tmpdir):
+    # Square page
+    p = ChipGridPrinter(page_size=(2, 2), 
+        page_padding=0.1, output=tmpdir, page_nocrop=True)
+    assert p.page_size_pixels == (600, 600)
+    assert p.page_padding_pixels == 30
+    _crop(p, tmpdir, (600, 600))    

@@ -42,9 +42,9 @@ TODO
 Usage
 ============
 ```
-usage: chip_label [-h] (-c name [name ...] | -a | -l) [-i dir] [-o dir] [-f font]
-                  [--dpi num] [--invert] [-p] [--page_size n n] [--page_padding inch] [-t]
-                  [--debug | -v]
+usage: chip_label.py [-h] (-c name [name ...] | -a | -l) [-i dir] [-o dir] [-f font]
+                     [--dpi num] [--invert] [-p] [--page_size n n] [--page_padding inch]
+                     [--page_nocrop] [-t] [--debug | -v]
 
 Generate footprint images for chips.
 
@@ -54,9 +54,9 @@ optional arguments:
                         one or more chip identifier
   -a, --all             generate labels for chips in package
   -l, --list            list all chips in package
-  -i dir, --input dir   input chip library file or directory (default: $package/chips). If
-                        a directory is specified all .yaml files in that directory will be
-                        loaded
+  -i dir, --input dir   input chip library file or directory (default: $package/chips).
+                        If a directory is specified all .yaml files in that directory
+                        will be loaded
   -o dir, --output dir  output directory (default: .)
   --debug               print debugging statements
   -v, --verbose         print additional information
@@ -71,6 +71,8 @@ Page Mode Options:
   -p, --page            page mode: fit all specified chips in a grid on one or more pages
   --page_size n n       page width and height, in inches (default: 7.5 10)
   --page_padding inch   space between chips, in inches (default: 0.1)
+  --page_nocrop         whitespace is cropped by default. Use this argument to leave the
+                        whitespace
 
 Text Output Options:
   -t, --text            generate text output in console instead of image. Image options

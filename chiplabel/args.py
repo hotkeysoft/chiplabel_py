@@ -126,6 +126,12 @@ def parse_args(args=None):
         default=DEFAULT_PAGE_PADDING
     )
 
+    page_group.add_argument(
+        '--page_nocrop',
+        action='store_true',
+        help='whitespace is cropped by default. Use this argument to leave the whitespace',
+    )
+
     text_group = parser.add_argument_group('Text Output Options')
 
     text_group.add_argument(
