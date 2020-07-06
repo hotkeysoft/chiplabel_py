@@ -87,7 +87,7 @@ This will generate a page with all the chips in chiplist.  This if you are worki
 
 In the _examples_ folder I put a file [beneater8bit.txt](./examples/beneater8bit.txt) that contains the BOM of the [Ben Eater's TTL Computer](https://eater.net/8bit)
 
-I put the output of ```chip_label -c @examples/beneater8bit.txt -p``` [in the _out_ folder](./examples/beneater8bit.png)
+I put the output of ```chip_label -c @examples/beneater8bit.txt -p``` [in the _out_ folder](./out/beneater8bit.png)
 
 ### Family Aliases
 Chips part the 7400 family have auto-generated aliases (see [configuration file format](#configuration-files))
