@@ -3,4 +3,4 @@
 
 import sys
 from chiplabel.chip_label import main
-main()
+main(sys.argv)

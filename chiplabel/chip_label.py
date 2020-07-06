@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import logging
+import os
 from PIL import Image
 from .args import parse_args
 from .chip import Chip
@@ -27,7 +28,10 @@ def print_chips_text(chip_list, args):
         chip.print_ASCII()
 
 def print_chips_image(chip_list, args):
-    #TODO: Validate output directory
+    if not os.path.isdir(args.output):
+        log.error('Output directory not found [%s]', args.output)
+        return
+
     log.info('Printing %s chips to .png', len(chip_list))
     output_dir = args.output
     if output_dir[-1] not in ('/', '\\'):
@@ -39,7 +43,7 @@ def print_chips_image(chip_list, args):
     if not args.page:
         chip_printer = ChipPrinter(**config)
         for chip in chip_list:
-            log.info('Generating label for chip: %s', chip.id)
+            log.info('Generating label for chip [%s]', chip.id)
             #TODO: Prefix lib name flag
             output_file = f"{output_dir}{chip.unscoped_id}.png"
             chip_printer.print_chip_to_file(chip, output_file)
@@ -56,40 +60,49 @@ class LogFormatter(logging.Formatter):
             self._style._fmt = "%(levelname)s: %(message)s"
         return super().format(record)
 
-def main():
-    args = parse_args()
+def main(argv):
+    args = parse_args(argv[1:])
 
     # Configure logging
+    old_loglevel = log.level
     handler = logging.StreamHandler()
     handler.setFormatter(LogFormatter())
     log.setLevel(args.loglevel)
     log.addHandler(handler)
 
-    chip_list = ChipList()
-    chip_list.load(args.input)
-    if not len(chip_list):
-        log.error('No chip loaded')
-        return
+    try:
+        chip_list = ChipList()
+        try:
+            chip_list.load(args.input)
+        except IOError as ex:
+            log.error('Error loading chip list [%s]: %s', args.input, ex)
+        if not len(chip_list):
+            log.error('No chip loaded')
+            return
 
-    print_chips = print_chips_text if args.text else print_chips_image
+        print_chips = print_chips_text if args.text else print_chips_image
 
-    if args.list:
-        for chip in sorted(chip_list.names, key=str.casefold):
-            print(chip)
-    elif args.all:
-        print_chips(chip_list, args)
-    else:        
-        chips = _to_chip_list(chip_list, args.chip)
-        if chips and len(chips):
-            out_of = f'(out of {len(args.chip)})' if len(chips) != len(args.chip) else ''
-            log.info('Found %d chips %s', len(chips), out_of)
-            print_chips(chips, args)
-        else: 
-            log.warning('Nothing to do')
+        if args.list:
+            for chip in sorted(chip_list.names, key=str.casefold):
+                print(chip)
+        elif args.all:
+            print_chips(chip_list, args)
+        else:        
+            chips = _to_chip_list(chip_list, args.chip)
+            if chips and len(chips):
+                out_of = f'(out of {len(args.chip)})' if len(chips) != len(args.chip) else ''
+                log.info('Found %d chips %s', len(chips), out_of)
+                print_chips(chips, args)
+            else: 
+                log.warning('Nothing to do')
+    finally:
+        # Reset log in case we're not running as a standalong app
+        log.removeHandler(handler)
+        log.setLevel(old_loglevel)
 
 if __name__ == '__main__':
     import sys
     MIN_PYTHON = (3, 6)
     if sys.version_info < MIN_PYTHON:
         sys.exit("Python %s.%s or later is required.\n" % MIN_PYTHON)
-    main()
+    main(sys.argv)

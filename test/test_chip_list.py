@@ -29,7 +29,7 @@ def test_load_file(caplog):
     assert "Duplicate" in caplog.text    
     assert len(chip_list) == 3
 
-def test_load_directory(caplog):
+def test_load_directory():
     chip_list = ChipList()
     chip_list.load(f'{TEST_DATA_DIR}')
     assert len(chip_list) == 3
@@ -162,7 +162,7 @@ def test_bad_family(caplog):
     assert 'WARNING' in caplog.text
     assert 'Unknown family' in caplog.text
 
-def test_hidden_chips(caplog):
+def test_hidden_chips():
     # chip ids that start with _ are skipped
     chip_list = ChipList()
     chip_list.load(f'{TEST_DATA_DIR}/bad/skip.yaml')

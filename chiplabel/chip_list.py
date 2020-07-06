@@ -46,7 +46,7 @@ class ChipList:
         if family == '7400':
             log.debug('Adding 7400-family aliases')
             if id[:2] != '74':
-                log.error('Chip is missing 74 prefix: %s, skipping aliases', id)
+                log.error('Chip is missing 74 prefix: [%s], skipping aliases', id)
             else:
                 FAMILIES = ['L', 'H', 'S', 'LS', 'AS', 'ALS', 'F', # Bipolar
                             'C', 'HC', 'HCT', 'AC', 'ACT', # CMOS
@@ -58,7 +58,7 @@ class ChipList:
                     self._global_name_dict[name] = chip.create_alias(name)
                 log.debug('Added %d aliases: %s', len(names), names)
         else:
-            log.warning('Unknown family: %s for chip %s', family, chip.scoped_id)
+            log.warning('Unknown family: [%s] for chip [%s]', family, chip.scoped_id)
 
     @staticmethod
     def _get_row_spacing(yaml_chip):
@@ -67,7 +67,7 @@ class ChipList:
             if yaml_chip['type'] == 'wide':
                 spacing = 12
             else:
-                log.warning('Unknown type attribute: %s', yaml_chip['type'])
+                log.warning('Unknown type attribute: [%s]', yaml_chip['type'])
         return spacing
 
     def _load_single_file(self, filename):
@@ -82,10 +82,10 @@ class ChipList:
             try:
                 yaml_chips = yaml.safe_load(ymlfile)
             except yaml.YAMLError as err: 
-                log.error('Error parsing chip file: %s', err)
+                log.error('Error parsing chip file [%s]: %s', filename, err)
                 return
             if yaml_chips == None:
-                log.warning('No chip data in file')
+                log.warning('No chip data in file [%s]', filename)
                 return
             for id, yaml_chip in yaml_chips.items():
                 log.debug('processing: %s, data: %s', id, yaml_chip)
@@ -98,7 +98,7 @@ class ChipList:
                     continue
                 try:
                     if not 'pins' in yaml_chip:
-                        raise chip.Error('No pins attribute')
+                        raise chip.Error('No pins attribute for chip [%s]', scoped_id)
 
                     spacing = self._get_row_spacing(yaml_chip)
                     new_chip = chip.Chip(string_id, len(yaml_chip['pins']),
