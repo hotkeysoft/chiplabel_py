@@ -1,6 +1,23 @@
 # chiplabel_py
 _chip_label.py_ generates customized labels with pin number for chips.
 
+Quickstart
+============
+There are four modes (see [output examples below](#examples)):
+- _image_ (default): generate a single image (.png) for each chip
+  - `chip_label -c 555 7404 8085`
+  - output: _555.png 7404.png 8085.png_
+- _page_: generate one or more pages with all chips aligned in a grid
+  - `chip_label -c 555 555 555 555 7404 7404 8085`
+  - output: _page1.png_ with all chips (4x555, 2x7404, 8085)
+- _text_: output the chip pinout on stdout
+  - `chip_label -c 555 -t`
+  - output: ASCII pinout of the chip
+- _list_: list all the chips in the library or libraries
+  - `chip_label -l`
+
+History
+============
 This project was inspired by [clabel](http://repetae.net/repos/clabel) (which is in Perl and can print on a PTouch label maker).
 The original _clabel_ project repository was converted to git and [archived on github](https://github.com/hotkeysoft/chiplabel/tree/archive).
 
@@ -55,6 +72,15 @@ Text Output Options:
   -t, --text            generate text output in console instead of image. Image options
                         will be ignored
  ```
+You can use a file with a list of chips (one chip per line) and pass it to the --chip parameter like this:
+```chip_label -c @chiplist -p```
+
+This will generate a page with all the chips in chiplist.  This if you are working on a project and want to label all the chips in it.  
+
+In the _examples_ folder I put a file [beneater8bit.txt](./examples/beneater8bit.txt) that contains the BOM of the [Ben Eater's TTL Computer](https://eater.net/8bit)
+
+I put the output of ```chip_label -c @examples/beneater8bit.txt -p``` [in the _out_ folder](./examples/beneater8bit.png)
+
 Examples
 ============
 ### Image Output (default)
