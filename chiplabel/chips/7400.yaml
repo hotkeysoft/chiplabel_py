@@ -24,6 +24,11 @@ _4bitcounter: &4bitcounter
   description: 4-bit counter
   pins: [/CLR, CLK, A, B, C, D, ENP, GND, /LOAD, END, QD, QC, QB, QA, RCO, VCC]
 
+_octbuf: &octbuf
+  family: 7400
+  description: octal buffer/line driver
+  pins: [/1G, 1A1, 2Y4, 1A2, 2Y3, 1A3, 2Y2, 1A4, 2Y1, GND, 2A1, 1Y4, 2A2, 1Y3, 2A3, 1Y2, 2A4, 1Y1, /2G, VCC]
+
 7400:
   <<: *quad2in  
   description: quad 2-input NAND
@@ -123,6 +128,16 @@ _4bitcounter: &4bitcounter
   <<: *quad2in  
   description: quad 2-input XOR
 
+7490: 
+  family: 7400  
+  description: DIV5/10 counter
+  pins: [B, R01, R02, NC, VCC, R91, R92, Qc, QB, GND, QD, QA, NC, A]
+
+7493: 
+  family: 7400  
+  description: DIV8 counter
+  pins: [B, R01, R02, NC, VCC, NC, NC, QC, QB, GND, QD, QA, NC, A]
+
 74107:
   family: 7400  
   description: dual JK FF w/clear
@@ -142,6 +157,16 @@ _4bitcounter: &4bitcounter
   family: 7400  
   description: dual one shot
   pins: [1A, 1B, 1CLR, /1Q, 2Q, 2Cext, 2RCext, GND, 2A, 2B, 2CLR, /2Q, 1Q, 1Cext, 1RCext, VCC]
+
+74125:
+  family: 7400  
+  description: quad 3-state buffer
+  pins: [/C1, A1, Y1, /C2, A2, Y2, GND, Y3, A3, /C3, Y4, A4, /C4, VCC]
+
+74126:
+  family: 7400  
+  description: quad 3-state buffer
+  pins: [C1, A1, Y1, C2, A2, Y2, GND, Y3, A3, C3, Y4, A4, C4, VCC]
 
 74132: 
   <<: *quad2in  
@@ -242,10 +267,48 @@ _4bitcounter: &4bitcounter
   description: hex D Flip-Flop
   pins: [/MR, Q0, /Q0, D0, D1, /Q1, Q1, GND, CP, Q2, /Q2, D2, D3, /Q3, Q3, VCC]
 
+74181:
+  family: 7400
+  description: 4-bit ALU
+  type: wide
+  pins: [/B0, /A0, S3, S2, S1, S0, Cn, M, /F0, /F1, /F2, GND, /F3, A=B, /P, Cn+4, /G, /B3, /A3, /B2, /A2, /B1, /A1, VCC]
+
 74189:
   family: 7400
   description: 64 bit RAM 3-state
   pins: [A0, /CS, /WE, D0, /O0, D1, /O1, GND, /O2, D2, /O3, D3, A3, A2, A1, VCC]
+
+74190: &74190
+  family: 7400
+  description: 4-bit bcd u/d counter
+  pins: [B, QB, QA, /CTEN, D/U, QC, QD, GND, D, C, /LOAD, MAX, /RCL, CLK, A, VCC]
+
+74191: 
+  <<: *74190
+  description: 4-bit bin u/d counter
+
+74193:
+  family: 7400
+  description: 4-bit counter w/preset
+  pins: [P1, Q1, Q0, CPd, CPu, Q2, Q3, GND, P3, P2, /PL, /TCu, /TCd, MR, P0, VCC]
+
+74194:
+  family: 7400
+  description: 4-bit 2way shift reg
+  pins: [/MR, Dsr, P0, P1, P2, P3, Dsl, GND, S0, S1, CP, Q3, Q2, Q1, Q0, VCC]
+
+74195:
+  family: 7400
+  description: 4-bit shift reg
+  pins: [/MR, J, /K, P0, P1, P2, P3, GND, /PE, CP, /Q3, Q3, Q2, Q1, Q0, VCC]
+
+74240:
+  <<: *octbuf
+  description: octal buffer 3-state
+
+74244:
+  <<: *octbuf
+  description:  octal line driver 3-state
 
 74245:
   family: 7400  
@@ -262,7 +325,17 @@ _4bitcounter: &4bitcounter
   description: 4-bit full adder
   pins: [Σ2, B2, A1, Σ1, A1, B1, CO, GND, C4, Σ4, B4, A4, 'Σ3', A3, B3, VCC]
 
+74373:
+  family: 7400  
+  description: octal D-type latch 3-state
+  pins: [/OE, Q0, D0, D1, Q1, Q2, D2, D3, Q3, GND, LE, Q4, D4, D5, Q5, Q6, D6, D7, Q7, VCC]
+
 74573:
   family: 7400  
   description: octal D-type latch 3-state
   pins: [/OE, D0, D1, D2, D3, D4, D5, D6, D7, GND, LE, Q7, Q6, Q5, Q4, Q3, Q2, Q1, Q0, VCC]
+
+74574:
+  family: 7400  
+  description: octal D-type flip-flop pos 3-state
+  pins: [/O#, D0, D1, D2, D3, D4, D5, D6, D7, GND, CP, Q7, Q6, Q5, Q4, Q3, Q2, Q1, Q0, VCC]
