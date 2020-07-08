@@ -170,3 +170,9 @@ LM741:
   <<: *op1  
   description: custom description
 ```
+Future
+============
+- Multiple line pins
+- Partial pin negation: R/(/W), /(B1) vs (/B)1
+- Subscript A<sub>1</sub>
+- Color output
