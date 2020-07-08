@@ -211,14 +211,15 @@ _octbuf: &octbuf
   description: dual 1-of-4 demux
   pins: [Ea, /Ea, A1, /O3a, /O2a, /O1a, /O0a, GND, /O0b, /O1b, /O2b, /O3b, A0, /Eb, /Eb, VCC]
 
-74157: &quad2to1mux
+74157:
   family: 7400
   description: quad 2-to-1 mux
-  pins: [SEL, A1, B1, Y1, A2, B2, Y2, GND, Y3, B3, A3, Y4, B4, A4, STRB, VCC]
+  pins: [SEL, A1, B1, Y1, A2, B2, Y2, GND, Y3, B3, A3, Y4, B4, A4, /G, VCC]
 
 74158:
-  <<: *quad2to1mux
+  family: 7400
   description: quad 2-to-1 mux, invert
+  pins: [SEL, A1, B1, /Y1, A2, B2, /Y2, GND, /Y3, B3, A3, /Y4, B4, A4, /G, VCC]
 
 74160:
   <<: *4bitcounter
@@ -250,7 +251,6 @@ _octbuf: &octbuf
   family: 7400
   description: 8 bit P-to-S Shift Reg
   pins: [SI, A, B, C, D, CI, CLK, GND, /CLR, E, F, G, Qh, H, S/L, VCC]
-
 
 74173:
   family: 7400
@@ -338,4 +338,9 @@ _octbuf: &octbuf
 74574:
   family: 7400  
   description: octal D-type flip-flop pos 3-state
-  pins: [/O#, D0, D1, D2, D3, D4, D5, D6, D7, GND, CP, Q7, Q6, Q5, Q4, Q3, Q2, Q1, Q0, VCC]
+  pins: [/OE, D0, D1, D2, D3, D4, D5, D6, D7, GND, CP, Q7, Q6, Q5, Q4, Q3, Q2, Q1, Q0, VCC]
+
+74595:
+  family: 7400  
+  description: octal D-type flip-flop pos 3-state
+  pins: [Q1, Q2, Q3, Q4, Q5, Q6, Q7, GND, /Q7, /MR, SHCP, STCP, /OE, DS, Q0, VCC]
