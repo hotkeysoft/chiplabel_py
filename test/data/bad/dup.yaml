@@ -1,0 +1,14 @@
+# Duplicate chip definition
+
+555:
+  name: first
+  pins: [1, 1, 1, 1]
+
+TestChip:
+  name: myName
+  description: myDescription
+  pins: [P1, P2, P3, P4]
+
+555:
+  name: dup
+  pins: [dup, dup, dup, dup]

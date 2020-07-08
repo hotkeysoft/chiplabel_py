@@ -168,3 +168,13 @@ def test_hidden_chips():
     chip_list.load(f'{TEST_DATA_DIR}/bad/skip.yaml')
     assert len(chip_list) == 2    
     assert len(chip_list.global_names) == 2
+
+def test_bad_dup(caplog):
+    # chip list with duplicate definition
+    # duplicates are silently skipped due to yaml library implementation
+    chip_list = ChipList()
+    chip_list.load(f'{TEST_DATA_DIR}/bad/dup.yaml')
+    assert len(chip_list) == 2    
+    assert len(chip_list.global_names) == 2    
+    chip = chip_list['555']
+    assert chip.name == 'dup'
