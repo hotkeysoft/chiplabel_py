@@ -70,6 +70,11 @@ def parse_args(args=None):
         help='list all chips in package',
         action='store_true'
     )
+    action_group.add_argument(
+        '--version',
+        help="print version info",
+        action="store_true"
+    )    
 
     parser.add_argument(
         '-i', '--input',

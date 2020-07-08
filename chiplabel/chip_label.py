@@ -2,12 +2,14 @@
 
 import logging
 import os
+import sys
 from PIL import Image
 from .args import parse_args
 from .chip import Chip
 from .chip_list import ChipList
 from .chip_printer import ChipPrinter
 from .chip_grid_printer import ChipGridPrinter
+from ._version import print_version_info
 
 log = logging.getLogger()
 
@@ -63,6 +65,10 @@ class LogFormatter(logging.Formatter):
 def main(argv):
     args = parse_args(argv[1:])
 
+    if args.version:
+        print_version_info()
+        return
+
     # Configure logging
     old_loglevel = log.level
     handler = logging.StreamHandler()
@@ -101,7 +107,6 @@ def main(argv):
         log.setLevel(old_loglevel)
 
 if __name__ == '__main__':
-    import sys
     MIN_PYTHON = (3, 6)
     if sys.version_info < MIN_PYTHON:
         sys.exit("Python %s.%s or later is required.\n" % MIN_PYTHON)
