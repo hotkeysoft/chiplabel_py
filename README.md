@@ -8,7 +8,7 @@ There are four modes (see [output examples below](#examples)):
   - `chip_label -c 555 7404 8085`
   - output: _555.png 7404.png 8085.png_
 - _page_: generate one or more pages with all chips aligned in a grid
-  - `chip_label -c 555 555 555 555 7404 7404 8085`
+  - `chip_label -c 555 555 555 555 7404 7404 8085 -p`
   - output: _page1.png_ with all chips (4x555, 2x7404, 8085)
 - _text_: output the chip pinout on stdout
   - `chip_label -c 555 -t`
