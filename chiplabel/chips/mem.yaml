@@ -30,3 +30,9 @@ TC551001:
   type: wide
   pins: [A7, A6, A5, A4, A3, A2, A1, A0, IO0, IO1, IO2, GND,
         IO3, IO4, IO5, IO6, IO7, /CE, A10, /OE, /WE, A9, A8, VCC]
+
+28C64:
+  description: 8Kx8 EEPROM
+  type: wide
+  pins: [RDY, A12, A7, A6, A5, A4, A3, A2, A1, A0, IO0, IO1, IO2, GND,
+         IO3, IO4, IO5, IO6, IO7, /CE, A10, /OE, A11, A9, A8, NC, /WE, VCC]
