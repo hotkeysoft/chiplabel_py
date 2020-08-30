@@ -323,7 +323,7 @@ _octbuf: &octbuf
 74283:
   family: 7400  
   description: 4-bit full adder
-  pins: [Σ2, B2, A1, Σ1, A1, B1, CO, GND, C4, Σ4, B4, A4, 'Σ3', A3, B3, VCC]
+  pins: [Σ2, B2, A2, Σ1, A1, B1, CO, GND, C4, Σ4, B4, A4, 'Σ3', A3, B3, VCC]
 
 74373:
   family: 7400  
