@@ -1,7 +1,11 @@
 555:
   description: Timer
   pins: [GND,  TRG, OUT, /RST,  CTRL, THR,  DIS,  VCC]
-  
+
+556:
+  description: Dual timer
+  pins: [DIS1, THR1, CTL1, /RST1, OUT1, TRG1, GND, TRG2, OUT2, /RST2, CTL2, THR2, DIS2, VDD]
+
 TLC5620:
   description: Quad DAC
   pins: [GND, RA, RB, RC, RD, DATA, CLK, LOAD, OD, OC, OB, OA, LDAC, VDD]

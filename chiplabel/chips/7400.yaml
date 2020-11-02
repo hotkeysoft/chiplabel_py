@@ -323,7 +323,7 @@ _octbuf: &octbuf
 74283:
   family: 7400  
   description: 4-bit full adder
-  pins: [Σ2, B2, A1, Σ1, A1, B1, CO, GND, C4, Σ4, B4, A4, 'Σ3', A3, B3, VCC]
+  pins: [Σ2, B2, A2, Σ1, A1, B1, CO, GND, C4, Σ4, B4, A4, 'Σ3', A3, B3, VCC]
 
 74373:
   family: 7400  
@@ -340,7 +340,12 @@ _octbuf: &octbuf
   description: octal D-type flip-flop pos 3-state
   pins: [/OE, D0, D1, D2, D3, D4, D5, D6, D7, GND, CP, Q7, Q6, Q5, Q4, Q3, Q2, Q1, Q0, VCC]
 
+74594:
+  family: 7400  
+  description: 8-bit SIPO shift reg
+  pins: [Q1, Q2, Q3, Q4, Q5, Q6, Q7, GND, /Q7, /MR, SHCP, STCP, /STR, DS, Q0, VCC]
+
 74595:
   family: 7400  
-  description: octal D-type flip-flop pos 3-state
+  description: 8-bit SIPO sh reg 3-st
   pins: [Q1, Q2, Q3, Q4, Q5, Q6, Q7, GND, /Q7, /MR, SHCP, STCP, /OE, DS, Q0, VCC]
