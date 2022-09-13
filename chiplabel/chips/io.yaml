@@ -22,3 +22,10 @@ FT232RL:
   type: wide
   pins: [TXD, /DTR, /RTS, VCCIO, RXD, /RI, GND, NC, /DSR, /DCD, /CTS, CBUS4, CBUS2, CBUS3,
         USBDP, USBDM, 3V3OUT, GND, /RESET, VCC, GND, CBUS1, CBUS0, NC, AGND, TEST, OSCI, OSCO]
+
+# Interface Adapter
+6522:
+  description: Versatile Interface Adapter (VIA)
+  type: wide
+  pins: [VSS, PA0, PA1, PA2, PA3, PA4, PA5, PA6, PA7, PB0, PB1, PB2, PB3, PB4, PB5, PB6, PB7, CB1, CB2, VDD,
+        /IRQ, /IRW, /CS2, CS1, PHI2, D7, D6, D5, D4, D3, D2, D1, D0, /RES, RS3, RS2, RS1, RS0, CA2, CA1 ]
