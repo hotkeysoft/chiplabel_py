@@ -153,6 +153,14 @@ Pins that start with '/', '!' or '~' will be drawn as inverted (with a line on t
 
 These are functionally equivalent.
 
+#### Partial Pin Inversion 🆕
+
+The '~' token allows partial pin inversion. The first ~ starts the range and the second ends it.
+If only one ~ is found, the inversion continues until the end of the label.
+  - ~ABC = A̅B̅C̅ (same behavior as /ABC or !ABC)
+  - A/~BC = A/B̅C̅ (continues until the end of the label)
+  - a~BC~de = aB̅C̅de (range)
+
 #### Hidden Chips, Templates
 Chips with an id that begins with an underscore (\_) are hidden from chip list. This is useful to generate many chips based on the same pinout without cluttering the chip list:
 
