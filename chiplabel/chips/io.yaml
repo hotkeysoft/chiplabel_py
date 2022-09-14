@@ -27,5 +27,5 @@ FT232RL:
 6522:
   description: Versatile Interface Adapter (VIA)
   type: wide
-  pins: [VSS, PA0, PA1, PA2, PA3, PA4, PA5, PA6, PA7, PB0, PB1, PB2, PB3, PB4, PB5, PB6, PB7, CB1, CB2, VDD,
-        /IRQ, /IRW, /CS2, CS1, PHI2, D7, D6, D5, D4, D3, D2, D1, D0, /RES, RS3, RS2, RS1, RS0, CA2, CA1 ]
+  pins: [GND, PA0, PA1, PA2, PA3, PA4, PA5, PA6, PA7, PB0, PB1, PB2, PB3, PB4, PB5, PB6, PB7, CB1, CB2, VCC,
+        /IRQ, R/~W, /CS2, CS1, φ2, D7, D6, D5, D4, D3, D2, D1, D0, /RES, RS3, RS2, RS1, RS0, CA2, CA1 ]

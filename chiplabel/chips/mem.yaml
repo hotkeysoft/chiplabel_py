@@ -2,48 +2,48 @@
 
 # SRAM
 IS61C256:
-  description: 32Kx8 SRAM
-  pins: [A14, A12, A7, A6, A5, A4, A3, A2, A1, A0, IO0, IO1, IO2, GND,
-        IO3, IO4, IO5, IO6, IO7, /CE, A10, /OE, A11, A9, A8, A13, /WE, VCC]
+  description: 256Kbit (32Kx8) SRAM
+  pins: [A14, A12, A7, A6, A5, A4, A3, A2, A1, A0, I/O0, I/O1, I/O2, GND,
+        I/O3, I/O4, I/O5, I/O6, I/O7, /CE, A10, /OE, A11, A9, A8, A13, /WE, VCC]
 
 CY7C199-15:
-  description: 32Kx8 Static SRAM
-  pins: [A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, IO0, IO1, IO2, GND,
-        IO3, IO4, IO5, IO6, IO7, /CE, A0, /OE, A1, A2, A3, A4, /WE, VCC ]
+  description: 256Kbit (32Kx8) SRAM
+  pins: [A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, I/O0, I/O1, I/O2, GND,
+        I/O3, I/O4, I/O5, I/O6, IO7, /CE, A0, /OE, A1, A2, A3, A4, /WE, VCC ]
 
 TC551001:
-  description: 128Kx8 SRAM
+  description: 1Mbit (128Kx8) SRAM
   type: wide
-  pins: [NC, A16, A14, A12, A7, A6, A5, A4, A3, A2, A1, A0, IO0, IO1, IO2, GND,
-        IO3, IO4, IO5, IO6, IO7, /CE1, A10, /OE, A11, A9, A8, A13, R/~W, CE2, A15, VCC]
+  pins: [NC, A16, A14, A12, A7, A6, A5, A4, A3, A2, A1, A0, I/O0, I/O1, I/O2, GND,
+        I/O3, I/O4, I/O5, I/O6, I/O7, /CE1, A10, /OE, A11, A9, A8, A13, R/~W, CE2, A15, VCC]
 
 62256:
-  description: 256k SRAM (32-kword x 8-bit)
+  description: 256Kbit (32Kx8) SRAM
   type: wide
-  pins: [A14, A12, A7, A6, A5, A4, A3, A2, A1, A0, I/O0, I/O1, I/O2, VSS,
+  pins: [A14, A12, A7, A6, A5, A4, A3, A2, A1, A0, I/O0, I/O1, I/O2, GND,
         I/O3, I/O4, I/O5, I/O6, I/O7, /CS, A10, /OE, A11, A9, A8, A13, /WE, VCC]
 
 # EPROM
 27C256:
-  description: 32Kx8 EPROM
+  description: 256Kbit (32Kx8) EPROM
   type: wide
-  pins: [VPP, A12, A7, A6, A5, A4, A3, A2, A1, A0, D0, D1, D2, GND,
-        D3, D4, D5, D6, D7, /CE, A10, /OE, A11, A9, A8, A13, A14, VCC]
-
-28C256:
-  description: 32Kx8 EEPROM
-  pins: [A14, A12, A7, A6, A5, A4, A3, A2, A1, A0, I/O0, I/01, I/O2, GND,
-        I/O3, I/O4, I/O5, I/O6, I/O7, /CE, A10, /OE, A11, A9, A8, A13, /WE, VCC]
+  pins: [VPP, A12, A7, A6, A5, A4, A3, A2, A1, A0, I/O0, I/01, I/O2, GND,
+        I/O3, I/O4, I/O5, I/O6, I/O7, /CE, A10, /OE, A11, A9, A8, A13, A14, VCC]
 
 # EEPROM
 28C16:
-  description: 2Kx8 EEPROM
+  description: 16Kbit (2Kx8) EEPROM
   type: wide
-  pins: [A7, A6, A5, A4, A3, A2, A1, A0, IO0, IO1, IO2, GND,
-        IO3, IO4, IO5, IO6, IO7, /CE, A10, /OE, /WE, A9, A8, VCC]
+  pins: [A7, A6, A5, A4, A3, A2, A1, A0, I/O0, I/O1, I/O2, GND,
+        I/O3, I/O4, I/O5, I/O6, I/O7, /CE, A10, /OE, /WE, A9, A8, VCC]
 
 28C64:
-  description: 8Kx8 EEPROM
+  description: 64Kbit (8Kx8) EEPROM
   type: wide
-  pins: [RDY, A12, A7, A6, A5, A4, A3, A2, A1, A0, IO0, IO1, IO2, GND,
-         IO3, IO4, IO5, IO6, IO7, /CE, A10, /OE, A11, A9, A8, NC, /WE, VCC]
+  pins: [RDY, A12, A7, A6, A5, A4, A3, A2, A1, A0, I/O0, I/O1, I/O2, GND,
+         I/O3, I/O4, I/O5, I/O6, I/O7, /CE, A10, /OE, A11, A9, A8, NC, /WE, VCC]
+
+28C256:
+  description: 256KBit (32Kx8) EEPROM
+  pins: [A14, A12, A7, A6, A5, A4, A3, A2, A1, A0, I/O0, I/01, I/O2, GND,
+        I/O3, I/O4, I/O5, I/O6, I/O7, /CE, A10, /OE, A11, A9, A8, A13, /WE, VCC]
