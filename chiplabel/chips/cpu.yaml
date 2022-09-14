@@ -4,13 +4,13 @@
   description: 8-bit CPU
   type: wide
   pins: [GND, RDY, φ1(out), /IRQ, NC, /NMI, SYNC, VCC, AB0, AB1, AB2, AB3, AB4, AB5, AB6, AB7, AB8, AB9, AB10, AB11,
-        GND, AB12, AB13, AB14, AB15, DB7, DB6, DB5, DB4, DB3, DB2, DB1, DB0, R/W, NC, NC, φ0(in), SO, φ2(out), /RES]
+        GND, AB12, AB13, AB14, AB15, DB7, DB6, DB5, DB4, DB3, DB2, DB1, DB0, R/~W, NC, NC, φ0(in), SO, φ2(out), /RES]
 
 6800:
   description: 8-bit CPU
   type: wide
   pins: [GND, /HALT, φ1, /IRQ, VMA, /NMI, BA, VCC, A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11,
-        GND, A12, A13, A14, A15, D7, D6, D5, D4, D3, D2, D1, D0, R/W, NC, DBE, φ2, NC, TSC, /RES]
+        GND, A12, A13, A14, A15, D7, D6, D5, D4, D3, D2, D1, D0, R/~W, NC, DBE, φ2, NC, TSC, /RES]
 
 8080:
   description: 8-bit CPU
@@ -22,7 +22,7 @@
   description: 8-bit CPU
   type: wide
   pins: [X1, X2, RST_OUT, SOD, SID, TRAP, RST7.5, RST6.5, RST5.5, INTR, /INTA, AD0, AD1, AD2, AD3, AD4, AD5, AD6, AD7, GND,
-        A8, A9, A10, A11, A12, A13, A14, A15, S0, ALE, /WR, /RD, S1, IO/M, READY, /RST_IN, CLK_OUT, HLDA, HOLD, VCC]
+        A8, A9, A10, A11, A12, A13, A14, A15, S0, ALE, /WR, /RD, S1, IO/~M, READY, /RST_IN, CLK_OUT, HLDA, HOLD, VCC]
 
 Z80: &z80
   description: 8-bit CPU
