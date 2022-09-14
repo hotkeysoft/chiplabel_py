@@ -3,6 +3,7 @@
 #
 import logging
 import math
+import re
 from PIL import ImageFont, ImageDraw, Image
 from .chip import Chip
 
@@ -21,11 +22,14 @@ class ChipPrinter:
     _chip = None
     _font = None
 
+    _invertRegex = re.compile(r"~[^~]*~?")
+
     def __init__(self, **kwargs):
         if kwargs:
             self.config = {**self.config, **kwargs}
 
         self._init_font()
+
 
     def _init_font(self):
         font_size = self._get_font_size()
@@ -61,6 +65,35 @@ class ChipPrinter:
         _, textSizeY = draw.textsize(label, font=self._font)
         draw.text((x0, (canvasY-textSizeY)//2), label, font=self._font)
 
+    def _get_pin_info(self, pin):
+        pinName = self._chip[pin]
+        invertRange = None
+
+        # / and ! inverts the full pin label
+        # /ABC = A̅B̅C̅
+        # !DEF = D̅E̅F̅
+        if pinName[0] in ('/', '!'):
+            pinName = pinName[1:]
+            invertRange = (0, len(pinName))
+        # ~ denotes a partial invert. The first ~ starts the range and the seconds ends it.
+        # If only one ~ is found, the inversion continues until the end of the label.
+        # ~ABC = A̅B̅C̅  (same behavior as /ABC or !ABC)
+        # A/~BC = A/B̅C̅ (continues until the end of the label)
+        # a~BC~de = aB̅C̅de (range)
+        else:
+            result = self._invertRegex.search(pinName)
+            if result:
+                invertRange = result.span()
+                markers = result.group() # starts with ~ and (sometimes) ends with ~
+                cleanedMarkers = markers.replace('~', '') # Get rid of them
+                # Check how many we want to remove (1-2) and adjust end range
+                cleanedCount = len(markers) - len(cleanedMarkers)
+                invertRange = (invertRange[0], invertRange[1] - cleanedCount)
+                # Remove the ~ from the pin name
+                pinName = pinName.replace(markers, cleanedMarkers)
+
+        return pinName, invertRange
+
     def _draw_pins(self, image):
         width, height = image.size
         draw = ImageDraw.Draw(image)
@@ -73,16 +106,17 @@ class ChipPrinter:
                 y = self._get_pin_row_y(row)
                 if (col == 1):
                     y = height-y
-                pinName = self._chip[pin]
-                invert = pinName[0] in ('~', '/', '!')
-                pinName = pinName[1:] if invert else pinName
+                pinName, invertRange = self._get_pin_info(pin)
                 pin += 1
                 textSizeX, textSizeY = draw.textsize(pinName, font=self._font)
                 offsetY = math.ceil(textSizeY / 2.0)
                 x = padding if effective_col == 0 else width-textSizeX-padding
                 draw.text((x, y-offsetY), pinName, font=self._font)
-                if invert:
-                    draw.line([(x,y-offsetY), (x+textSizeX, y-offsetY)])
+                if invertRange:
+                    charWidth = textSizeX / len(pinName)
+                    xStart = x + (invertRange[0] * charWidth)
+                    xEnd = x + (invertRange[1] * charWidth)
+                    draw.line([(xStart,y-offsetY), (xEnd, y-offsetY)])
 
     def _get_indent_size(self):
         return self._mm_to_pixel(self.config['indentSize'])
