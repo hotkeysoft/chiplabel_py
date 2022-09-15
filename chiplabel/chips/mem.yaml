@@ -9,7 +9,7 @@ IS61C256:
 CY7C199:
   description: 256Kbit (32Kx8) SRAM
   pins: [A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, I/O0, I/O1, I/O2, GND,
-        I/O3, I/O4, I/O5, I/O6, IO7, /CE, A0, /OE, A1, A2, A3, A4, /WE, VCC ]
+        I/O3, I/O4, I/O5, I/O6, I/O7, /CE, A0, /OE, A1, A2, A3, A4, /WE, VCC]
 
 TC551001:
   description: 1Mbit (128Kx8) SRAM
