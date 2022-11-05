@@ -43,7 +43,11 @@ TC551001:
   pins: [RDY, A12, A7, A6, A5, A4, A3, A2, A1, A0, I/O0, I/O1, I/O2, GND,
          I/O3, I/O4, I/O5, I/O6, I/O7, /CE, A10, /OE, A11, A9, A8, NC, /WE, VCC]
 
-28C256:
+_28C256: &28C256
   description: 256KBit (32Kx8) EEPROM
   pins: [A14, A12, A7, A6, A5, A4, A3, A2, A1, A0, I/O0, I/01, I/O2, GND,
         I/O3, I/O4, I/O5, I/O6, I/O7, /CE, A10, /OE, A11, A9, A8, A13, /WE, VCC]
+
+28C256:
+  <<: *28C256
+  type: wide
