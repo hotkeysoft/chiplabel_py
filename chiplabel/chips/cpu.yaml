@@ -6,6 +6,12 @@
   pins: [GND, RDY, φ1(out), /IRQ, NC, /NMI, SYNC, VCC, AB0, AB1, AB2, AB3, AB4, AB5, AB6, AB7, AB8, AB9, AB10, AB11,
         GND, AB12, AB13, AB14, AB15, DB7, DB6, DB5, DB4, DB3, DB2, DB1, DB0, R/~W, NC, NC, φ0(in), SO, φ2(out), /RES]
 
+W65C02S:
+  description: WDC 8-bit Microprocessor
+  type: wide
+  pins: [/VP, RDY, PHI1O, /IRQ, /ML, /NMI, SYNC, VDD, A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11,
+        VSS, A12, A13, A14, A15, D7, D6, D5, D4, D3, D2, D1, D0, R/~W, NC, BE, PHI2, /SO, PHI2O, /RES]
+
 6800:
   description: 8-bit CPU
   type: wide
@@ -33,4 +39,3 @@ Z80: &z80
 Z8400: 
   <<: *z80
   description: Z80 8-bit CPU
-  
