@@ -12,6 +12,12 @@
   pins: [D0, D1, D2, D3, D4, D5, D6, D7, RCLK, SIN, SOUT, CS0, CS1, /CS2, /BAUDOUT, XIN, XOUT, /WR, WR, GND,
         /RD, RD, DDIS, /TXRDY, /ADS, A2, A1, A0, /RXRDY, INTR, /OUT2, /RTS, /DTR, /OUT1, MR, /CTS, /DSR, /DCD, /RI, VCC]
 
+6551:
+  description: ACIA
+  type: wide
+  pins: [GND, CS0, /CS1, /RES, RxC, XTAL1, XTAL2, /RTS, /CTS, TxD, /DTR, RxD, RS0, RS1,
+        VCC, /DCD, /DSR, DB0, DB1, DB2, DB3, DB4, DB5, DB6, DB7, /IRQ, φ2, R/~W]
+
 # FTDI Adapters
 FTDI:
   description: USB-Serial Interface
