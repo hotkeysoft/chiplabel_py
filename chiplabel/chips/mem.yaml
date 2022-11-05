@@ -51,3 +51,7 @@ _28C256: &28C256
 28C256:
   <<: *28C256
   type: wide
+
+UM61256:
+  <<: *28C256
+  description: 256Kbit (32Kx8) SRAM
