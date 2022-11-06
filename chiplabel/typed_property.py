@@ -12,7 +12,7 @@ def typedproperty(name, expected_type, strip=False, regex=None):
         if not isinstance(value, expected_type):
             raise TypeError(f'Expected {expected_type}')
         value = value.strip() if strip else value
-        if regex and not regex.match(value): 
+        if regex and not regex.match(value):
             raise TypeError('Invalid character in string')
         setattr(self, private_name, value)
     return prop

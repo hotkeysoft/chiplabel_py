@@ -19,13 +19,13 @@ def test_init():
     assert c.config['invert'] == False
     assert c.config['font'] == ''
     assert c.font
-    assert c.dpi == 300    
+    assert c.dpi == 300
     assert c.page_padding == 0.1
     assert c.page_padding_pixels == 30
     assert c.page_size == (1, 1)
     assert c.page_size_pixels == (300, 300)
 
-    c = ChipGridPrinter(invert=True, foo='bar', dpi=600, 
+    c = ChipGridPrinter(invert=True, foo='bar', dpi=600,
         page_size=(4, 4), page_padding=0.2)
     assert c.config['invert'] == True
     assert c.config['foo'] == 'bar'
@@ -33,15 +33,15 @@ def test_init():
     assert c.dpi == 600
     assert c.page_padding == 0.2
     assert c.page_padding_pixels == 120
-    assert c.page_size == (4, 4)    
+    assert c.page_size == (4, 4)
     assert c.page_size_pixels == (2400, 2400)
 
 # 2x2 chips/page
-def test_print_to_page(tmpdir):    
+def test_print_to_page(tmpdir):
     c = chip.Chip('id', 20, rowSpacing=25.4)
 
     # Square page
-    p = ChipGridPrinter(page_size=(2, 2), 
+    p = ChipGridPrinter(page_size=(2, 2),
         page_padding=0, output=tmpdir)
     assert p.page_size_pixels == (600, 600)
 
@@ -82,11 +82,11 @@ def test_print_to_page(tmpdir):
     assert tmpdir.join('page2.png').check(file=1)
 
 # With padding, 1x1 chip / page
-def test_print_to_page2(tmpdir):    
+def test_print_to_page2(tmpdir):
     c = chip.Chip('id', 20, rowSpacing=25.4)
 
     # Square page
-    p = ChipGridPrinter(page_size=(2, 2), 
+    p = ChipGridPrinter(page_size=(2, 2),
         page_padding=0.1, output=tmpdir)
     assert p.page_size_pixels == (600, 600)
     assert p.page_padding_pixels == 30
@@ -121,11 +121,11 @@ def test_print_to_page2(tmpdir):
     assert tmpdir.join('page3.png').check(file=1)
 
 # With padding, 2x2 chip / page
-def test_print_to_page3(tmpdir):    
+def test_print_to_page3(tmpdir):
     c = chip.Chip('id', 20, rowSpacing=25.4)
 
     # Square page
-    p = ChipGridPrinter(page_size=(2.2, 2.2), 
+    p = ChipGridPrinter(page_size=(2.2, 2.2),
         page_padding=0.1, output=tmpdir)
     assert p.page_size_pixels == (660, 660)
     assert p.page_padding_pixels == 30
@@ -166,11 +166,11 @@ def test_print_to_page3(tmpdir):
     p.save_page()
     assert tmpdir.join('page2.png').check(file=1)
 
-def test_new_page(tmpdir):    
+def test_new_page(tmpdir):
     c = chip.Chip('id', 20, rowSpacing=25.4)
 
     # Square page
-    p = ChipGridPrinter(page_size=(2.2, 2.2), 
+    p = ChipGridPrinter(page_size=(2.2, 2.2),
         page_padding=0.1, output=tmpdir)
     assert p.page_size_pixels == (660, 660)
     assert p.page_padding_pixels == 30
@@ -203,11 +203,11 @@ def test_new_page(tmpdir):
     assert tmpdir.join('page2.png').check(file=1)
 
 # With padding, 2x2 chip / page
-def test_print_chips(tmpdir):    
+def test_print_chips(tmpdir):
     c = chip.Chip('id', 20, rowSpacing=25.4)
 
     # Square page
-    p = ChipGridPrinter(page_size=(2.2, 2.2), 
+    p = ChipGridPrinter(page_size=(2.2, 2.2),
         page_padding=0.1, output=tmpdir)
     assert p.page_size_pixels == (660, 660)
     assert p.page_padding_pixels == 30
@@ -229,7 +229,7 @@ def test_print_chips(tmpdir):
     assert tmpdir.join('page3.png').check(file=1)
     assert tmpdir.join('page4.png').check(file=1)
 
-def test_output_dir():    
+def test_output_dir():
     c = chip.Chip('id', 20)
     p = ChipGridPrinter(output='bad/dir')
     with pytest.raises(ValueError):
@@ -251,7 +251,7 @@ def _crop(printer, tmpdir, expected_size):
 
 def test_crop(tmpdir):
     # Square page
-    p = ChipGridPrinter(page_size=(2, 2), 
+    p = ChipGridPrinter(page_size=(2, 2),
         page_padding=0.1, output=tmpdir, page_nocrop=False)
     assert p.page_size_pixels == (600, 600)
     assert p.page_padding_pixels == 30
@@ -259,8 +259,8 @@ def test_crop(tmpdir):
 
 def test_nocrop(tmpdir):
     # Square page
-    p = ChipGridPrinter(page_size=(2, 2), 
+    p = ChipGridPrinter(page_size=(2, 2),
         page_padding=0.1, output=tmpdir, page_nocrop=True)
     assert p.page_size_pixels == (600, 600)
     assert p.page_padding_pixels == 30
-    _crop(p, tmpdir, (600, 600))    
+    _crop(p, tmpdir, (600, 600))

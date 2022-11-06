@@ -94,7 +94,7 @@ class Chip:
         # aliases are shallow copies
         alias = copy.copy(self)
         alias._id = id
-        return alias        
+        return alias
 
     def set_pins(self, pins):
         if not isinstance(pins, list):

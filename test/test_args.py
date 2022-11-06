@@ -60,27 +60,27 @@ def test_page_size_range(capsys):
     assert arg_list.page_size == [1.0, 1.0]
 
     arg_list = args.parse_args(['-a', '--page_size', '20', '20'])
-    assert arg_list.page_size == [20.0, 20.0]    
+    assert arg_list.page_size == [20.0, 20.0]
 
     with pytest.raises(SystemExit):
         arg_list = args.parse_args(['-a', '--page_size', '0.5', '1'])
-    capture = capsys.readouterr()                
+    capture = capsys.readouterr()
     assert 'argument --page_size: 0.5' in capture.err
 
     with pytest.raises(SystemExit):
         arg_list = args.parse_args(['-a', '--page_size', '1', '0.6'])
-    capture = capsys.readouterr()        
+    capture = capsys.readouterr()
     assert 'argument --page_size: 0.6' in capture.err
 
     with pytest.raises(SystemExit):
         arg_list = args.parse_args(['-a', '--page_size', '1', 'badsize'])
-    capture = capsys.readouterr()        
-    assert 'argument --page_size: badsize' in capture.err       
+    capture = capsys.readouterr()
+    assert 'argument --page_size: badsize' in capture.err
 
     with pytest.raises(SystemExit):
         arg_list = args.parse_args(['-a', '--page_size', '1'])
-    capture = capsys.readouterr()        
-    assert 'argument --page_size: expected 2 arguments' in capture.err       
+    capture = capsys.readouterr()
+    assert 'argument --page_size: expected 2 arguments' in capture.err
 
 def test_page_padding_range(capsys):
     arg_list = args.parse_args(['-a', '--page_padding', '0'])
@@ -91,18 +91,18 @@ def test_page_padding_range(capsys):
 
     with pytest.raises(SystemExit):
         arg_list = args.parse_args(['-a', '--page_padding', '-0.1'])
-    capture = capsys.readouterr()                
+    capture = capsys.readouterr()
     assert 'argument --page_padding: -0.1' in capture.err
 
     with pytest.raises(SystemExit):
         arg_list = args.parse_args(['-a', '--page_padding', '1.1'])
-    capture = capsys.readouterr()        
+    capture = capsys.readouterr()
     assert 'argument --page_padding: 1.1' in capture.err
 
     with pytest.raises(SystemExit):
         arg_list = args.parse_args(['-a', '--page_padding', 'badpad'])
-    capture = capsys.readouterr()        
-    assert 'argument --page_padding: badpad' in capture.err       
+    capture = capsys.readouterr()
+    assert 'argument --page_padding: badpad' in capture.err
 
 def test_dpi_range(capsys):
     arg_list = args.parse_args(['-a', '--dpi', '100'])
@@ -113,18 +113,18 @@ def test_dpi_range(capsys):
 
     with pytest.raises(SystemExit):
         arg_list = args.parse_args(['-a', '--dpi', '99'])
-    capture = capsys.readouterr()                
+    capture = capsys.readouterr()
     assert 'argument --dpi: 99' in capture.err
 
     with pytest.raises(SystemExit):
         arg_list = args.parse_args(['-a', '--dpi', '2001'])
-    capture = capsys.readouterr()        
+    capture = capsys.readouterr()
     assert 'argument --dpi: 2001' in capture.err
 
     with pytest.raises(SystemExit):
         arg_list = args.parse_args(['-a', '--dpi', 'baddpi'])
-    capture = capsys.readouterr()        
-    assert 'argument --dpi: baddpi' in capture.err       
+    capture = capsys.readouterr()
+    assert 'argument --dpi: baddpi' in capture.err
 
 def test_mode(capsys):
     arg_list = args.parse_args(['-a'])
@@ -144,15 +144,15 @@ def test_mode(capsys):
 
     with pytest.raises(SystemExit):
         arg_list = args.parse_args(['-a', '-l'])
-    capture = capsys.readouterr()        
+    capture = capsys.readouterr()
     assert 'not allowed with argument' in capture.err
 
     with pytest.raises(SystemExit):
         arg_list = args.parse_args(['-a', '-c', 'chip'])
-    capture = capsys.readouterr()        
+    capture = capsys.readouterr()
     assert 'not allowed with argument' in capture.err
 
     with pytest.raises(SystemExit):
         arg_list = args.parse_args(['-l', '-c', 'chip'])
-    capture = capsys.readouterr()        
+    capture = capsys.readouterr()
     assert 'not allowed with argument' in capture.err

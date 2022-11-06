@@ -7,7 +7,7 @@ ARDUINO328: &arduino328p
         D9, D10, D11, D12, D13, AVCC, AREF, GND, A0, A1, A2, A3, A4, A5]
 
 ARDUINO328INT:
-  <<: *arduino328p  
+  <<: *arduino328p
   description: Arduino Internal clock 8MHz
 
 ARDUINO328INTSMD: # SMD chip in SMD to DIP Adapter

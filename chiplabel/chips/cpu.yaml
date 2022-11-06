@@ -21,7 +21,7 @@ W65C02S:
 8080:
   description: 8-bit CPU
   type: wide
-  pins: [A10, GND, D4, D5, D6, D7, D3, D2, D1, D0, -5V, RESET, HOLD, INT, φ2, INTE, DBIN, /WR, SYNC, +5V, 
+  pins: [A10, GND, D4, D5, D6, D7, D3, D2, D1, D0, -5V, RESET, HOLD, INT, φ2, INTE, DBIN, /WR, SYNC, +5V,
         HLDA, φ1, READY, WAIT, A0, A1, A2, +12V, A3, A4, A5, A6, A7, A8, A9, A15, A12, A13, A14, A11]
 
 8085:
@@ -36,6 +36,6 @@ Z80: &z80
   pins: [A11, A12, A13, A14, A15, φ, D4, D3, D5, D6, VCC, D2, D7, D0, D1, /INT, /NMI, /HALT, /MREQ, /IORQ,
         /RD, /WR, /BUSACK, /WAIT, /BUSREQ, /RESET, /M1, /RFSH, GND, A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10]
 
-Z8400: 
+Z8400:
   <<: *z80
   description: Z80 8-bit CPU

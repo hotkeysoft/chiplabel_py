@@ -30,7 +30,7 @@ _octbuf: &octbuf
   pins: [/1G, 1A1, 2Y4, 1A2, 2Y3, 1A3, 2Y2, 1A4, 2Y1, GND, 2A1, 1Y4, 2A2, 1Y3, 2A3, 1Y2, 2A4, 1Y1, /2G, VCC]
 
 7400:
-  <<: *quad2in  
+  <<: *quad2in
   description: quad 2-input NAND
 
 7402:
@@ -39,7 +39,7 @@ _octbuf: &octbuf
   pins: [1Y, 1A, 1B, 2Y, 2A, 2B, GND, 3A, 3B, 3Y, 4A, 4B, 4Y, VCC]
 
 7403:
-  <<: *quad2in  
+  <<: *quad2in
   description: quad 2-input NAND OC
 
 7404:
@@ -51,11 +51,11 @@ _octbuf: &octbuf
   description: hex NOT OC
 
 7408:
-  <<: *quad2in  
+  <<: *quad2in
   description: quad 2-input AND
 
 7409:
-  <<: *quad2in  
+  <<: *quad2in
   description: quad 2-input AND OC
 
 7410:
@@ -87,98 +87,98 @@ _octbuf: &octbuf
   description: triple 3-input NOR
 
 7430:
-  family: 7400  
+  family: 7400
   description: 8-input NAND
   pins: [A, B, C, D, E, F, GND, Y, NC, NC, G, H, NC, VCC]
 
 7432:
-  <<: *quad2in  
+  <<: *quad2in
   description: quad 2-input OR
 
 7438:
-  <<: *quad2in  
+  <<: *quad2in
   description: quad 2-input NAND
 
 7442: &1to10decoder
-  family: 7400  
+  family: 7400
   description: 1-of-10 decoder
   pins: [/0, /1, /2, /3, /4, /5, /6, GND, /7, /8, /9, A3, A2, A1, A0, VCC]
 
 7447:
-  family: 7400  
+  family: 7400
   description: BCD-7seg decoder/driver
   pins: [B, C, /LT, "/BI/RBO", /RBI, D, A, GND, /e, /d, /c, /b, /a, /g, /f, VCC]
 
 7474:
-  family: 7400  
+  family: 7400
   description: dual D FF +edge
   pins: [/1CLR, 1D, 1CLK, /1PRE, 1Q, /1Q, GND, /2Q, 2Q, /2PRE, 2CLK, 2D, /2CLR, VCC]
 
 7476:
-  family: 7400  
+  family: 7400
   description: dual JK FF w/set+clear
   pins: [1CLK, 1PRE, 1CLR, 1J, VCC, 2CLK, 2PRE, 2CLR, 2J, /2Q, 2Q, 2K, GND, /1Q, 1Q, 1K]
 
 7485:
-  family: 7400  
+  family: 7400
   description: 4-bit magnitude comparator
   pins: [B3, Ia<b, Ia=b, Ia>b, Oa>b, Oa=b, Oa<b, GND, B0, A0, B1, A1, A2, B2, A3, VCC]
 
 7486:
-  <<: *quad2in  
+  <<: *quad2in
   description: quad 2-input XOR
 
-7490: 
-  family: 7400  
+7490:
+  family: 7400
   description: DIV5/10 counter
   pins: [B, R01, R02, NC, VCC, R91, R92, Qc, QB, GND, QD, QA, NC, A]
 
-7493: 
-  family: 7400  
+7493:
+  family: 7400
   description: DIV8 counter
   pins: [B, R01, R02, NC, VCC, NC, NC, QC, QB, GND, QD, QA, NC, A]
 
 74107:
-  family: 7400  
+  family: 7400
   description: dual JK FF w/clear
   pins: [1J, /1Q, 1Q, 1K, 2Q, /2Q, GND, 2J, 2CLK, /2CLR, 2K, 1CLK, /1CLR, VCC]
 
 74109:
-  family: 7400  
+  family: 7400
   description: dual JK FF +edge
   pins: [/1CLR, 1J, /1K, 1CLK, /1PRE, 1Q, /1Q, GND, /2Q, 2Q, /2PRE, 2CLK, /2K, 2J, /2CLR, VCC]
 
 74122:
-  family: 7400  
+  family: 7400
   description: one shot
   pins: [A1, A2, B1, B2, CLR, /Q, GND, Q, Rint, NC, Cext, NC, RCext, VCC]
 
 74123:
-  family: 7400  
+  family: 7400
   description: dual one shot
   pins: [1A, 1B, 1CLR, /1Q, 2Q, 2Cext, 2RCext, GND, 2A, 2B, 2CLR, /2Q, 1Q, 1Cext, 1RCext, VCC]
 
 74125:
-  family: 7400  
+  family: 7400
   description: quad 3-state buffer
   pins: [/C1, A1, Y1, /C2, A2, Y2, GND, Y3, A3, /C3, Y4, A4, /C4, VCC]
 
 74126:
-  family: 7400  
+  family: 7400
   description: quad 3-state buffer
   pins: [C1, A1, Y1, C2, A2, Y2, GND, Y3, A3, C3, Y4, A4, C4, VCC]
 
-74132: 
-  <<: *quad2in  
+74132:
+  <<: *quad2in
   description: quad 2-input NAND Schmitt
 
 74138:
-  family: 7400  
+  family: 7400
   description: 3-to-8 demux
   pins: [A, B, C, /G2A, /G2B, G1, Y7, GND, Y6, Y5, Y4, Y3, Y2, Y1, Y0, VCC]
 
 74139:
-  family: 7400  
+  family: 7400
   description: dual 2-to-4 demux
   pins: [/1G, 1A, 1B, 1Y0, 1Y1, 1Y2, 1Y3, GND, 2Y3, 2Y2, 2Y1, 2Y0, 2B, 2A, /2G, VCC]
 
@@ -206,7 +206,7 @@ _octbuf: &octbuf
   description: dual 4-input mux
   pins: [/Ea, S1, I3a, I2a, I1a, I0a, Za, GND, Zb, I0b, I1b, I2b, I3b, S0, /Eb, VCC]
 
-74156: 
+74156:
   family: 7400
   description: dual 1-of-4 demux
   pins: [Ea, /Ea, A1, /O3a, /O2a, /O1a, /O0a, GND, /O0b, /O1b, /O2b, /O3b, A0, /Eb, /Eb, VCC]
@@ -235,7 +235,7 @@ _octbuf: &octbuf
 
 74163:
   <<: *4bitcounter
-  description:  counter /16 full sync  
+  description:  counter /16 full sync
 
 74164:
   family: 7400
@@ -283,7 +283,7 @@ _octbuf: &octbuf
   description: 4-bit bcd u/d counter
   pins: [B, QB, QA, /CTEN, D/U, QC, QD, GND, D, C, /LOAD, MAX, /RCL, CLK, A, VCC]
 
-74191: 
+74191:
   <<: *74190
   description: 4-bit bin u/d counter
 
@@ -311,41 +311,41 @@ _octbuf: &octbuf
   description:  octal line driver 3-state
 
 74245:
-  family: 7400  
+  family: 7400
   description: octal bus transceiver 3-state
   pins: [DIR, A1, A2, A3, A4, A5, A6, A7, A8, GND, B8, B7, B6, B5, B4, B3, B2, B1, /OE, VCC]
 
 74273:
-  family: 7400  
+  family: 7400
   description: octal D-type flip-flop w/clear
   pins: [/CLR, 1Q, 1D, 2D, 2Q, 3Q, 3D, 4D, 4Q, GND, CLK, 5Q, 5D, 6D, 6Q, 7Q, 7D, 8D, 8Q, VCC]
 
 74283:
-  family: 7400  
+  family: 7400
   description: 4-bit full adder
   pins: [Σ2, B2, A2, Σ1, A1, B1, CO, GND, C4, Σ4, B4, A4, 'Σ3', A3, B3, VCC]
 
 74373:
-  family: 7400  
+  family: 7400
   description: octal D-type latch 3-state
   pins: [/OE, Q0, D0, D1, Q1, Q2, D2, D3, Q3, GND, LE, Q4, D4, D5, Q5, Q6, D6, D7, Q7, VCC]
 
 74573:
-  family: 7400  
+  family: 7400
   description: octal D-type latch 3-state
   pins: [/OE, D0, D1, D2, D3, D4, D5, D6, D7, GND, LE, Q7, Q6, Q5, Q4, Q3, Q2, Q1, Q0, VCC]
 
 74574:
-  family: 7400  
+  family: 7400
   description: octal D-type flip-flop pos 3-state
   pins: [/OE, D0, D1, D2, D3, D4, D5, D6, D7, GND, CP, Q7, Q6, Q5, Q4, Q3, Q2, Q1, Q0, VCC]
 
 74594:
-  family: 7400  
+  family: 7400
   description: 8-bit SIPO shift reg
   pins: [Q1, Q2, Q3, Q4, Q5, Q6, Q7, GND, /Q7, /MR, SHCP, STCP, /STR, DS, Q0, VCC]
 
 74595:
-  family: 7400  
+  family: 7400
   description: 8-bit SIPO sh reg 3-st
   pins: [Q1, Q2, Q3, Q4, Q5, Q6, Q7, GND, /Q7, /MR, SHCP, STCP, /OE, DS, Q0, VCC]

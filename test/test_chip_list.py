@@ -10,14 +10,14 @@ TEST_DATA_DIR = pkg_resources.resource_filename('test', 'data')
 
 def test_load_file(caplog):
     chip_list = ChipList()
-    
+
     with pytest.raises(IOError):
         chip_list.load('')
     with pytest.raises(IOError):
         chip_list.load('bad')
 
     chip_list.load(f'{TEST_DATA_DIR}/chip0.yaml')
-    assert "No chip data" in caplog.text    
+    assert "No chip data" in caplog.text
     caplog.clear()
     assert len(chip_list) == 0
 
@@ -26,7 +26,7 @@ def test_load_file(caplog):
     assert len(chip_list) == 1
 
     chip_list.load(f'{TEST_DATA_DIR}/chip2.yaml')
-    assert "Duplicate" in caplog.text    
+    assert "Duplicate" in caplog.text
     assert len(chip_list) == 3
 
 def test_load_directory():
@@ -88,7 +88,7 @@ def test_chip_attributes():
     assert chip.description == 'myDescription'
     assert chip.config['rowSpacing'] == 12
     assert [pin for pin in chip] == ['P1', 'P2', 'P3', 'P4']
-    
+
 def test_family_7400(caplog):
     def good_lookup(chip_id):
         chip = chip_list[chip_id]
@@ -112,7 +112,7 @@ def test_family_7400(caplog):
     chip_list.load(f'{TEST_DATA_DIR}/family/7400b.yaml')
     assert len(chip_list) == 1
     assert len(chip_list.global_names) == 1
-    assert "ERROR" in caplog.text    
+    assert "ERROR" in caplog.text
     assert "missing 74 prefix" in caplog.text
 
 def test_bad_yaml(caplog):
@@ -132,7 +132,7 @@ def test_bad_chip(caplog):
     chip_list.load(f'{TEST_DATA_DIR}/bad/bad_chip.yaml')
     assert 'Error adding chip [bad_chip/Test!Chip]' in caplog.text
     assert 'Error adding chip [bad_chip/5pins]' in caplog.text
-    assert 'Error adding chip [bad_chip/nopins]' in caplog.text    
+    assert 'Error adding chip [bad_chip/nopins]' in caplog.text
     assert len(chip_list) == 1
 
 def test_bad_type(caplog):
@@ -153,12 +153,12 @@ def test_bad_family(caplog):
     # no alias will be loaded
     chip_list = ChipList()
     chip_list.load(f'{TEST_DATA_DIR}/bad/bad_family.yaml')
-    assert len(chip_list) == 2    
-    assert len(chip_list.global_names) == 2    
+    assert len(chip_list) == 2
+    assert len(chip_list.global_names) == 2
     chip = chip_list['TestChip']
     assert chip.name == 'myName'
     assert chip.description == 'myDescription'
-    assert chip.config['rowSpacing'] == 6 
+    assert chip.config['rowSpacing'] == 6
     assert 'WARNING' in caplog.text
     assert 'Unknown family' in caplog.text
 
@@ -166,7 +166,7 @@ def test_hidden_chips():
     # chip ids that start with _ are skipped
     chip_list = ChipList()
     chip_list.load(f'{TEST_DATA_DIR}/bad/skip.yaml')
-    assert len(chip_list) == 2    
+    assert len(chip_list) == 2
     assert len(chip_list.global_names) == 2
 
 def test_bad_dup(caplog):
@@ -174,7 +174,7 @@ def test_bad_dup(caplog):
     # duplicates are silently skipped due to yaml library implementation
     chip_list = ChipList()
     chip_list.load(f'{TEST_DATA_DIR}/bad/dup.yaml')
-    assert len(chip_list) == 2    
-    assert len(chip_list.global_names) == 2    
+    assert len(chip_list) == 2
+    assert len(chip_list.global_names) == 2
     chip = chip_list['555']
     assert chip.name == 'dup'
