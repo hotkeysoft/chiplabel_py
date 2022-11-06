@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 class ChipPrinter:
     config = {
         'dpi': 300,
-        'fontSize': 1.0, # desired font size in mm but not really, font size is not an exact science
+        'fontSize': DEFAULT_FONT_SIZE, # desired font size in mm but not really, font size is not an exact science
         'indentSize': 1.0,  # in mm
         'padding': 2, # pixels between edge and label
         'invert': False,
