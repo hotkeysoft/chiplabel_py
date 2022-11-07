@@ -8,6 +8,7 @@ MIN_DPI = 100
 MAX_DPI = 2000
 DEFAULT_DPI = 300
 DEFAULT_FONT = 'CascadiaMono.ttf'
+DEFAULT_FONT_SIZE = 1.0
 DEFAULT_FONT_DIR = pkg_resources.resource_filename('chiplabel', f'fonts/{DEFAULT_FONT}')
 DEFAULT_INPUT_DIR = pkg_resources.resource_filename('chiplabel', 'chips')
 DEFAULT_OUTPUT_DIR = '.'
@@ -47,9 +48,16 @@ def _dpi_range(string):
         raise argparse.ArgumentTypeError(f'{string} is not an integer value')
     return value
 
+def _float_type(string):
+    try:
+        value = float(string)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f'{string} is not a float value')
+    return value
+
 def parse_args(args=None):
     parser = argparse.ArgumentParser(
-        description='Generate footprint images for chips.', 
+        description='Generate footprint images for chips.',
         fromfile_prefix_chars='@'
     )
 
@@ -74,7 +82,7 @@ def parse_args(args=None):
         '--version',
         help="print version info",
         action="store_true"
-    )    
+    )
 
     parser.add_argument(
         '-i', '--input',
@@ -95,6 +103,13 @@ def parse_args(args=None):
         metavar='font',
         help=f'TTF font to use (default: $package/fonts/{DEFAULT_FONT}). Under Windows the system font directory is searched automatically',
         default=DEFAULT_FONT_DIR
+    )
+    graph_group.add_argument(
+        '--fontSize',
+        metavar='fontSize',
+        type=_float_type,
+        help=f'Font size (default: {DEFAULT_FONT_SIZE})',
+        default=DEFAULT_FONT_SIZE
     )
     graph_group.add_argument(
         '--dpi',

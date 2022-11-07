@@ -38,7 +38,7 @@ def test_font(caplog):
     assert 'WARNING' in caplog.text
     assert 'Unable to load font' in caplog.text
     assert 'bad_font' in caplog.text
-    assert c.font    
+    assert c.font
     caplog.clear()
 
     c = ChipPrinter(font=DEFAULT_FONT)
@@ -52,17 +52,17 @@ def test_get_chip_size():
     wide_chip = chip.Chip('wide', 8, rowSpacing=12)
     weird_chip = chip.Chip('weird', 8, pinSpacing=5.08, rowSpacing=12)
 
-    p = ChipPrinter(dpi=100)      
+    p = ChipPrinter(dpi=100)
     assert p.get_chip_size(narrow_chip) == (24, 40)
     assert p.get_chip_size(wide_chip) == (48, 40)
     assert p.get_chip_size(weird_chip) == (48, 80)
 
-    p = ChipPrinter(dpi=200)      
+    p = ChipPrinter(dpi=200)
     assert p.get_chip_size(narrow_chip) == (48, 80)
     assert p.get_chip_size(wide_chip) == (95, 80)
     assert p.get_chip_size(weird_chip) == (95, 160)
 
-    p = ChipPrinter(dpi=1000)      
+    p = ChipPrinter(dpi=1000)
     assert p.get_chip_size(narrow_chip) == (237, 400)
     assert p.get_chip_size(wide_chip) == (473, 400)
     assert p.get_chip_size(weird_chip) == (473, 800)
@@ -77,7 +77,7 @@ def _compare_reference(chip_printer, chip, name):
     test_image = chip_printer.print_chip(chip)
     assert test_image
     assert test_image.size == ref.size
-   
+
     diff = ImageChops.difference(test_image, ref)
 
     if diff.getbbox():
@@ -132,7 +132,7 @@ def test_print_chip_to_file(tmpdir):
         p.print_chip_to_file(None, 'out.png')
     with pytest.raises(ValueError):
         p.print_chip_to_file(c, None)
-    with pytest.raises(ValueError):        
+    with pytest.raises(ValueError):
         p.print_chip_to_file(c, '')
 
     p = ChipPrinter(font=DEFAULT_FONT, dpi=300)

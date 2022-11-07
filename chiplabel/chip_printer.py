@@ -5,14 +5,15 @@ import logging
 import math
 import re
 from PIL import ImageFont, ImageDraw, Image
+from .args import *
 from .chip import Chip
 
 log = logging.getLogger(__name__)
 
 class ChipPrinter:
     config = {
-        'dpi': 300,
-        'fontSize': 1.0, # desired font size in mm but not really, font size is not an exact science
+        'dpi': DEFAULT_DPI,
+        'fontSize': DEFAULT_FONT_SIZE, # desired font size in mm but not really, font size is not an exact science
         'indentSize': 1.0,  # in mm
         'padding': 2, # pixels between edge and label
         'invert': False,
@@ -167,4 +168,4 @@ class ChipPrinter:
     def print_chip_to_file(self, chip, output_file):
         image = self.print_chip(chip)
         image.save(output_file, dpi=(self.dpi, self.dpi))
-        log.info('Output saved to %s', output_file)        
+        log.info('Output saved to %s', output_file)
